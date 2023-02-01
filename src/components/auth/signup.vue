@@ -1,0 +1,423 @@
+<script  setup lang="ts">
+import { HollowDotsSpinner, SemipolarSpinner } from 'epic-spinners'
+import type { registerPayload } from '@/types/auth.types'
+import BaseInput from '../smallComponents/BaseInput.vue';
+import { ref, onMounted, reactive } from 'vue';
+import { useAuthStore } from "@/stores/auth";
+
+
+
+const authStore = useAuthStore();
+const formData: registerPayload = reactive({
+    email: '',
+    name: '',
+    lastName: '',
+    phone: '',
+    password: '',
+    address: ''
+});
+const isLoading = ref(false)
+const code = ref(0)
+const otp1 = ref()
+const otp2 = ref()
+const otp3 = ref()
+const otp4 = ref()
+
+
+
+const sendOtp = () => {
+    if (formData.email && authStore.isValid.isEmail) {
+        authStore.sendOtp(formData.email);
+    } else {
+        authStore.errorMassage = "please enter your Email address"
+    }
+
+}
+const verify = () => {
+    if (formData.email && code.value) {
+        authStore.verify(formData.email, code.value);
+    } else {
+        authStore.errorMassage = "Fill inputs"
+    }
+
+}
+
+const register = () => {
+    isLoading.value = true;
+
+    if (authStore.isValid.isPassword && authStore.isValid.isName) {
+        authStore.errorMassage = "ok"
+        authStore.register(formData)
+
+    } else {
+        authStore.errorMassage = "Fill the field"
+    }
+
+}
+
+
+onMounted(() => (
+    authStore.errorMassage = "",
+    authStore.showOtp = false,
+    authStore.loading = false,
+    authStore.isVerified = false
+))
+</script>
+
+<template>
+
+    <div class="signupForm">
+        <div class="info-section">
+            <div class="first-block">
+                <div class="logo">
+                    <p>Online Shopping store</p>
+                    <img src="@/assets/logo.jpg" alt="">
+                </div>
+                <h1>Sign Up</h1>
+            </div>
+            <div class="divider"></div>
+            <p class="detail">We do not share your
+                personal details
+                with anyone</p>
+        </div>
+
+        <div class="form-groups">
+            <button type="button" class="close" @click="$emit('closeSignUPModal')"><vue-feather type="x" size="2.5em"
+                    stroke="#159347" stroke-width="2"></vue-feather></button>
+            <div class="signUp-loader" v-if="isLoading">
+                <semipolar-spinner class="signUp-loader-item" :animation-duration="2000" :size="65" color="#159347" />
+            </div>
+
+            <form autocomplete="off" @submit.prevent="">
+                <div class="first-form-group" v-if="!authStore.isVerified">
+                    <BaseInput v-model="formData.email" input-type="email" input-id="Email" :is-required="true" />
+                    <span class="errorS" v-show="authStore.errorMassage">{{ authStore.errorMassage }}</span>
+                    <hollow-dots-spinner class="loadSpinner" v-if="authStore.loading" :animation-duration="1000"
+                        :dot-size="10" :dots-num="3" color="#159347" />
+
+                    <div class="otpInput" v-if="authStore.showOtp">
+                        <input class="otp" type="number" id="1" ref="otp1" maxlength="1" @input="() => {
+                            code = otp1.value
+                            otp2.focus()
+                        }
+                        ">
+                        <input class="otp" type="number" id="2" ref="otp2" maxlength="1" @input="() => {
+                            code += otp2.value
+                            otp3.focus()
+                        }">
+                        <input class="otp" type="number" id="3" ref="otp3" maxlength="1" @input="() => {
+                            code += otp3.value
+                            otp4.focus()
+                        }">
+                        <input class="otp" type="number" id="4" ref="otp4" maxlength="1" @input="() => {
+                            code += otp4.value
+                        }">
+                    </div>
+                    <button class="button" v-if="authStore.showOtp" type="button" @click="verify">Verify</button>
+                    <button class="button" v-if="!authStore.showOtp" type="submit" @click="sendOtp"
+                        :disabled="!authStore.isValid.isEmail">Continue</button>
+
+                    <span class="loginLink" @click="$emit('gotoLogin')">Exiting User? Log In</span>
+                </div>
+            </form>
+            <form autocomplete="off" @submit.prevent="register">
+
+                <transition-group name="modals">
+                    <div class="second-form-group" v-if="authStore.isVerified">
+
+                        <div class="form-control">
+                            <BaseInput v-model="formData.name" input-type="text" input-id="Name" :is-required="true" />
+                            <BaseInput v-model="formData.lastName" input-type="text" input-id="LastName"
+                                :is-required="true" />
+                        </div>
+                        <div class="form-control">
+                            <BaseInput v-model="formData.phone" input-type="number" input-id="Phone"
+                                :is-required="true" />
+                            <BaseInput v-model="formData.password" input-type="password" input-id="Password"
+                                :is-required="true" />
+                        </div>
+                        <BaseInput v-model="formData.address" input-type="textarea" input-id="Address"
+                            :is-required="true" />
+                        <button class="button" type="submit"
+                            :disabled="!authStore.isValid.isPassword && !authStore.isValid.isName">Register</button>
+
+                        <span class="loginLink" @click="$emit('gotoLogin')">Exiting User? Log In</span>
+                    </div>
+                </transition-group>
+            </form>
+
+        </div>
+
+
+    </div>
+</template>
+
+
+<style scoped>
+.signupForm {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 5em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 47%;
+    height: 80%;
+    background-color: #ffffff;
+    border-radius: 1em;
+    -webkit-box-shadow: 2px 111px 300px -33px rgba(3, 2, 7, 0.27);
+    -moz-box-shadow: 2px 111px 300px -33px rgba(8, 3, 15, 0.27);
+    box-shadow: 2px 111px 300px -33px rgba(7, 3, 20, 0.27);
+    display: flex;
+    z-index: 210;
+}
+
+.close {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 2em;
+    top: 2.5em;
+    cursor: pointer;
+}
+
+.loadSpinner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.info-section {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+img {
+    width: 70px;
+    height: 70px;
+}
+
+.logo {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #159347;
+}
+
+.logo p {
+    margin-left: 1em;
+    width: 45%;
+}
+
+h1 {
+    color: #159347;
+    font-weight: 600;
+    text-align: left;
+    padding-left: 2em;
+}
+
+.detail {
+    width: 50%;
+    display: flex;
+    margin-right: 50px;
+    color: #159347;
+    font-weight: 200;
+}
+
+.divider {
+    background-color: #cccccc;
+    width: 75%;
+    margin: 0 auto;
+    height: 0.5px;
+}
+
+.form-groups {
+    position: relative;
+    width: 70%;
+    border-left: 1px solid #cccccc;
+    background-color: #ffffff;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.first-form-group {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 7em auto;
+}
+
+.emailInput {
+    height: 36px;
+    width: 100% !important;
+    border: none;
+    outline: none;
+    border-bottom: #cccccc 1px solid;
+    font-size: 18px;
+    margin: 2em 0;
+}
+
+.otpInput {
+    margin-top: 2em;
+    animation: 0.5s ease-in-out 0s 1 FadeIn;
+    transition: 0.5s ease-in;
+}
+
+.otp {
+    width: 3em;
+    height: 3em;
+    color: #159347;
+    font-size: 16px;
+    margin: 0 0.5em;
+    border: none;
+    text-align: center;
+    border-radius: 8px;
+    background: linear-gradient(145deg, #e6e1e1, #ffffff);
+    box-shadow: 6px 6px 12px #e2dddd,
+        -6px -6px 12px #ffffff;
+}
+
+@keyframes FadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.otp:focus {
+    outline: 0.3px #159347 solid;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.loginLink {
+    color: #0086ff;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.errorM {
+    color: red;
+    font-size: 14px;
+}
+
+.errorS {
+    color: #c2bebe;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.button {
+    cursor: pointer;
+}
+
+/* /////////////////////////////////////////////////////////// */
+.second-form-group {
+    width: 85%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 7em auto;
+}
+
+.button {
+    height: 45px;
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    background-color: #159347;
+    transition: all 0.5s ease;
+    font-size: 18px;
+    color: #ffffff;
+    margin-top: 2.5em;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
+}
+.button:hover{
+    background-color: #071c92;
+}
+.second-form-group input {
+    height: 55px;
+}
+
+.form-control {
+    display: flex;
+}
+
+/* ////////////////////////////////////////////////// */
+
+.modals-enter-from {
+    opacity: 0;
+    transform: scale(0);
+    transform: translateX(-5em);
+}
+
+.modals-enter-to {
+    opacity: 1;
+    transform: scale(1);
+    transform: translateX(0);
+}
+
+.modals-enter-active {
+    transition: all 0.5s ease-in-out;
+}
+
+.modals-leave-from {
+    opacity: 1;
+    transform: scale(1);
+    transform: translateX(0);
+}
+
+.modals-leave-to {
+    opacity: 0;
+    transform: scale(0.5);
+    transform: translateX(5em);
+}
+
+.modals-leave-active {
+    transition: all 0.5s ease;
+    position: absolute;
+}
+
+.modals-move {
+    transition: all 0.5s ease;
+}
+
+.signUp-loader {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.76);
+    z-index: 100;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.signUp-loader-item {
+    margin-top: 6em;
+}
+</style>
