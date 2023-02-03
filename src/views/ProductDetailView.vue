@@ -17,8 +17,8 @@ onBeforeMount(async () => {
         })
         .catch((err) => {
             console.log(err.response.data)
-        })
-})
+        });
+});
 
 
 </script>
@@ -28,7 +28,7 @@ onBeforeMount(async () => {
         <div class="prd-path">
             Home > {{ product.category }} > {{ product.name }}
         </div>
-        <div class="prd-details">
+        <div class="product-details-div">
             <div class="col-1">
                 <div class="img-list">
                     <div class="img" v-for="img in product.img">
@@ -36,107 +36,427 @@ onBeforeMount(async () => {
                     </div>
                 </div>
                 <div class="img-slider">
+                    <span class="heart"><vue-feather type="heart" size="1.5em" stroke="#414e5a"
+                            stroke-width="2"></vue-feather></span>
                     <img :src="'http://localhost:4000' + showImg" :alt="showImg">
                 </div>
             </div>
             <div class="divider"></div>
             <div class="col-2">
-
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
-                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                Officiis, fuga aperiam!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
-                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                Officiis, fuga aperiam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea
-                tempora hic inventore,
-                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                Officiis, fuga aperiam!
-                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est repellat corrupti velit placeat
-                </h1>
+                <div class="header">
+                    <div class="productText">
+                        <h2>{{ product.name }}</h2>
+                        <span>
+                            <vue-feather type="share" size="2em" stroke-width="1.5" stroke="#414e5a"></vue-feather>
+                            <span>SHARE</span>
+                        </span>
+                    </div>
+                    <div class="preview">
+                        <span>
+                            <vue-feather v-for="i in 5" :id="i" type="star" size="1.2em" fill="#F1F6F5" stroke-width="1"
+                                stroke="#DDDDDD"></vue-feather>
+                        </span>
+                        <span>Be the First to Review</span>
+                    </div>
+                    <div class="price">
+                        <h1>${{ product.price }}</h1>
+                    </div>
+                </div>
+                <div class="delivery-details">
+                    <h4>Delivery</h4>
+                    <div class="pinCode">
+                        <span class="icon"><vue-feather type="map-pin" size=".8em" stroke-width="2"
+                                stroke="#423F3E"></vue-feather></span>
+                        <input type="text" placeholder="Enter pincode">
+                        <button>CHECK</button>
+                    </div>
+                    <div>Delivery by Feb 5, Sunday by 01:00 PM</div>
+                    <div>Enter pincode for exact delivery dates and charge</div>
+                </div>
+                <div class="delivery-action">
+                    <button>
+                        <span><vue-feather type="shopping-cart" size=".9em" stroke-width="3"
+                                stroke="#fff"></vue-feather></span>
+                        <span>Add To Cart</span>
+                    </button>
+                    <div>
+                        <span><img src="@/assets/shield.png" alt=""></span>
+                        <span>Safe and Secure payments.100% Authentic products</span>
+                    </div>
+                </div>
+                <div class="Specifications">
+                    <h2>Specifications</h2>
+                    <ul>
+                        <li v-for="spec in product.Specifications.reverse()"><span class="name">{{ spec.name }}</span>
+                            <span class="value">{{
+                                spec.value
+                            }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rate-action">
+                    <h2>Reviews & Ratings</h2>
+                    <div>
+                        <div class="rate">
+                            <span>
+                                <vue-feather v-for="i in 5" :id="i" type="star" size="1.2em" fill="#F1F6F5"
+                                    stroke-width="1" stroke="#DDDDDD"></vue-feather>
+                            </span>
+                            <span>Be the First to Review</span>
+                        </div>
+                        <div class="rate-review">
+                            <span>Have You Used this Product ?</span>
+                            <button>
+                                Rate and Write Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/assets/variavle.scss';
+
 .background-container {
     position: relative;
     height: 100%;
     width: 100%;
-    padding: 0 1em;
+    padding: 0 1em 1em 1em;
     background-color: rgba(46, 55, 97, 0.05);
-    ;
-}
 
-.prd-path {
-    padding: .5em .5em;
-    font-size: 1.2em;
-    color: rgb(121, 121, 121);
-    max-width: 1366px;
-    margin: 0 auto;
-}
+    .prd-path {
+        padding: 0.5em .5em;
+        color: rgb(121, 121, 121);
+        max-width: 1366px;
+        margin: 0 auto;
+    }
 
-.divider {
-    border-top: 0.3px solid #e5e6e9;
-    border-left: 0.3px solid #e5e6e9;
-}
+    .divider {
+        border-top: 0.3px solid #e5e6e9;
+        border-left: 0.3px solid #e5e6e9;
+    }
 
-.prd-details {
-    position: relative;
+    .product-details-div {
+        position: relative;
+        max-width: 1366px;
+        display: flex;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+        margin: 0 auto;
 
-    max-width: 1366px;
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
-    margin: 0.4em auto;
-}
+        .col-1 {
+            position: sticky;
+            top: 60px;
+            height: fit-content;
+            width: 45%;
+            display: flex;
 
-.prd-details .col-1 {
-    position: sticky;
-    top: 75px;
-    width: 41%;
-    display: flex;
-}
+            .img-list {
+                width: 15%;
+                margin: 2em 0 2em 1.5em;
+                overflow-y: auto;
+                @include scrollbar();
+                max-height: 28em;
 
-.col-1 .img-list img {
-    width: 5em;
-    height: 5em;
-}
+                &:hover {
+                    box-shadow: inset 0px -19px 21px -14px rgba(0, 0, 0, 0.1);
+                }
 
-.col-1 .img-list .img {
-    width: 6em;
-    height: 6em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    border: #e5e6e9 1px solid;
-}
+                .img {
+                    width: 100%;
+                    height: 5em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 0.5em;
+                    border-radius: 3px;
+                    border: #e5e6e9 1px solid;
 
-.prd-details .col-2 {
-    width: 59%;
-}
+                    &:hover {
+                        border: #84a3ff 1px solid;
+                    }
+                }
+
+                img {
+                    width: 4em;
+                    height: 4em;
+                }
+            }
+
+            .img-slider {
+                height: 28em;
+                width: 80%;
+                border: #e5e6e9 1px solid;
+                border-radius: 5px;
+                padding: 0.3em;
+                margin: 2em 0.5em;
+                position: relative;
+
+                .heart {
+                    position: absolute;
+                    top: 1em;
+                    right: 1em;
+                    z-index: 10;
+                    width: 2em;
+                    height: 2em;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    background-color: rgba(255, 255, 255, 0.473);
+                }
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 5px;
+
+                }
+            }
+        }
+
+        .col-2 {
+            width: 55%;
+
+            .header {
+                padding: 1em;
+
+                .productText {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    h2 {
+                        font-weight: 400;
+                        font-size: 1.4em;
+                        line-height: 1.4em;
+                        width: 90%;
+                    }
+
+                    span {
+                        display: block;
+                        text-align: center;
+                        color: #414e5a;
+                        font-size: 14px;
+                        position: absolute;
+                        right: 1em;
+                        cursor: pointer;
+
+                        span {
+                            font-size: 10px;
+                            right: 0;
+                        }
+                    }
+                }
+
+                .preview {
+                    display: flex;
+                    align-items: center;
+                    margin: 0.5em 0;
+
+                    span {
+                        cursor: pointer;
+
+                        &:last-child {
+                            margin: 0 1em;
+                            color: #0086FF;
+
+                            &:hover {
+                                text-decoration: underline;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+
+                .price {
+                    height: 4em;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            .delivery-details {
+                background: rgba(46, 55, 97, 0.05);
+                padding: 1em 1em;
+
+                h4 {
+                    font-weight: 400;
+                    color: #414e5a;
+                }
+
+                .pinCode {
+                    display: flex;
+                    height: 2.2em;
+                    border-radius: 3px;
+                    background: #ffffff;
+                    width: fit-content;
+                    border: 1px solid rgb(0 0 0 / 20%);
+                    margin: 0.5em 0;
+
+                    input {
+                        height: 100%;
+                        width: 200px;
+                        background: transparent;
+                        border: none;
+                        outline: none;
+                    }
+
+                    button {
+                        height: 100%;
+                        border: none;
+                        outline: none;
+                        background: rgb(94, 94, 94);
+                        border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;
+                        color: #fff;
+                        padding: 0.5em 1.5em;
+                        font-weight: 800;
+                    }
+
+                    span {
+                        display: flex;
+                        align-items: center;
+                        padding: 0 0.5em;
+                    }
+                }
+
+                div {
+                    color: #414e5a;
+                }
+            }
+
+            .delivery-action {
+                background: rgba(46, 55, 97, 0.05);
+                padding: 3em 1em 1em 1em;
+
+                button {
+                    background: #159347;
+                    box-shadow: 0 0 5px 0 rgb(0 0 0 / 20%);
+                    border: none;
+                    outline: none;
+                    font-size: 1em;
+                    color: #ffffff;
+                    font-weight: 600;
+                    padding: 1em 2.5em;
+                    border-radius: 5px;
+                    transition: all 0.4s ease;
+
+                    &:hover {
+                        background: #071c92;
+                    }
+
+                    span {
+                        padding: 0 4px;
+
+                    }
+                }
+
+                div {
+                    display: flex;
+                    margin: 1em 0 1em 0;
+
+                    span {
+                        margin-right: 1em;
+                    }
+
+                    img {
+                        width: 1.5em;
+                        height: 1.5em;
+                    }
+                }
+            }
+
+            .Specifications {
+                padding: 1em;
+
+                h2 {
+                    border-bottom: 1px dashed #e5e6e9;
+                    padding: 0.9em 0;
+                }
+
+                ul {
+                    padding: 1em 0;
+
+                    li {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 1em 0;
+
+                        .name {
+                            width: 30%;
+                            color: rgb(141, 141, 141);
+                        }
+
+                        .value {
+                            width: 70%;
+                            color: #414e5a;
+
+                        }
+                    }
+                }
+            }
+
+            .rate-action {
+                padding: 1em;
+
+                h2 {
+                    border-bottom: 1px dashed #e5e6e9;
+                    padding: 0.9em 0;
+                }
+
+                div {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 2em;
+
+                    .rate {
+                        width: 50%;
+                        flex-direction: column;
+                        border-right: 1px solid #e5e6e9;
+
+                        // background-color: #0086FF;
+                        span {
+                            margin: 0.25em 0;
+                        }
+                    }
+
+                    .rate-review {
+                        width: 50%;
+                        flex-direction: column;
+
+                        span {
+                            margin: 0.25em 0;
+                        }
+
+                        button {
+                            background: #159347;
+                            box-shadow: 0 0 5px 0 rgb(0 0 0 / 20%);
+                            border: none;
+                            outline: none;
+                            font-size: 1em;
+                            color: #ffffff;
+                            font-weight: 600;
+                            padding: 1em 2.5em;
+                            border-radius: 5px;
+                            transition: all 0.4s ease;
+
+                            &:hover {
+                                background: #071c92;
+                            }
+                        }
+                    }
+                }
 
 
-.img-list {
-    width: 5em;
-    margin: 2em 2em;
-}
-
-.img-slider {
-    height: 65vh;
-    width: 30vw;
-    border: #e5e6e9 1px solid;
-    border-radius: 10px;
-    padding: 0.3em 1em;
-    margin: 2em .5em;
-}
-
-.img-slider img {
-    height: 100%;
-    width: 100%;
+            }
+        }
+    }
 }
 </style>

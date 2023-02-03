@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 
 
