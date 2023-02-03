@@ -9,55 +9,55 @@ const showImg = ref();
 const changeImg = (img: any) => {
     showImg.value = img;
 }
-onBeforeMount(async() => {
-   await axios.get(`/product/${lastParam}`)
-        .then((res:any) => {
-            product.value = res.product
+onBeforeMount(async () => {
+    await axios.get(`/product/${lastParam}`)
+        .then((res: any) => {
+            product.value = res.data.product
             showImg.value = product.value.img[0]
         })
-       .catch((err) => {
+        .catch((err) => {
             console.log(err.response.data)
-       })
+        })
 })
 
 
 </script>
 
 <template>
-        <div class="background-container">
-            <div class="prd-path">
-                Home > {{ product.category }} > {{ product.name }}
-            </div>
-            <div class="prd-details">
-                <div class="col-1">
-                    <div class="img-list">
-                        <div class="img" v-for="img in product.img">
-                            <img :src="'http://localhost:4000' + img" :alt="img" @mouseover="changeImg(img)">
-                        </div>
-                    </div>
-                    <div class="img-slider">
-                        <img :src="'http://localhost:4000' + showImg" :alt="showImg">
-                    </div>
-                </div>
-                <div class="divider"></div>
-                <div class="col-2">
-
-
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
-                    earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                    Officiis, fuga aperiam!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
-                    earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                    Officiis, fuga aperiam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea
-                    tempora hic inventore,
-                    earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
-                    Officiis, fuga aperiam!
-                    <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est repellat corrupti velit placeat
-                    </h1>
-                </div>
-            </div>
-
+    <div class="background-container">
+        <div class="prd-path">
+            Home > {{ product.category }} > {{ product.name }}
         </div>
+        <div class="prd-details">
+            <div class="col-1">
+                <div class="img-list">
+                    <div class="img" v-for="img in product.img">
+                        <img :src="'http://localhost:4000' + img" :alt="img" @mouseover="changeImg(img)">
+                    </div>
+                </div>
+                <div class="img-slider">
+                    <img :src="'http://localhost:4000' + showImg" :alt="showImg">
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="col-2">
+
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
+                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
+                Officiis, fuga aperiam!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea tempora hic inventore,
+                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
+                Officiis, fuga aperiam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quo ea
+                tempora hic inventore,
+                earum labore ipsam aspernatur dignissimos obcaecati ipsa tempore illo perferendis, eaque neque.
+                Officiis, fuga aperiam!
+                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est repellat corrupti velit placeat
+                </h1>
+            </div>
+        </div>
+
+    </div>
 </template>
 
 <style scoped>

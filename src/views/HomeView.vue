@@ -1,20 +1,32 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
-import { ref } from 'vue';
+
+const sort = ref('low')
 
 const productStore = useProductStore();
 
-
+onMounted(() => {
+  if (localStorage.getItem("listView")) {
+    productStore.listView = JSON.parse(localStorage.getItem("listView") as string);
+  }
+  if (localStorage.getItem("sort")) {
+    productStore.filters.sort = JSON.parse(localStorage.getItem("sort") as string);
+  }
+  if (localStorage.getItem("tags")) {
+    productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
+  }
+})
 </script>
 <template>
   <div class="content">
     <main>
       <Filters />
       <div class="divider-border"></div>
-      <div class="main-content" v-if="!productStore.productLoading && productStore.product">
+      <div class="main-content">
         <div class="product-headers">
           <div class="first-header">
             <div class="count">
@@ -23,8 +35,9 @@ const productStore = useProductStore();
             </div>
             <div class="sort">
               <span>Sort By</span>
-              <select name="sort" id="sort" @change="productStore.getFilters('sort','test',$event)">
-                <option value=""></option>
+              <select name="sort" id="sort" v-model="productStore.filters.sort"
+                @change="productStore.getFilters('sort', 'test', $event)">
+                <!-- <option value=""></option> -->
                 <option value="all">All</option>
                 <!-- <option value="popular">Popularity</option> -->
                 <option value="newest">Newest</option>
@@ -32,27 +45,31 @@ const productStore = useProductStore();
                 <option value="high">Price High to Low</option>
               </select>
               <div class="view-buttons">
-                <vue-feather type="list" size="1em" stroke="gray" stroke-width="2"
+                <vue-feather type="list" size="1.2em" :stroke="productStore.listViewData ? 'black' : '#ccc'"
+                  :stroke-width="productStore.listViewData ? '2' : '3'"
                   @click="productStore.listView = true"></vue-feather>
-                <vue-feather type="grid" size="1em" fill="gray" stroke="gray" stroke-width="2"
+                <vue-feather type="grid" size="1.2em" :fill="productStore.listViewData ? '#ccc' : '#474747'"
+                  :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"
                   @click="productStore.listView = false"></vue-feather>
               </div>
             </div>
           </div>
           <div class="second-header">
             <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
-              <span class="tag">{{ Object.values(tag).toString() }}</span>    
-              <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em" stroke="#000" stroke-width="2"
-                  @click="productStore.listView = false"></vue-feather></span>
+              <span class="tag">{{ Object.values(tag).toString() }}</span>
+              <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em"
+                  stroke="#000" stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
             </div>
           </div>
         </div>
-        <div :class="productStore.listView ? 'listViewProduct' : 'products-container'">
-          <Product :list-view-product="productStore.listView" v-for="product in productStore.product" :data="product" />
+        <div v-if="!productStore.productLoading && productStore.product"
+          :class="productStore.listView ? 'listViewProduct' : 'products-container'">
+          <Product :list-view-product="productStore.listViewData" v-for="product in productStore.product"
+            :data="product" />
         </div>
-      </div>
-      <div class="main-content" v-else>
-        <ProductSkeleton />
+        <div class="main-content" v-else>
+          <ProductSkeleton />
+        </div>
       </div>
     </main>
   </div>
@@ -108,7 +125,7 @@ main {
 }
 
 .count .cat-name,
-.count span {  
+.count span {
   color: #414e5a;
   margin-right: 1em;
 }
@@ -118,6 +135,20 @@ main {
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+.sort select {
+  position: relative;
+  background: transparent;
+  background-image: none;
+  display: block;
+  outline: none;
+  color: #414e5a;
+  cursor: pointer;
+}
+
+option {
+  padding: 0.5em;
 }
 
 .view-buttons {
@@ -163,7 +194,8 @@ main {
   display: flex;
   flex-wrap: wrap;
 }
-.second-header div{
+
+.second-header div {
   min-width: 4em;
   margin: 0.5em;
   padding: 5px;
@@ -174,10 +206,12 @@ main {
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 5%);
   cursor: pointer;
 }
-.second-header div:hover{
+
+.second-header div:hover {
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
 }
-.tag-close{
+
+.tag-close {
   position: absolute;
   background-color: #ffffff;
   width: 1.5em;
@@ -191,11 +225,12 @@ main {
   transition: all .5s ease;
   opacity: 0;
 }
-.tag-close:hover{
+
+.tag-close:hover {
   opacity: 1;
 }
 
-.tag:hover ~ .tag-close{
+.tag:hover~.tag-close {
   opacity: 1;
 }
 

@@ -9,21 +9,12 @@ export const useProductStore = defineStore("product", () => {
   const price = ref<any[]>([]);
   const category = ref<any[]>([]);
   const search = ref("");
-  const listView = ref(false);
+  const listView = ref<any>();
 
   const productLoading = ref(false);
   const filterLoading = ref(false);
   let tags = <any>ref([]);
 
-  const brandsData = computed(() => {
-    if (search.value) {
-      return brands.value.filter((item) =>
-        item.brandName.includes(search.value.toLowerCase())
-      );
-    }
-    return brands.value;
-  });
-  let params = new URLSearchParams();
   const filters = ref({
     category: <string[]>[],
     subCategory: <string[]>[],
@@ -32,8 +23,68 @@ export const useProductStore = defineStore("product", () => {
     sort: "all",
   });
 
+  let params = new URLSearchParams();
+
+  ////////////////////////////////////////////
+  //////////////// Getters ///////////////////
+  ////////////////////////////////////////////
+
+  const brandsData = computed(() => {
+    let checked = <string[]>[];
+    if (search.value) {
+      return brands.value.filter((item) =>
+        item.brandName.toLowerCase().includes(search.value.toLowerCase())
+      );
+    }
+    if (tags.value.length) {
+      tags.value.find((el: any) => {
+        if (Object.keys(el).toString() == "brand") {
+          checked.push(el.brand);
+        }
+      });
+    }
+    brands.value.forEach((el: any) => {
+      if (checked.includes(el.brandName)) {
+        el["checked"] = true;
+      } else {
+        el["checked"] = false;
+      }
+    });
+
+    return brands.value;
+  });
+
+  const priceData = computed(() => {
+    let checked = 0;
+    tags.value.find((el: any) => {
+      if (Object.keys(el).toString() == "price") {
+        checked = el.price;
+      }
+    });
+    price.value.forEach((el: any) => {
+      if (el.price === checked) {
+        el["checked"] = true;
+      } else {
+        el["checked"] = false;
+      }
+    });
+    return price.value;
+  });
+  const listViewData = computed(() => {
+    if (listView.value == true) {
+      localStorage.setItem("listView", JSON.stringify(true));
+    }
+    if (listView.value == false) {
+      localStorage.setItem("listView", JSON.stringify(false));
+    }
+    return listView.value;
+  });
+
+  ////////////////////////////////////////////
+  //////////////// Actions ///////////////////
+  ////////////////////////////////////////////
+
   const getFilters = (type: string, value: any, event: any) => {
-    // console.log(filters.value);
     tags.value = [];
     if (type === "category") {
       filters.value.category.push(value);
@@ -47,10 +98,10 @@ export const useProductStore = defineStore("product", () => {
         tags.value.splice(tags.value.indexOf(value), 1);
       }
     } else if (type === "sort") {
-      // filters.value.sort=''
-      // filters.value.sort = event.target.value
       params.delete("sort");
       if (event.target.value !== "all") {
+        localStorage.removeItem("sort");
+        localStorage.setItem("sort", JSON.stringify(event.target.value));
         params.append("sort", event.target.value);
       }
     } else {
@@ -71,11 +122,10 @@ export const useProductStore = defineStore("product", () => {
       } else {
         var obj = <any>{};
         obj[key] = value;
-        // if(typeof value === 'string')tags.value.push(obj);
         if (value > 0) tags.value.push(obj);
       }
     }
-    // console.log(tags.value);
+    localStorage.setItem("tags", JSON.stringify(tags.value));
   };
   // access ann search on brands
   const removeTag = (tag: {}) => {
@@ -84,6 +134,8 @@ export const useProductStore = defineStore("product", () => {
     tags.value = tags.value.filter((item: any) => {
       return item[key] != value;
     });
+    localStorage.setItem("tags", JSON.stringify(tags.value));
+
     if (Object.keys(tag).toString() === "brand") {
       filters.value.brand.splice(
         filters.value.brand.indexOf(Object.values(tag).toString()),
@@ -103,7 +155,7 @@ export const useProductStore = defineStore("product", () => {
       );
     }
     if (Object.keys(tag).toString() === "price") {
-      filters.value.price = 0
+      filters.value.price = 0;
     }
   };
   watch(
@@ -136,12 +188,11 @@ export const useProductStore = defineStore("product", () => {
     await axios
       .get("/product/allof", request)
       .then((res: any) => {
-        product.value = res.products;
-        console.log(product.value);
+        product.value = res.data.products;
         setTimeout(() => {
           productLoading.value = false;
           filterLoading.value = false;
-        }, 300);
+        }, 100);
       })
       .catch((err) => {
         console.log(err);
@@ -161,10 +212,10 @@ export const useProductStore = defineStore("product", () => {
       .then(
         _axios.spread(
           (categoryData: any, priceData, brandData, productData) => {
-            brands.value = brandData.brands;
-            price.value = priceData.price;
-            category.value = categoryData.category;
-            product.value = productData.products;
+            brands.value = brandData.data.brands;
+            price.value = priceData.data.price;
+            category.value = categoryData.data.category;
+            product.value = productData.data.products;
             if (brands.value && price.value && category.value) {
               filterLoading.value = false;
             }
@@ -179,13 +230,14 @@ export const useProductStore = defineStore("product", () => {
     params,
     product,
     filterLoading,
-    price,
+    priceData,
     category,
     productLoading,
     filters,
     brandsData,
     search,
     tags,
+    listViewData,
     getFilters,
     removeTag,
     fetchBrandAndPrice,

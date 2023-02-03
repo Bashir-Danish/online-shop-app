@@ -7,7 +7,7 @@ const productStore = useProductStore();
 const closeAll = (item: any) => {
 
     if (!item.open) {
-        productStore.category.forEach((el:any) => el.open = false);
+        productStore.category.forEach((el: any) => el.open = false);
     }
     item.open = !item.open
 }
@@ -24,9 +24,11 @@ const closeAll = (item: any) => {
                 </div>
                 <span class="cat-divider"></span>
                 <ul :class="category.open ? 'visible' : 'invisible'">
-                    <li @click="productStore.getFilters('category', category.category, $event); $emit('closeModal')">All {{
-                        category.category
-                    }}</li>
+                    <li @click="productStore.getFilters('category', category.category, $event); $emit('closeModal')">All
+                        {{
+                            category.category
+                        }}</li>
+
                     <li v-for="parent in category.parent"
                         @click="productStore.getFilters('subcategory', parent.name, $event); $emit('closeModal')">
                         {{ parent.name }}

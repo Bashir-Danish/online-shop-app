@@ -113,7 +113,7 @@ onMounted(() => (
                             code += otp4.value
                         }">
                     </div>
-                    <button class="button" v-if="authStore.showOtp" type="button" @click="verify">Verify</button>
+                    <button class="button" v-if="authStore.showOtp" type="submit" @click="verify">Verify</button>
                     <button class="button" v-if="!authStore.showOtp" type="submit" @click="sendOtp"
                         :disabled="!authStore.isValid.isEmail">Continue</button>
 
@@ -272,8 +272,8 @@ h1 {
 }
 
 .otp {
-    width: 3em;
-    height: 3em;
+    width: 2.5em;
+    height: 2.5em;
     color: #159347;
     font-size: 16px;
     margin: 0 0.5em;
@@ -356,9 +356,11 @@ input[type=number] {
     margin-top: 2.5em;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
 }
-.button:hover{
+
+.button:hover {
     background-color: #071c92;
 }
+
 .second-form-group input {
     height: 55px;
 }

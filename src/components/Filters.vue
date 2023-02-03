@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useProductStore } from '@/stores/product'
-import { onMounted, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import filterSkeletonVue from './vueSkeleton/filterSkeleton.vue';
 import category from '@/components/Categories.vue'
 const productStore = useProductStore();
 
 const categoryModal = ref(false);
+
 
 
 onMounted(() => {
@@ -18,6 +19,7 @@ onMounted(() => {
         <filterSkeletonVue />
     </div>
     <div class="side-bar" v-else>
+
         <div class="header-section">
             <div class="filter-header">
                 <span>FILTERS</span>
@@ -37,9 +39,10 @@ onMounted(() => {
             <div class="price">
                 <div class="header">PRICE</div>
                 <ul class="price-ul">
-                    <li class="price-li" v-for="price in productStore.price">
+                    <li class="price-li" v-for="price in productStore.priceData">
                         <input type="radio" name="p" :id="price._id"
-                            @change="productStore.getFilters('price', price.price, $event)" :key="price._id">
+                            @change="productStore.getFilters('price', price.price, $event)" :key="price._id"
+                            :checked="price.checked">
                         <label :for="price._id">{{ price.price }} _ Afg</label>
                     </li>
                 </ul>
@@ -55,7 +58,7 @@ onMounted(() => {
                     <li class="brand-li" v-for="brand in productStore.brandsData">
                         <input type="checkbox" :id="brand._id"
                             @change="productStore.getFilters('brand', brand.brandName, $event)"
-                            :checked="Object.values(productStore.tags).includes(brand.brandName)">
+                            :checked="brand.checked">
                         <label :for="brand._id">{{ brand.brandName }}</label>
                     </li>
                 </ul>
@@ -246,7 +249,7 @@ onMounted(() => {
         // width: calc(100% - 1em);
         border: none;
         outline: none;
-        
+
         margin-left: 1em;
 
         &:focus {

@@ -2,7 +2,7 @@
 import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
 </script>
 <template>
-    <div class="product-headers">
+    <!-- <div class="product-headers">
         <div class="first-header">
             <div class="count">
                 <Placeholder hight="1.3em" width="30%" border-radius="5px" />
@@ -12,7 +12,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 <Placeholder hight="1.3em" width="15%" border-radius="5px" margin="0 .5em" />
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="products-container">
         <div class="product">
             <div class="product-details">
@@ -136,7 +136,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:1em  0;
+    margin: 1em 0;
 
 }
 
@@ -154,6 +154,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
 }
 
 .products-container {
+
     display: flex;
     flex-wrap: wrap;
     row-gap: 1.5em;

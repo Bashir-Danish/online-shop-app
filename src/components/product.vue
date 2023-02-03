@@ -8,21 +8,20 @@ defineProps([
 )
 const router = useRouter()
 const addToCart = () => {
-    // alert("hello")
-    console.log("fdgfdgd")
+    console.log("add to cart")
 }
 </script>
 <template>
     <div :class="listViewProduct ? 'product-2' : 'product'">
-        <div :class="listViewProduct ? 'product-2-details' : 'product-details'">
-            <div :class="listViewProduct ? 'product-2-img' : 'product-img'"
-                @click="router.push({ path: '/product/' + data._id })">
-                <span class="heart" @click.native="addToCart()"><vue-feather type="heart" size="1.1em" stroke="#414e5a"
+        <div :class="listViewProduct ? 'product-2-details' : 'product-details'"
+            @click="router.push({ path: '/product/' + data._id })">
+            <div :class="listViewProduct ? 'product-2-img' : 'product-img'">
+                <span class="heart" @click.stop="addToCart()"><vue-feather type="heart" size="1.1em" stroke="#414e5a"
                         stroke-width="2"></vue-feather></span>
                 <img :src="'http://localhost:4000' + data.img[0]" :alt="data.img[0]">
             </div>
             <div :class="listViewProduct ? 'desc-wrapper-2' : 'desc-wrapper'">
-                <div class="row1" @click="router.push({ path: '/product/' + data._id })">
+                <div class="row1">
                     <div class="product-name">{{ data.name }}</div>
                     <div class="price">
                         <span>$</span>
@@ -30,7 +29,7 @@ const addToCart = () => {
                     </div>
                 </div>
                 <div class="row2">
-                    <div class="add-btn" @click="addToCart()">
+                    <div class="add-btn" @click.stop="addToCart()">
                         <span><vue-feather type="shopping-cart" size="1em" stroke="#fff"
                                 stroke-width="2"></vue-feather></span>
                         <span>Add</span>
@@ -56,6 +55,8 @@ const addToCart = () => {
 
     &:hover {
         box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+
 
         img {
             transform: scale(1.05);
@@ -63,7 +64,7 @@ const addToCart = () => {
         }
 
         .product-img .heart {
-            transition: all 0.5s ease;
+            transition: all 1s ease;
             opacity: 1;
             transform: translateY(0px);
             z-index: 1000;
@@ -92,7 +93,7 @@ const addToCart = () => {
                 display: flex;
                 top: 1.7em;
                 right: 1.7em;
-                z-index: 1000;
+                z-index: 10;
                 opacity: 0;
                 transform: translateY(-30px);
             }
@@ -180,14 +181,16 @@ const addToCart = () => {
             padding: 0 2em;
             display: flex;
             flex-direction: column;
+
             // justify-content: space-evenly;
-            .row1{
-                .price{
+            .row1 {
+                .price {
                     margin: 1.5em 0;
                 }
             }
+
             .row2 {
-                
+
                 .add-btn {
                     background-color: #159347;
                     width: 100px;

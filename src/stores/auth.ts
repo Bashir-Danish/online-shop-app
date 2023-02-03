@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "@/plugins/axios";
 import jwtUtil from "@/utils/jwt";
-import type { registerPayload ,loginPayload} from "@/types/auth.types";
+import type { registerPayload, loginPayload } from "@/types/auth.types";
 
 export const useAuthStore = defineStore("auth", () => {
   const isLoggedIn = ref(false);
@@ -41,6 +41,7 @@ export const useAuthStore = defineStore("auth", () => {
       await axios
         .post("/users/sendOtp", { email })
         .then((response) => {
+          console.log(response);
           if (response.status === 200) {
             errorMassage.value = "Enter the code";
             showOtp.value = true;
@@ -96,13 +97,12 @@ export const useAuthStore = defineStore("auth", () => {
         .then((res) => {
           jwtUtil.saveToken(res.data.user.token);
           isLoggedIn.value = true;
-          jwtUtil.saveUser(JSON.stringify(res.data.user))
+          jwtUtil.saveUser(JSON.stringify(res.data.user));
         })
         .catch((error) => {
           loading.value = false;
           errorMassage.value = error.response;
         });
-      
     } catch (error) {
       console.log(error);
       return false;
@@ -132,35 +132,37 @@ export const useAuthStore = defineStore("auth", () => {
   }
   async function login(formData: loginPayload) {
     try {
-      await axios.post('/users/login', formData)
-      .then((res => {
-        if (res.status == 200) {
-          jwtUtil.saveToken(res.data.token);
-          jwtUtil.saveUser(JSON.stringify(res.data.user))
-          isLoggedIn.value = true
-        }
-      }))
-      .catch((error) => {
-        errorMassage.value = error.response.data.msg
-      });
+      await axios
+        .post("/users/login", formData)
+        .then((res) => {
+          if (res.status == 200) {
+            jwtUtil.saveToken(res.data.token);
+            jwtUtil.saveUser(JSON.stringify(res.data.user));
+            isLoggedIn.value = true;
+          }
+        })
+        .catch((error) => {
+          errorMassage.value = error.response.data.msg;
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async function resetPass(formData: any) {
     try {
-      await axios.post('/users/resetPass', formData)
-      .then((res => {
-        if (res.status == 200) {
-          errorMassage.value = res.data.message
-          // console.log(res.data.message)
-        }
-      }))
-      .catch((error) => {
-        errorMassage.value = error.response.data.msg
-      });
+      await axios
+        .post("/users/resetPass", formData)
+        .then((res) => {
+          if (res.status == 200) {
+            errorMassage.value = res.data.message;
+            // console.log(res.data.message)
+          }
+        })
+        .catch((error) => {
+          errorMassage.value = error.response.data.msg;
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   return {
@@ -176,6 +178,6 @@ export const useAuthStore = defineStore("auth", () => {
     sendOtp,
     sendLoginCode,
     login,
-    resetPass
+    resetPass,
   };
 });
