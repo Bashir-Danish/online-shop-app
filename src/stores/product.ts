@@ -168,6 +168,7 @@ export const useProductStore = defineStore("product", () => {
         params.delete("brand");
         params.delete("price");
         // params.delete("sort");
+        console.log("s");
 
         tags.value.forEach((el: any) => {
           params.append(
@@ -175,8 +176,9 @@ export const useProductStore = defineStore("product", () => {
             Object.values(el).toString()
           );
         });
+        console.log(tags.value);
+        getProduct();
       }
-      getProduct();
     }
   );
   let offset = 0;

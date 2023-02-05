@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
@@ -7,6 +7,8 @@ import { useProductStore } from '@/stores/product'
 import AnimatedPlaceholder from '@/components/smallComponents/AnimatedPlaceholder.vue'; '@/components/smallComponents/AnimatedPlaceholder.vue';
 
 const productStore = useProductStore();
+
+
 
 
 

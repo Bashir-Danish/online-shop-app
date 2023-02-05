@@ -123,8 +123,8 @@ const addToCart = () => {
 
                 .product-name {
                     max-width: 100%;
-                    max-height: 1.5em;
-                    min-height: 1.5em;
+                    max-height: 2.5em;
+                    min-height: 2.5em;
                     font-size: 1.1em;
                     white-space: wrap;
                     overflow: hidden;

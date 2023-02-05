@@ -9,6 +9,7 @@ const categoryModal = ref(false);
 
 
 
+
 onMounted(() => {
     productStore.fetchBrandAndPrice()
 })
