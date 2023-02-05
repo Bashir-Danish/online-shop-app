@@ -4,6 +4,7 @@ import { ref, onBeforeMount } from 'vue';
 const url = window.location.href;
 const lastParam = url.split("/").slice(-1)[0];
 const product = ref<any>();
+const products = ref<any[]>([]);
 
 const showImg = ref();
 const changeImg = (img: any) => {
@@ -16,8 +17,19 @@ onBeforeMount(async () => {
             showImg.value = product.value.img[0]
         })
         .catch((err) => {
-            console.log(err.response.data)
+            console.log(err)
         });
+
+    if (product.value) {
+        products.value = []
+        await axios.get(`/product/match/${product.value.subCategory}`)
+            .then((res: any) => {
+                products.value = res.data.products
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
 });
 
 
@@ -111,6 +123,9 @@ onBeforeMount(async () => {
                             </button>
                         </div>
                     </div>
+                </div>
+                <div v-for="product in products">
+                    {{ product.subCategory }}
                 </div>
             </div>
         </div>
@@ -421,9 +436,9 @@ onBeforeMount(async () => {
                         flex-direction: column;
                         border-right: 1px solid #e5e6e9;
 
-                        // background-color: #0086FF;
                         span {
                             margin: 0.25em 0;
+                            color: #414e5a;
                         }
                     }
 
@@ -433,6 +448,7 @@ onBeforeMount(async () => {
 
                         span {
                             margin: 0.25em 0;
+                            color: #414e5a;
                         }
 
                         button {
@@ -443,7 +459,7 @@ onBeforeMount(async () => {
                             font-size: 1em;
                             color: #ffffff;
                             font-weight: 600;
-                            padding: 1em 2.5em;
+                            padding: 1em;
                             border-radius: 5px;
                             transition: all 0.4s ease;
 

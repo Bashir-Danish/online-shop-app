@@ -56,13 +56,18 @@ defineProps({
             to(transparent));
 
     background: linear-gradient(90deg, transparent,
-            rgba(143, 143, 143, 0.1), transparent);
+            rgba(70, 70, 70, 0.1), transparent);
     /* Adding animation */
     animation: loading 0.8s ease infinite;
 }
 
 /* Loading Animation */
 @keyframes loading {
+    0% {
+        background-position: -150px;
+        /* transform: ba(-80px); */
+    }
+
     100% {
         background-position: 150px;
         /* transform: ba(-80px); */

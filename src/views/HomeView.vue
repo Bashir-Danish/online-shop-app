@@ -4,10 +4,12 @@ import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
-
-const sort = ref('low')
+import AnimatedPlaceholder from '@/components/smallComponents/AnimatedPlaceholder.vue'; '@/components/smallComponents/AnimatedPlaceholder.vue';
 
 const productStore = useProductStore();
+
+
+
 
 onMounted(() => {
   if (localStorage.getItem("listView")) {
@@ -15,10 +17,12 @@ onMounted(() => {
   }
   if (localStorage.getItem("sort")) {
     productStore.filters.sort = JSON.parse(localStorage.getItem("sort") as string);
+    productStore.params.append('sort', productStore.filters.sort)
   }
   if (localStorage.getItem("tags")) {
     productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
   }
+  productStore.getProduct()
 })
 </script>
 <template>
@@ -29,9 +33,12 @@ onMounted(() => {
       <div class="main-content">
         <div class="product-headers">
           <div class="first-header">
-            <div class="count">
+            <div class="count" v-if="productStore.count">
               <div class="cat-name">All Items</div>
-              <span>( {{ productStore.product.length }} items )</span>
+              <span>( {{ productStore.count }} items )</span>
+            </div>
+            <div v-else>
+              <AnimatedPlaceholder hight="1.3em" width="150px" border-radius="5px" margin="0.4em" />
             </div>
             <div class="sort">
               <span>Sort By</span>
@@ -75,6 +82,11 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
+.loader {
+  height: 10em;
+  display: block;
+}
+
 .content {
   padding: 0 1em;
 }
@@ -164,6 +176,7 @@ option:before {
 option:hover:before {
   display: inline;
 }
+
 .view-buttons {
   display: inline-flex;
   justify-content: space-evenly;

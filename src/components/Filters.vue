@@ -79,49 +79,17 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-@mixin scrollbar() {
-    &::-webkit-scrollbar {
-        width: 10px;
-    }
+@import '@/assets/variavle.scss';
 
-    &::-webkit-scrollbar-thumb {
-        height: 3em;
-        border: 2px solid rgba(0, 0, 0, 0);
-        background-clip: padding-box;
-        border-radius: 10px;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.111);
-            box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-        }
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: transparent;
-        display: none;
-    }
-
-    &::-webkit-scrollbar-button {
-        width: 0;
-        height: 0;
-        display: none;
-    }
-
-    &::-webkit-scrollbar-corner {
-        background-color: transparent;
-    }
-
-}
 
 .side-bar {
     position: sticky;
     top: 75px;
     width: 250px;
-    max-width: 90vh;
-    height: fit-content;
+    max-width: 50vh;
+    height: 88vh;
     outline: none;
     border-top-left-radius: 10px;
-    background-color: #ffffff;
     box-shadow: none;
     z-index: 80;
 
@@ -206,15 +174,16 @@ onMounted(() => {
                 display: flex;
                 flex-direction: column;
                 color: #414e5a;
-                max-height: 170px;
-                min-height: 170px;
+                max-height: 160px;
+                min-height: 160px;
                 margin: 0.5em 0;
-                overflow-y: hidden;
-                @include scrollbar();
+                overflow-y: scroll;
+                @include hideScrollbar();
                 -ms-overflow-style: none;
 
                 &:hover {
-                    overflow-y: scroll;
+                    @include scrollbar();
+
                 }
             }
 
@@ -278,6 +247,13 @@ onMounted(() => {
     transition: box-shadow 1.5s ease;
     border-radius: 2%;
     z-index: 300;
+
+    &:hover {
+        .modal-header {
+            box-shadow: 0px 0px 10px  0px rgba(0, 0  , 0, 0.2);
+            clip-path: inset(0px 0px -10px 0px);
+        }
+    }
 }
 
 .modal-header {

@@ -5,7 +5,7 @@ const router = useRouter();
 <template>
     <div class="search-Bar">
         <div class="search-Bar-Container">
-            <div class="logo" @click="router.go(-1)">
+            <div class="logo" @click="router.push('/')">
                 <p>Online
                     Shopping store</p>
                 <img src="@/assets/logo.jpg" alt="">
@@ -152,9 +152,8 @@ img {
     width: 1.5em;
     height: 1.5em;
     border-radius: 50%;
-    bottom:10px;
+    bottom: 10px;
     left: 10px;
 }
-
 </style>
 

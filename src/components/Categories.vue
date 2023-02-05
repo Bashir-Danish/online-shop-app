@@ -38,7 +38,9 @@ const closeAll = (item: any) => {
         </div>
     </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
+@import '@/assets/variavle.scss';
+
 .cat-wrapper {
     overflow-y: scroll;
     height: calc(100% - 70px);
@@ -46,45 +48,37 @@ const closeAll = (item: any) => {
     width: 99%;
     border-bottom-left-radius: 2%;
     border-bottom-right-radius: 2%;
-}
+    @include hideScrollbar();
+
+    &:hover {
+        @include scrollbar()
+    }
 
 
-.cat-wrapper::-webkit-scrollbar-thumb {
-    background-color: transparent
-}
+    .main-cat {
+        color: rgb(75, 75, 75);
+        padding: 1em 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        transition: 0.3s ease all;
 
-.cat-wrapper:hover:-webkit-scrollbar-thumb {
-    background-color: #566eb6
-}
+        i {
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            right: 1rem;
+            cursor: pointer;
+        }
 
-.main-cat {
-    color: rgb(75, 75, 75);
-    padding: 1em 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    transition: 0.3s ease all;
-}
+        &:hover {
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+        }
+    }
 
-.main-cat:hover {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
-}
 
-.main-cat i {
-    width: 1rem;
-    height: 1rem;
-    position: absolute;
-    right: 1rem;
-}
-
-.visible {
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    height: auto;
-    transform: scaleY(1);
-    transform-origin: top;
 }
 
 .invisible {
@@ -93,6 +87,10 @@ const closeAll = (item: any) => {
     height: auto;
     transform: scaleY(0);
     transform-origin: top;
+
+    li {
+        display: none;
+    }
 }
 
 
@@ -105,32 +103,40 @@ const closeAll = (item: any) => {
     flex-direction: column;
 }
 
-.invisible li {
-    display: none;
+.visible {
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    height: auto;
+    transform: scaleY(1);
+    transform-origin: top;
+
+    li {
+        color: rgb(75, 75, 75);
+        width: 70%;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e6e9;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover {
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+        }
+    }
+
+    h4 {
+        width: 70%;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e6e9;
+        color: rgb(80, 100, 141);
+        text-align: left;
+        cursor: pointer;
+    }
 }
 
-.visible li {
-    color: rgb(75, 75, 75);
-    width: 70%;
-    padding: 1rem;
-    border-bottom: 1px solid #e5e6e9;
-    text-align: left;
-    cursor: pointer;
-}
 
-.visible h4 {
-    width: 70%;
-    padding: 1rem;
-    border-bottom: 1px solid #e5e6e9;
-    color: rgb(80, 100, 141);
-    text-align: left;
-    cursor: pointer;
-}
 
-.visible li:hover {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
-}
+
 
 .cat-divider {
     border-bottom: 1px solid #e5e6e9;
