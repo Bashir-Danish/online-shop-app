@@ -155,6 +155,7 @@ export const useAuthStore = defineStore("auth", () => {
         .then((res) => {
           if (res.status == 200) {
             errorMassage.value = res.data.message;
+            isLoggedIn.value = true;
             // console.log(res.data.message)
           }
         })

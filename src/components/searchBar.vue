@@ -56,17 +56,22 @@ const getNames = async () => {
     }, 300);
 }
 
-function highlight(str: string, char: string) {
-    const re = new RegExp(char, "g");
+const highlight = (str: string, char: string) => {
+    const re = new RegExp(char, "gi");
     return str.replace(re, `<span style="color:#313131c2; font-weight: bolder; padding-right:1px">${char}</span>`);
 }
-
+const deleteName = () => {
+    search.value = '';
+    names.value = [];
+    productStore.params.delete('name')
+    productStore.getProduct()
+}
 
 </script>
 <template>
     <div class="search-Bar">
         <div class="search-Bar-Container">
-            <div class="logo" @click="router.push('/')">
+            <div class="logo" @click="router.push({ name: 'home', path: '/' })">
                 <p>Online
                     Shopping store</p>
                 <img src="@/assets/logo.jpg" alt="">
@@ -87,8 +92,8 @@ function highlight(str: string, char: string) {
                     </Transition>
                     <div class="loader">
                         <half-circle-spinner v-if="loader" :animation-duration="1000" :size="20" color="#071c92" />
-                        <vue-feather @click="search = ''; names = []" type="x" v-if="search && !loader" size="1.3em"
-                            stroke="#000" stroke-width="2"></vue-feather>
+                        <vue-feather @click="deleteName" type="x" v-if="search && !loader" size="1.3em" stroke="#000"
+                            stroke-width="2"></vue-feather>
                     </div>
                 </div>
                 <button @click="searchName('searchInput', search)" class="search-button"><vue-feather type="search"
@@ -111,7 +116,7 @@ function highlight(str: string, char: string) {
     </div>
 </template>
 <style scoped lang="scss">
-@import '@/assets/variavle.scss';
+@import '@/assets/variables.scss';
 
 .search-Bar {
     width: 100%;

@@ -47,12 +47,12 @@ const login = () => {
 
 const resetPass = () => {
     authStore.isVerified = false
-    isLoading.value = true
+    // isLoading.value = true
     authStore.errorMassage = ''
     if (formData.value.password == formData.value.sndPassword) {
         authStore.resetPass(formData)
     }
-    
+
 }
 
 watch(() => formData.value.sndPassword, () => {
@@ -94,7 +94,7 @@ onMounted(() => (
                 <semipolar-spinner class="login-loader-item" :animation-duration="2000" :size="65" color="#159347" />
             </div>
             <form autocomplete="off" @submit.prevent="login" v-if="!otpLoginForm">
-                <div class="loginForm">
+                <div class="first-form">
                     <BaseInput v-model="formData.email" input-type="email" input-id="Email" :is-required="true" />
                     <BaseInput v-model="formData.password" input-type="password" input-id="Password"
                         :is-required="true" />
@@ -117,14 +117,14 @@ onMounted(() => (
 
                         <div class="otpInput" v-if="authStore.showOtp">
                             <input class="otp" type="number" id="1" ref="otp1" maxlength="1" @input="() => {
-                            code = otp1.value
-                            otp2.focus()
-                        }
-                        ">
+                                code = otp1.value
+                                otp2.focus()
+                            }
+                            ">
                             <input class="otp" type="number" id="2" ref="otp2" maxlength="1" @input="() => {
-                            code += otp2.value
-                                    otp3.focus()
-                                }">
+                                code += otp2.value
+                                otp3.focus()
+                            }">
                             <input class="otp" type="number" id="3" ref="otp3" maxlength="1" @input="() => {
                                 code += otp3.value
                                 otp4.focus()
@@ -162,7 +162,7 @@ onMounted(() => (
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 .LoginForm {
     position: fixed;
     left: 0;
@@ -179,172 +179,208 @@ onMounted(() => (
     box-shadow: 2px 111px 300px -33px rgba(7, 3, 20, 0.27);
     display: flex;
     z-index: 210;
-}
 
-.close {
-    background-color: transparent;
-    border: none;
-    position: absolute;
-    right: 2em;
-    top: 2.5em;
-    cursor: pointer;
-}
+    .close {
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        right: 2em;
+        top: 2.5em;
+        cursor: pointer;
+    }
 
-.loadSpinner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
+    .info-section {
+        width: 45%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
 
-.info-section {
-    width: 45%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-}
+        .logo {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #159347;
 
-img {
-    width: 70px;
-    height: 70px;
-}
+            p {
+                margin-left: 1em;
+                width: 45%;
+            }
 
-.logo {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 400;
-    color: #159347;
-}
+            img {
+                width: 70px;
+                height: 70px;
+            }
+        }
 
-.logo p {
-    margin-left: 1em;
-    width: 45%;
-}
+        h1 {
+            color: #159347;
+            font-weight: 600;
+            text-align: left;
+            padding-left: 2em;
+        }
 
-h1 {
-    color: #159347;
-    font-weight: 600;
-    text-align: left;
-    padding-left: 2em;
-}
+        .detail {
+            width: 50%;
+            display: flex;
+            margin-right: 50px;
+            color: #159347;
+            font-weight: 200;
+        }
+    }
 
-.detail {
-    width: 50%;
-    display: flex;
-    margin-right: 50px;
-    color: #159347;
-    font-weight: 200;
-}
+    .form-groups {
+        position: relative;
+        width: 70%;
+        height: 100%;
+        border-left: 1px solid #cccccc;
+        background-color: #ffffff;
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
 
-.divider {
-    background-color: #cccccc;
-    width: 75%;
-    margin: 0 auto;
-    height: 0.5px;
-}
+        .first-form {
+            width: 85%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 5em auto;
 
-.form-groups {
-    position: relative;
-    width: 70%;
-    height: 100%;
-    border-left: 1px solid #cccccc;
-    background-color: #ffffff;
-    border-top-right-radius: 1em;
-    border-bottom-right-radius: 1em;
-}
+            .divider {
+                margin-top: 2em;
+                background-color: #cccccc;
+                width: 90%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-.loginForm {
-    width: 85%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 5em auto;
-}
+                span {
+                    width: 2em;
+                    height: 2em;
+                    color: rgb(130, 130, 130);
+                    background-color: #ffffff;
+                    text-align: center;
+                    font-size: 20px;
+                }
+            }
 
-.loginForm .divider {
-    margin-top: 2em;
-    background-color: #cccccc;
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+            .goSignup {
+                color: #0086ff;
+                font-size: 16px;
+                font-weight: 400;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
 
-.loginForm .divider span {
-    width: 2em;
-    height: 2em;
-    color: rgb(130, 130, 130);
-    background-color: #ffffff;
-    text-align: center;
-    font-size: 20px;
-}
+        .login-loader {
+            position: absolute;
+            width: 95%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.76);
+            z-index: 100;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
 
-.button {
-    height: 45px;
-    width: 90%;
-    border: none;
-    border-radius: 5px;
-    background-color: #159347;
-    transition: all 0.5s ease;
-    font-size: 18px;
-    color: #ffffff;
-    margin-top: 1em;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
-}
-.button:hover{
-    background-color: #071c92;
-}
-.goSignup {
-    color: #0086ff;
-    font-size: 16px;
-    font-weight: 400;
-    margin: 10px;
-    cursor: pointer;
-}
+            .login-loader-item {
+                margin-top: 6em;
+            }
+        }
 
-.login-loader {
-    position: absolute;
-    width: 95%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.76);
-    z-index: 100;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
 
-.login-loader-item {
-    margin-top: 6em;
-}
+        .otp-form-group,
+        .resetPass-form-group {
+            width: 85%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 7em auto;
 
-.errorS {
-    color: #c2bebe;
-    font-size: 14px;
-    font-weight: 400;
-}
+            .errorS {
+                color: #c2bebe;
+                font-size: 14px;
+                font-weight: 400;
+            }
 
-.otp-form-group,
-.resetPass-form-group {
-    width: 85%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 7em auto;
-}
+            .loadSpinner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
 
-.loginLink {
-    color: #0086ff;
-    font-size: 16px;
-    font-weight: 400;
-    margin: 10px;
-    cursor: pointer;
-}
+            .otpInput {
+                margin-top: 2em;
+                animation: 0.5s ease-in-out 0s 1 FadeIn;
+                transition: 0.5s ease-in;
 
+                .otp {
+                    width: 2em;
+                    height: 2em;
+                    color: #159347;
+                    font-size: 16px;
+                    margin: 0 0.5em;
+                    border: none;
+                    text-align: center;
+                    border-radius: 8px;
+                    background: linear-gradient(145deg, #e6e1e1, #ffffff);
+                    box-shadow: 6px 6px 12px #e2dddd,
+                        -6px -6px 12px #ffffff;
+
+                    &:focus {
+                        outline: 0.3px #159347 solid;
+                    }
+
+                }
+            }
+        }
+    }
+
+    .button {
+        height: 45px;
+        width: 90%;
+        border: none;
+        border-radius: 5px;
+        background-color: #159347;
+        transition: all 0.5s ease;
+        font-size: 18px;
+        color: #ffffff;
+        margin-top: 1em;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
+
+        &:hover {
+            background-color: #071c92;
+        }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .divider {
+        background-color: #cccccc;
+        width: 75%;
+        margin: 0 auto;
+        height: 0.5px;
+    }
+
+    .loginLink {
+        color: #0086ff;
+        font-size: 16px;
+        font-weight: 400;
+        margin: 10px;
+        cursor: pointer;
+    }
+}
 
 /* ////////////////////////////////////////////////// */
 
@@ -383,39 +419,5 @@ h1 {
 
 .modals-move {
     transition: all 0.5s ease;
-}
-
-.otpInput {
-    margin-top: 2em;
-    animation: 0.5s ease-in-out 0s 1 FadeIn;
-    transition: 0.5s ease-in;
-}
-
-.otp {
-    width: 3em;
-    height: 3em;
-    color: #159347;
-    font-size: 16px;
-    margin: 0 0.5em;
-    border: none;
-    text-align: center;
-    border-radius: 8px;
-    background: linear-gradient(145deg, #e6e1e1, #ffffff);
-    box-shadow: 6px 6px 12px #e2dddd,
-        -6px -6px 12px #ffffff;
-}
-
-.otp:focus {
-    outline: 0.3px #159347 solid;
-}
-
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-input[type=number] {
-    -moz-appearance: textfield;
 }
 </style>

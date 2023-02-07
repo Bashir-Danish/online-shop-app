@@ -1,38 +1,46 @@
 <script setup lang="ts">
-import axios from '@/plugins/axios';
-import { ref, onBeforeMount } from 'vue';
+import axios from "@/plugins/axios";
+import Product from "@/components/product.vue";
+import { ref, onBeforeMount } from "vue";
 const url = window.location.href;
 const lastParam = url.split("/").slice(-1)[0];
 const product = ref<any>();
-const products = ref<any[]>([]);
+const similar = ref<any[]>([]);
 
 const showImg = ref();
 const changeImg = (img: any) => {
     showImg.value = img;
-}
+};
 onBeforeMount(async () => {
-    await axios.get(`/product/${lastParam}`)
+    await axios
+        .get(`/product/${lastParam}`)
         .then((res: any) => {
-            product.value = res.data.product
-            showImg.value = product.value.img[0]
+            product.value = res.data.product;
+            showImg.value = product.value.img[0];
         })
         .catch((err) => {
-            console.log(err)
+            console.log(err);
         });
 
     if (product.value) {
-        products.value = []
-        await axios.get(`/product/match/${product.value.subCategory}`)
+        similar.value = [];
+        await axios
+            .get(`/product/match/${product.value.subCategory}`)
             .then((res: any) => {
-                products.value = res.data.products
+                similar.value = res.data.products;
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     }
 });
 
-
+const scrollSide = (e: any) => {
+    const list = document.getElementById("product-list");
+    // console.log(list)
+    console.log(list?.scrollIntoView({ behavior: "smooth" }));
+    list?.scrollIntoView({ behavior: "smooth" });
+};
 </script>
 
 <template>
@@ -44,13 +52,13 @@ onBeforeMount(async () => {
             <div class="col-1">
                 <div class="img-list">
                     <div class="img" v-for="img in product.img">
-                        <img :src="'http://localhost:4000' + img" :alt="img" @mouseover="changeImg(img)">
+                        <img :src="'http://localhost:4000' + img" :alt="img" @mouseover="changeImg(img)" />
                     </div>
                 </div>
                 <div class="img-slider">
                     <span class="heart"><vue-feather type="heart" size="1.5em" stroke="#414e5a"
                             stroke-width="2"></vue-feather></span>
-                    <img :src="'http://localhost:4000' + showImg" :alt="showImg">
+                    <img :src="'http://localhost:4000' + showImg" :alt="showImg" />
                 </div>
             </div>
             <div class="divider"></div>
@@ -79,7 +87,7 @@ onBeforeMount(async () => {
                     <div class="pinCode">
                         <span class="icon"><vue-feather type="map-pin" size=".8em" stroke-width="2"
                                 stroke="#423F3E"></vue-feather></span>
-                        <input type="text" placeholder="Enter pincode">
+                        <input type="text" placeholder="Enter pincode" />
                         <button>CHECK</button>
                     </div>
                     <div>Delivery by Feb 5, Sunday by 01:00 PM</div>
@@ -92,17 +100,16 @@ onBeforeMount(async () => {
                         <span>Add To Cart</span>
                     </button>
                     <div>
-                        <span><img src="@/assets/shield.png" alt=""></span>
+                        <span><img src="@/assets/shield.png" alt="" /></span>
                         <span>Safe and Secure payments.100% Authentic products</span>
                     </div>
                 </div>
                 <div class="Specifications">
                     <h2>Specifications</h2>
                     <ul>
-                        <li v-for="spec in product.Specifications.reverse()"><span class="name">{{ spec.name }}</span>
-                            <span class="value">{{
-                                spec.value
-                            }}</span>
+                        <li v-for="spec in product.Specifications.reverse()">
+                            <span class="name">{{ spec.name }}</span>
+                            <span class="value">{{ spec.value }}</span>
                         </li>
                     </ul>
                 </div>
@@ -118,32 +125,34 @@ onBeforeMount(async () => {
                         </div>
                         <div class="rate-review">
                             <span>Have You Used this Product ?</span>
-                            <button>
-                                Rate and Write Review
-                            </button>
+                            <button>Rate and Write Review</button>
                         </div>
                     </div>
                 </div>
-                <div v-for="product in products">
-                    {{ product.subCategory }}
-                </div>
+            </div>
+        </div>
+        <div class="similar-products">
+            <h2>Similar Products</h2>
+            <div class="product-list" id="product-list">
+                <button class="next" @click="scrollSide">add</button>
+                <Product :data="product" v-for="product in similar" />
+                <button class="prev" @click="scrollSide">add</button>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variavle.scss';
+@import "@/assets/variables.scss";
 
 .background-container {
     position: relative;
-    height: 100%;
     width: 100%;
     padding: 0 1em 1em 1em;
     background-color: rgba(46, 55, 97, 0.05);
 
     .prd-path {
-        padding: 0.5em .5em;
+        padding: 0.5em 0.5em;
         color: rgb(121, 121, 121);
         max-width: 1366px;
         margin: 0 auto;
@@ -174,11 +183,11 @@ onBeforeMount(async () => {
                 width: 15%;
                 margin: 2em 0 2em 1.5em;
                 overflow-y: auto;
-                @include scrollbar();
+                @include hideScrollbar();
                 max-height: 28em;
 
                 &:hover {
-                    box-shadow: inset 0px -19px 21px -14px rgba(0, 0, 0, 0.1);
+                    // box-shadow: inset 0px -19px 21px -14px rgba(0, 0, 0, 0.1);
                 }
 
                 .img {
@@ -229,7 +238,6 @@ onBeforeMount(async () => {
                     height: 100%;
                     width: 100%;
                     border-radius: 5px;
-
                 }
             }
         }
@@ -279,7 +287,7 @@ onBeforeMount(async () => {
 
                         &:last-child {
                             margin: 0 1em;
-                            color: #0086FF;
+                            color: #0086ff;
 
                             &:hover {
                                 text-decoration: underline;
@@ -368,7 +376,6 @@ onBeforeMount(async () => {
 
                     span {
                         padding: 0 4px;
-
                     }
                 }
 
@@ -411,7 +418,6 @@ onBeforeMount(async () => {
                         .value {
                             width: 70%;
                             color: #414e5a;
-
                         }
                     }
                 }
@@ -469,8 +475,50 @@ onBeforeMount(async () => {
                         }
                     }
                 }
+            }
+        }
+    }
 
+    .similar-products {
+        position: relative;
+        background-color: #fff;
+        max-width: 1366px;
+        height: fit-content;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+        margin: 0 auto;
+        padding: 1em 1em;
+        margin: 1em auto 0 auto;
+        position: relative;
 
+        h2 {
+            padding: 0.5em 0 0 0;
+            font-weight: 400;
+            font-size: 23px;
+        }
+
+        .product-list {
+            padding: 1em;
+            display: flex;
+            gap: 1em;
+            overflow-x: scroll;
+
+            .next {
+                position: absolute;
+                left: 1em;
+                top: 50%;
+                //   left: 50%;
+                // margin: auto 0;
+                z-index: 100;
+            }
+
+            .prev {
+                position: absolute;
+                right: 1em;
+                top: 50%;
+                //   left: 50%;
+                // margin: auto 0;
+                z-index: 100;
             }
         }
     }

@@ -50,7 +50,7 @@ onMounted(() => {
             </div>
             <div class="brand">
                 <div class="header">BRAND</div>
-                <div class="filter-search">
+                <div class="brand-search">
                     <vue-feather type="search" size="1.5em" stroke="#969494" stroke-width="1"></vue-feather>
                     <input type="text" placeholder="Search" v-model="productStore.search">
                 </div>
@@ -80,14 +80,14 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variavle.scss';
+@import '@/assets/variables.scss';
+@import '@/assets/mixin.scss';
 
 
 .side-bar {
     position: sticky;
     top: 75px;
-    width: 250px;
-    max-width: 50vh;
+    max-width: 220px;
     height: 88vh;
     outline: none;
     border-top-left-radius: 10px;
@@ -201,34 +201,34 @@ onMounted(() => {
                 outline: none;
             }
 
-        }
-    }
-}
+            .brand-search {
+                display: flex;
+                align-items: center;
+                border-bottom: 2px solid #d8d8d8;
+                width: fit-content;
+                margin: 1em 0;
+                padding: .5em 0;
 
+                input {
+                    width: calc(100% - 1em);
+                    border: none;
+                    outline: none;
+                    padding-left: 1em;
 
-
-.filter-search {
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid #d8d8d8;
-    width: fit-content;
-    margin: 1em 0;
-    padding: .5em 0;
-
-    input {
-        // width: calc(100% - 1em);
-        border: none;
-        outline: none;
-
-        margin-left: 1em;
-
-        &:focus {
-            .filter-search {
-                border-bottom: 2px solid #071c92;
+                    &:focus {
+                        .brand-search {
+                            border-bottom: 2px solid #071c92;
+                        }
+                    }
+                }
             }
+
         }
     }
 }
+
+
+
 
 
 
@@ -251,8 +251,34 @@ onMounted(() => {
 
     &:hover {
         .modal-header {
-            box-shadow: 0px 0px 10px  0px rgba(0, 0  , 0, 0.2);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
             clip-path: inset(0px 0px -10px 0px);
+        }
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e5e6e9;
+
+        /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1); */
+        .header {
+            margin: 1em;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            width: 2em;
+            height: 2em;
+            margin: 1em;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #e5e6e9;
+                border-radius: 20%;
+            }
         }
     }
 }
@@ -297,9 +323,7 @@ onMounted(() => {
     transition: all 0.5s ease;
 }
 
-.container {
-    animation: 0.5s ease-in-out 0s 1 FadeIn;
-}
+
 
 @keyframes FadeIn {
     0% {
@@ -322,33 +346,6 @@ onMounted(() => {
     justify-content: center;
     transform: translateY(-200px);
     z-index: 200;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #e5e6e9;
-    /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1); */
-}
-
-.modal-header .header {
-    margin: 1em;
-    /* font-size: 1em; */
-    /* font-weight: 700; */
-}
-
-.modal-header button {
-    background-color: transparent;
-    border: none;
-    width: 2em;
-    height: 2em;
-    margin: 1em;
-    cursor: pointer;
-}
-
-.modal-header button:hover {
-    background-color: #e5e6e9;
-    border-radius: 20%;
+    animation: 0.5s ease-in-out 0s 1 FadeIn;
 }
 </style>

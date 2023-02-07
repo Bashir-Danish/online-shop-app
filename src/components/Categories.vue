@@ -39,8 +39,8 @@ const closeAll = (item: any) => {
     </div>
 </template>
 <style lang="scss" scoped>
-@import '@/assets/variavle.scss';
-
+@import '@/assets/variables';
+@import '@/assets/mixin.scss';
 .cat-wrapper {
     overflow-y: scroll;
     height: calc(100% - 70px);
@@ -54,6 +54,7 @@ const closeAll = (item: any) => {
         @include scrollbar()
     }
 
+   
 
     .main-cat {
         color: rgb(75, 75, 75);

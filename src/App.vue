@@ -14,7 +14,7 @@ const productStore = useProductStore();
 onMounted(() => {
   if (jwt.getToken()) authStore.verifyToken()
 })
-var bottom = true
+
 const scroll = (e: any) => {
 
   const { scrollTop, clientHeight, scrollHeight } = e.target
@@ -23,7 +23,7 @@ const scroll = (e: any) => {
     if (productStore.count > 20) {
       productStore.getPage()
     }
-    
+
     // e.target.scrollBy(0, -150);
   }
 
@@ -49,8 +49,11 @@ const scroll = (e: any) => {
   </div>
 </template>
 <style lang="scss" scoped>
+
 .scroll {
   height: 100vh;
   overflow: scroll;
+
+
 }
 </style>

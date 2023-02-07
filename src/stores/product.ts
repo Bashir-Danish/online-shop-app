@@ -10,7 +10,7 @@ export const useProductStore = defineStore("product", () => {
   const category = ref<any[]>([]);
   const search = ref("");
   const listView = ref<any>();
-  const count = ref<any>();
+  const count = ref<number>();
 
   const productLoading = ref(false);
   const filterLoading = ref(false);
@@ -100,11 +100,9 @@ export const useProductStore = defineStore("product", () => {
       }
     } else if (type === "sort") {
       params.delete("sort");
-      if (event.target.value !== "all") {
-        localStorage.removeItem("sort");
-        localStorage.setItem("sort", JSON.stringify(event.target.value));
-        params.append("sort", event.target.value);
-      }
+      localStorage.removeItem("sort");
+      localStorage.setItem("sort", JSON.stringify(event.target.value));
+      params.append("sort", event.target.value);
     } else {
       filters.value.price = value;
     }
@@ -168,7 +166,6 @@ export const useProductStore = defineStore("product", () => {
         params.delete("brand");
         params.delete("price");
         // params.delete("sort");
-        console.log("s");
 
         tags.value.forEach((el: any) => {
           params.append(
@@ -176,7 +173,6 @@ export const useProductStore = defineStore("product", () => {
             Object.values(el).toString()
           );
         });
-        console.log(tags.value);
         getProduct();
       }
     }
@@ -196,6 +192,7 @@ export const useProductStore = defineStore("product", () => {
       .then((res: any) => {
         product.value = res.data.products;
         count.value = res.data.count;
+        console.log(res.data.count);
         setTimeout(() => {
           productLoading.value = false;
           filterLoading.value = false;

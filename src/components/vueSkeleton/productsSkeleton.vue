@@ -122,78 +122,39 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
         </div>
     </div>
 </template>
-<style scoped>
-.main-content {
-    margin: 0 auto;
-}
-
-.product-headers {
-    margin: 0 1.5em;
-    border-bottom: 1px solid #e5e6e9;
-}
-
-.first-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1em 0;
-
-}
-
-.first-header .count {
-    display: flex;
-    width: 50%;
-}
-
-
-.sort {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-
+<style scoped lang="scss">
 .products-container {
 
     display: flex;
     flex-wrap: wrap;
     row-gap: 1.5em;
     margin: 0 1.5em;
-}
 
+    .product {
+        width: 25%;
 
-.product {
-    width: 25%;
-}
+        .product-details {
+            padding: 20px;
+            margin: 0 auto;
 
-.product-details {
-    padding: 20px;
-    margin: 0 auto;
-}
+            .desc-wrapper {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                justify-content: flex-start;
+                margin-top: 16px;
 
-.desc-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: flex-start;
-    margin-top: 16px;
-}
+                .row1 {
+                    display: flex;
+                    flex-direction: column;
+                    height: unset;
+                    max-height: none;
+                    font-size: 1.5em;
 
-.desc-wrapper .row1 {
-    display: flex;
-    flex-direction: column;
+                }
+            }
 
-}
-
-.row1 {
-    height: unset;
-    max-height: none;
-    font-size: 1.5em;
-
-}
-
-.row2 {
-    flex-grow: 1;
-    margin-top: 0;
+        }
+    }
 }
 </style>

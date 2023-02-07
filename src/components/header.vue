@@ -27,8 +27,8 @@ watch(
 <template>
   <header>
     <div class="container" v-if="showLoginModal || showSingUPModal" @click="
-      showLoginModal = false;
-    showSingUPModal = false;
+  showLoginModal = false;
+showSingUPModal = false;
     "></div>
     <TransitionGroup name="modals" mode="out-in">
       <SignUP v-if="showSingUPModal" @closeSignUPModal="showSingUPModal = false" @gotoLogin="
@@ -77,10 +77,12 @@ watch(
       <div class="right-section">
         <RouterLink to="/"><vue-feather type="map-pin" size="1em" fill="#159347" stroke="#ececec"
             stroke-width="2"></vue-feather>
-          Malad West</RouterLink>
+            <span>Malad West</span>  
+        </RouterLink>
         <RouterLink to="/"><vue-feather type="truck" size="1em" fill="#159347" stroke="#ececec"
             stroke-width="2"></vue-feather>
-          Track Order</RouterLink>
+          <span>Track Order</span>
+        </RouterLink>
         <div class="signup-login" v-if="!authStore.isLoggedIn">
           <span @click="showLoginModal = true"><vue-feather type="user" size="1em" fill="#159347" stroke="#ececec"
               stroke-width="2"></vue-feather>
@@ -99,11 +101,15 @@ watch(
   <SearchBar />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/assets/mixin.scss';
+
+
 header {
   width: 100%;
   height: 30px;
   background-color: #159347;
+
 }
 
 .header-center {
@@ -111,91 +117,113 @@ header {
   width: 100%;
   color: #ececec;
   margin: 0;
-
   height: 30px;
   margin: auto;
   display: flex;
   justify-content: space-between;
   background-color: #159347;
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #ececec;
+  }
+
+  .social-links {
+    margin: 1em;
+    display: flex;
+    align-items: center;
+
+    .social-list {
+      .social-item {
+        background-color: #ececec;
+        width: 1.3em;
+        height: 1.3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        border-radius: 100%;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        width: 1.2em;
+        height: 1.2em;
+        margin: 0 0.3em;
+      }
+    }
+
+    .account-info {
+      display: flex;
+      font-size: 16px;
+      align-items: center;
+      margin: 0 2.5em;
+
+      a {
+        display: inline-flex;
+        margin: 0 1em;
+      }
+    }
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    width: 32%;
+    margin: 0 1.5em;
+
+    .signup-login {
+      display: flex;
+
+      span {
+        margin: 0 0.5em;
+        padding: 0;
+        font-size: 1.1em;
+        font-weight: 100;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @include small-down {
+    background: #fff;
+    // background-color: aqua;
+    .social-links {
+      display: none;
+    }
+  
+    .right-section {
+      font-size: 10px;
+      i{
+        display: none;
+      }
+      span{
+        color: #159347 ;
+      }
+      .signup-login {
+        display: none;
+      }
+    }
+  }
 }
 
-ul {
-  list-style-type: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-  color: #ececec;
-}
-
-.social-list li {
-  display: flex;
-  align-items: center;
-  width: 1.2em;
-  height: 1.2em;
-
-  margin: 0 0.3em;
-}
-
-.social-links {
-  margin: 1em;
-  display: flex;
-  align-items: center;
-}
-
-.account-info {
-  display: flex;
-  font-size: 16px;
-  align-items: center;
-  margin: 0 2.5em;
-}
-
-.account-info a {
-  display: inline-flex;
-  margin: 0 1em;
-}
-
-.social-item {
-  background-color: #ececec;
-  width: 1.3em;
-  height: 1.3em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  border-radius: 100%;
-}
-
-.right-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 16px;
-  width: 32%;
-  margin: 0 1.5em;
-}
-
-.right-section a {
-  display: flex;
-  align-items: center;
-}
-
-.signup-login {
-  display: flex;
-}
-
-.signup-login span {
-  margin: 0 0.5em;
-  padding: 0;
-  font-size: 1.1em;
-  font-weight: 100;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
 
 /* /////////////////// */
 

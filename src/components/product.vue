@@ -41,10 +41,11 @@ const addToCart = () => {
     </div>
 </template>
 <style scoped lang="scss">
+
+
 .product {
-    width: 25%;
-    max-width: 25%;
-    min-width: 15em;
+    min-width: 255px;
+    max-width: 270px;
     padding: 0;
     color: #212121;
     border: 0;
@@ -52,7 +53,7 @@ const addToCart = () => {
     flex: 1;
     transition: box-shadow 1s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+   
     &:hover {
         box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1);
         cursor: pointer;
@@ -99,10 +100,8 @@ const addToCart = () => {
             }
 
             img {
-                height: 16em;
-                width: 18em;
-                max-width: 100%;
-                max-height: 100%;
+                height: 100%;
+                width: 100%;
                 margin: auto auto;
                 border-radius: 5%;
             }
@@ -112,19 +111,18 @@ const addToCart = () => {
             display: flex;
             width: 100%;
             flex-direction: column;
-            margin-top: 16px;
 
             .row1 {
                 display: flex;
                 flex-direction: column;
-                height: unset;
-                max-height: none;
+                padding: 1em 0;
+                min-height: 6em;
                 cursor: pointer;
 
                 .product-name {
                     max-width: 100%;
                     max-height: 2.5em;
-                    min-height: 2.5em;
+
                     font-size: 1.1em;
                     white-space: wrap;
                     overflow: hidden;
@@ -184,6 +182,7 @@ const addToCart = () => {
 
             // justify-content: space-evenly;
             .row1 {
+
                 .price {
                     margin: 1.5em 0;
                 }
@@ -213,8 +212,8 @@ const addToCart = () => {
             padding: 0.7em;
             display: flex;
             align-items: center;
-            flex-basis: 15em;
-            height: 12em;
+            flex-basis: 12em;
+            height: 10em;
 
             img {
                 height: 100%;
