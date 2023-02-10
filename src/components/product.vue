@@ -2,10 +2,12 @@
 <script setup lang="ts">
 
 import { useRouter } from 'vue-router'
-defineProps([
+const props = defineProps([
     'data',
     'listViewProduct']
 )
+const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
+console.log(img)
 const router = useRouter()
 const addToCart = () => {
     console.log("add to cart")
@@ -16,9 +18,11 @@ const addToCart = () => {
         <div :class="listViewProduct ? 'product-2-details' : 'product-details'"
             @click="router.push({ path: '/product/' + data._id })">
             <div :class="listViewProduct ? 'product-2-img' : 'product-img'">
+
                 <span class="heart" @click.stop="addToCart()"><vue-feather type="heart" size="1.1em" stroke="#414e5a"
                         stroke-width="2"></vue-feather></span>
-                <img :src="'http://localhost:4000' + data.img[0]" :alt="data.img[0]">
+                <img :src="'http://localhost:4000' + data.img[0]" :alt="img">
+
             </div>
             <div :class="listViewProduct ? 'desc-wrapper-2' : 'desc-wrapper'">
                 <div class="row1">
@@ -41,34 +45,22 @@ const addToCart = () => {
     </div>
 </template>
 <style scoped lang="scss">
-
-
 .product {
-    min-width: 255px;
-    max-width: 270px;
+    width: 250px;
     padding: 0;
     color: #212121;
     border: 0;
     border-radius: 3%;
-    flex: 1;
     transition: box-shadow 1s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-   
+
     &:hover {
         box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1);
         cursor: pointer;
 
-
         img {
-            transform: scale(1.05);
+            transform: scale(1.04);
             transition: all 1s ease;
-        }
-
-        .product-img .heart {
-            transition: all 1s ease;
-            opacity: 1;
-            transform: translateY(0px);
-            z-index: 1000;
         }
     }
 
@@ -80,11 +72,38 @@ const addToCart = () => {
         align-items: center;
 
         .product-img {
-            border: 1px solid #e5e6e9;
-            border-radius: 5%;
+            position: relative;
             width: 100%;
-            height: 14em;
+            height: 13em;
+            padding: .3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            &::after {
+                content: '';
+                position: absolute;
+                top: 1.5em;
+                left: 1.5em;
+                width: 80%;
+                height: 80%;
+                background-position: center;
+                filter: blur(15px);
+                background-image: v-bind(img);
+                z-index: -100;
+            }
+
+            &::before {
+                content: '';
+                border: 1px solid #e5e6e9;
+                position: absolute;
+                border-radius: 5%;
+                background: transparent;
+                // box-shadow: 0px 0px 0px 10px #fff;
+                width: 100%;
+                height: 100%;
+                z-index: 100;
+            }
 
             span {
                 position: absolute;
@@ -92,17 +111,14 @@ const addToCart = () => {
                 padding: .3em;
                 border-radius: 50%;
                 display: flex;
-                top: 1.7em;
-                right: 1.7em;
+                top: 1em;
+                right: 1em;
                 z-index: 10;
-                opacity: 0;
-                transform: translateY(-30px);
             }
 
             img {
-                height: 100%;
-                width: 100%;
-                margin: auto auto;
+                max-height:100% ;
+                max-width: 100%;
                 border-radius: 5%;
             }
         }
@@ -145,7 +161,6 @@ const addToCart = () => {
                     width: 100px;
                     border-radius: 15px;
                     padding: 0.4em 0;
-                    // margin: 0 0.5em;
                     color: #fff;
                     display: flex;
                     justify-content: space-evenly;
@@ -212,8 +227,24 @@ const addToCart = () => {
             padding: 0.7em;
             display: flex;
             align-items: center;
+            justify-content: center;
             flex-basis: 12em;
             height: 10em;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 1em;
+                left: 1em;
+                right: 1em;
+                bottom: 1em;
+                width: 80%;
+                height: 80%;
+                background-position: center;
+                filter: blur(10px);
+                background-image: v-bind(img);
+                z-index: -100;
+            }
 
             img {
                 height: 100%;

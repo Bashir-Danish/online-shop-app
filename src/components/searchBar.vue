@@ -64,7 +64,7 @@ const deleteName = () => {
     search.value = '';
     names.value = [];
     productStore.params.delete('name')
-    productStore.getProduct()
+    // productStore.getProduct()
 }
 
 </script>

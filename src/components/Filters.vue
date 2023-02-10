@@ -119,7 +119,7 @@ onMounted(() => {
                 font-weight: 400;
                 margin: 0 0.3em;
             }
-
+            
             .category {
                 display: flex;
                 align-items: center;
@@ -160,7 +160,7 @@ onMounted(() => {
 
             .header {
                 color: #718190;
-
+                font-size: 14px;
             }
 
             .price-ul {

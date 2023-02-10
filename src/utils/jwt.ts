@@ -8,6 +8,7 @@ export const getToken = () => {
 };
 export const saveToken = (token: string) => {
   window.localStorage.setItem('tokenId', token);
+  
 };
 export const saveUser = (user :any )=> {
   window.localStorage.setItem('user', user);

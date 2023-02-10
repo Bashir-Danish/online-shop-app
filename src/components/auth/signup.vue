@@ -145,15 +145,12 @@ onMounted(() => (
                     </div>
                 </transition-group>
             </form>
-
         </div>
-
-
     </div>
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 .signupForm {
     position: fixed;
     left: 0;
@@ -170,16 +167,183 @@ onMounted(() => (
     box-shadow: 2px 111px 300px -33px rgba(7, 3, 20, 0.27);
     display: flex;
     z-index: 210;
+
+    .info-section {
+        width: 45%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+
+        .logo {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #159347;
+
+            p {
+                margin-left: 1em;
+                width: 45%;
+            }
+
+            img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        h1 {
+            color: #159347;
+            font-weight: 600;
+            text-align: left;
+            padding-left: 2em;
+        }
+
+        .detail {
+            width: 50%;
+            display: flex;
+            margin-right: 50px;
+            color: #159347;
+            font-weight: 200;
+        }
+    }
+
+    .form-groups {
+        position: relative;
+        width: 70%;
+        border-left: 1px solid #cccccc;
+        background-color: #ffffff;
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+
+        .close {
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            right: 2em;
+            top: 2.5em;
+            cursor: pointer;
+        }
+
+        .signUp-loader {
+            position: absolute;
+            width: 95%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.76);
+            z-index: 100;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .first-form-group {
+            width: 85%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 7em auto;
+
+            .otpInput {
+                margin-top: 2em;
+                animation: 0.5s ease-in-out 0s 1 FadeIn;
+                transition: 0.5s ease-in;
+
+                .otp {
+                    width: 2.5em;
+                    height: 2.5em;
+                    color: #159347;
+                    font-size: 16px;
+                    margin: 0 0.5em;
+                    border: none;
+                    text-align: center;
+                    border-radius: 8px;
+                    background: linear-gradient(145deg, #e6e1e1, #ffffff);
+                    box-shadow: 6px 6px 12px #e2dddd,
+                        -6px -6px 12px #ffffff;
+
+                    &:focus {
+                        outline: 0.3px #159347 solid;
+                    }
+
+                }
+
+            }
+
+        }
+
+        .second-form-group {
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 7em auto;
+
+            input {
+                height: 55px;
+            }
+
+            .form-control {
+                display: flex;
+            }
+        }
+
+    }
+
+
+
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .loginLink {
+        color: #0086ff;
+        font-size: 16px;
+        font-weight: 400;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+    .errorM {
+        color: red;
+        font-size: 14px;
+    }
+
+    .errorS {
+        color: #c2bebe;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .button {
+        height: 45px;
+        width: 90%;
+        border: none;
+        border-radius: 5px;
+        background-color: #159347;
+        transition: all 0.5s ease;
+        font-size: 18px;
+        color: #ffffff;
+        margin-top: 2.5em;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
+
+        &:hover {
+            background-color: #071c92;
+        }
+    }
 }
 
-.close {
-    background-color: transparent;
-    border: none;
-    position: absolute;
-    right: 2em;
-    top: 2.5em;
-    cursor: pointer;
-}
+
 
 .loadSpinner {
     position: relative;
@@ -187,48 +351,8 @@ onMounted(() => (
     height: 100%;
 }
 
-.info-section {
-    width: 45%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-}
 
-img {
-    width: 70px;
-    height: 70px;
-}
 
-.logo {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 400;
-    color: #159347;
-}
-
-.logo p {
-    margin-left: 1em;
-    width: 45%;
-}
-
-h1 {
-    color: #159347;
-    font-weight: 600;
-    text-align: left;
-    padding-left: 2em;
-}
-
-.detail {
-    width: 50%;
-    display: flex;
-    margin-right: 50px;
-    color: #159347;
-    font-weight: 200;
-}
 
 .divider {
     background-color: #cccccc;
@@ -237,53 +361,6 @@ h1 {
     height: 0.5px;
 }
 
-.form-groups {
-    position: relative;
-    width: 70%;
-    border-left: 1px solid #cccccc;
-    background-color: #ffffff;
-    border-top-right-radius: 1em;
-    border-bottom-right-radius: 1em;
-}
-
-.first-form-group {
-    width: 85%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 7em auto;
-}
-
-.emailInput {
-    height: 36px;
-    width: 100% !important;
-    border: none;
-    outline: none;
-    border-bottom: #cccccc 1px solid;
-    font-size: 18px;
-    margin: 2em 0;
-}
-
-.otpInput {
-    margin-top: 2em;
-    animation: 0.5s ease-in-out 0s 1 FadeIn;
-    transition: 0.5s ease-in;
-}
-
-.otp {
-    width: 2.5em;
-    height: 2.5em;
-    color: #159347;
-    font-size: 16px;
-    margin: 0 0.5em;
-    border: none;
-    text-align: center;
-    border-radius: 8px;
-    background: linear-gradient(145deg, #e6e1e1, #ffffff);
-    box-shadow: 6px 6px 12px #e2dddd,
-        -6px -6px 12px #ffffff;
-}
 
 @keyframes FadeIn {
     0% {
@@ -297,77 +374,6 @@ h1 {
     }
 }
 
-.otp:focus {
-    outline: 0.3px #159347 solid;
-}
-
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-.loginLink {
-    color: #0086ff;
-    font-size: 16px;
-    font-weight: 400;
-    margin: 10px;
-    cursor: pointer;
-}
-
-.errorM {
-    color: red;
-    font-size: 14px;
-}
-
-.errorS {
-    color: #c2bebe;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.button {
-    cursor: pointer;
-}
-
-/* /////////////////////////////////////////////////////////// */
-.second-form-group {
-    width: 85%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 7em auto;
-}
-
-.button {
-    height: 45px;
-    width: 90%;
-    border: none;
-    border-radius: 5px;
-    background-color: #159347;
-    transition: all 0.5s ease;
-    font-size: 18px;
-    color: #ffffff;
-    margin-top: 2.5em;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
-}
-
-.button:hover {
-    background-color: #071c92;
-}
-
-.second-form-group input {
-    height: 55px;
-}
-
-.form-control {
-    display: flex;
-}
 
 /* ////////////////////////////////////////////////// */
 
@@ -408,16 +414,6 @@ input[type=number] {
     transition: all 0.5s ease;
 }
 
-.signUp-loader {
-    position: absolute;
-    width: 95%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.76);
-    z-index: 100;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
 
 .signUp-loader-item {
     margin-top: 6em;

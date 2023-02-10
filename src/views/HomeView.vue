@@ -219,7 +219,7 @@ onMounted(() => {
 
       .products-container {
         display: flex;
-        flex-basis: (100 / 4) * 1%;
+        // flex-basis: (100 / 4) * 1%;
         flex-wrap: wrap;
         flex-grow: 1;
         flex-shrink: 1;
