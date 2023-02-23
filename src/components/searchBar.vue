@@ -4,8 +4,10 @@ import { ref } from 'vue'
 import axios from '@/plugins/axios';
 import { HalfCircleSpinner } from 'epic-spinners'
 import { useProductStore } from '@/stores/product'
+import { useCartStore } from '@/stores/cart'
 
 const productStore = useProductStore()
+const cartStore = useCartStore()
 const router = useRouter();
 const loader = ref(false)
 const search = ref('')
@@ -78,8 +80,8 @@ const deleteName = () => {
             </div>
             <div class="search-bar">
                 <div class="search-input">
-                    <input v-model="search" @input="getNames" @keydown.enter="searchName('searchInput', search)"
-                        type="text" class="input" placeholder="Search">
+                    <input v-model="search" @input="getNames" @keydown.enter="searchName('searchInput', search)" type="text"
+                        class="input" placeholder="Search">
                     <Transition name="list" mode="out-in" appear>
                         <ul class="auto-complete-container" v-if="!loader">
                             <li v-for="{ name } in names" @click="searchName('nameInput', name)">
@@ -91,22 +93,21 @@ const deleteName = () => {
                         </ul>
                     </Transition>
                     <div class="loader">
-                        <half-circle-spinner v-if="loader" :animation-duration="1000" :size="20" color="#071c92" />
+                        <half-circle-spinner v-if="loader" :animation-duration="1000" :size="20" color="#0b65a8" />
                         <vue-feather @click="deleteName" type="x" v-if="search && !loader" size="1.3em" stroke="#000"
                             stroke-width="2"></vue-feather>
                     </div>
                 </div>
-                <button @click="searchName('searchInput', search)" class="search-button"><vue-feather type="search"
-                        size="1.5em" fill="#159347" stroke="#ececec" stroke-width="2"></vue-feather>Search</button>
+                <button @click.stop="searchName('searchInput', search)" class="search-button"><vue-feather type="search"
+                        size="1.5em" stroke="#ececec" stroke-width="2"></vue-feather>Search</button>
 
             </div>
             <div class="cart">
                 <RouterLink to="/cart">
                     <button>
                         <span class="cart-basket">
-                            <vue-feather type="shopping-cart" size="1em" stroke="#159347"
-                                stroke-width="2"></vue-feather>
-                            <span>32</span>
+                            <vue-feather type="shopping-cart" size="1em" stroke-width="2"></vue-feather>
+                            <span v-if="cartStore.items.length">{{ cartStore.items.length }}</span>
                         </span>
                         <span>Cart</span>
                     </button>
@@ -133,15 +134,13 @@ const deleteName = () => {
         height: 75px;
         margin: auto;
         display: flex;
-        display: grid;
         background-color: rgb(255, 255, 255);
-        grid-template-columns: 2.5fr 8fr 1.3fr;
         position: sticky;
         top: 0;
         z-index: 100;
 
         .logo {
-            width: 100%;
+            width: 20%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -257,7 +256,12 @@ const deleteName = () => {
                 align-items: center;
                 cursor: pointer;
 
+                &:hover {
+                    background: #0b65a8;
+                }
+
                 i {
+                    background: transparent;
                     margin: 5px;
                 }
             }
@@ -269,22 +273,40 @@ const deleteName = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 12%;
 
             button {
-                width: 110px;
-                height: 2.2em;
-                /* font-size: 1em; */
+                width: 8em;
+                height: 2.5em;
+                //  font-size: 1em; 
                 background-color: transparent;
                 border: none;
                 outline: 1px solid #159347;
+                color: #159347;
                 border-radius: 3px;
                 cursor: pointer;
-                color: #159347;
+
+                &:hover {
+                    background: #0b65a8;
+                    outline: 1px solid #0b65a8;
+
+                    color: #fff;
+
+                    .cart-basket i {
+
+                        color: #fff;
+
+                    }
+                }
             }
 
             .cart-basket {
                 position: relative;
                 margin: 1em;
+
+                i {
+                    color: #159347;
+                }
 
                 span {
                     position: absolute;

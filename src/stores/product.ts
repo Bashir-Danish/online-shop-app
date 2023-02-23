@@ -10,7 +10,7 @@ export const useProductStore = defineStore("product", () => {
   const category = ref<any[]>([]);
   const search = ref("");
   const listView = ref<any>();
-  const count = ref<number>();
+  const count = ref<number>(0);
 
   const productLoading = ref(false);
   const filterLoading = ref(false);
@@ -192,7 +192,6 @@ export const useProductStore = defineStore("product", () => {
       .then((res: any) => {
         product.value = res.data.products;
         count.value = res.data.count;
-        console.log(res.data.count);
         setTimeout(() => {
           productLoading.value = false;
           filterLoading.value = false;

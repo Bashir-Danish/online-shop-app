@@ -10,6 +10,7 @@ if (token) {
 
 let config = {
   baseURL: "http://localhost:4000/api/v1",
+  withCredentials: false,
   
 };
 

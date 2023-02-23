@@ -4,9 +4,12 @@ import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
+import { useCartStore } from '@/stores/cart'
 import AnimatedPlaceholder from '@/components/smallComponents/AnimatedPlaceholder.vue'; '@/components/smallComponents/AnimatedPlaceholder.vue';
+import Header from '@/components/header.vue';
 
 const productStore = useProductStore();
+const cartStore = useCartStore();
 
 onMounted(() => {
   if (localStorage.getItem("listView")) {
@@ -19,10 +22,13 @@ onMounted(() => {
   if (localStorage.getItem("tags")) {
     productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
   }
+  cartStore.loadCart()
   productStore.getProduct()
 })
 </script>
 <template>
+    <Header />
+
   <div class="content">
     <main>
       <Filters />
@@ -30,7 +36,7 @@ onMounted(() => {
       <div class="main-content">
         <div class="product-headers">
           <div class="first-header">
-            <div class="count" v-if="productStore.count?.toLocaleString">
+            <div class="count" v-if="productStore.count">
               <div class="cat-name">All Items</div>
               <span>( {{ productStore.count }} items )</span>
             </div>
@@ -61,8 +67,8 @@ onMounted(() => {
           <div class="second-header">
             <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
               <span class="tag">{{ Object.values(tag).toString() }}</span>
-              <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em"
-                  stroke="#000" stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
+              <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em" stroke="#000"
+                  stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
             </div>
           </div>
         </div>
@@ -76,7 +82,7 @@ onMounted(() => {
         </div>
       </div>
     </main>
-  </div>
+</div>
 </template>
 <style scoped lang="scss">
 .content {
@@ -221,10 +227,10 @@ onMounted(() => {
         display: flex;
         // flex-basis: (100 / 4) * 1%;
         flex-wrap: wrap;
-        flex-grow: 1;
-        flex-shrink: 1;
+        // flex-grow: 1;
+        // flex-shrink: 1;
         row-gap: 1.5em;
-        margin: 0 1.5em;
+        margin: 0 1.5em 1em 1.5em;
       }
 
       .listViewProduct {

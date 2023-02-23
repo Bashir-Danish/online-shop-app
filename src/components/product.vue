@@ -1,26 +1,33 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-
+import { computed } from 'vue';
 import { useRouter } from 'vue-router'
+import { useCartStore } from "@/stores/cart";
+
+
+const cartStore = useCartStore()
 const props = defineProps([
     'data',
     'listViewProduct']
 )
+const existItem = computed(() => {
+    let item = cartStore.items.find(el => el._id == props.data._id)
+    return item
+})
 const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
-console.log(img)
+
+
 const router = useRouter()
-const addToCart = () => {
-    console.log("add to cart")
-}
+
 </script>
 <template>
     <div :class="listViewProduct ? 'product-2' : 'product'">
         <div :class="listViewProduct ? 'product-2-details' : 'product-details'"
-            @click="router.push({ path: '/product/' + data._id })">
+            @click.native="router.push({ path: '/product/' + data._id })">
             <div :class="listViewProduct ? 'product-2-img' : 'product-img'">
 
-                <span class="heart" @click.stop="addToCart()"><vue-feather type="heart" size="1.1em" stroke="#414e5a"
-                        stroke-width="2"></vue-feather></span>
+                <span class="heart" @click.stop=""><vue-feather type="heart" :size="listViewProduct ? '1em' : '1.1em'"
+                        stroke="#414e5a" stroke-width="2"></vue-feather></span>
                 <img :src="'http://localhost:4000' + data.img[0]" :alt="img">
 
             </div>
@@ -33,7 +40,12 @@ const addToCart = () => {
                     </div>
                 </div>
                 <div class="row2">
-                    <div class="add-btn" @click.stop="addToCart()">
+                    <div v-if="existItem" class="add-btn-2">
+                        <span class="decrease" @click.stop="cartStore.changeQuantity('decrease', data._id)">-</span>
+                        <span class="count">{{ existItem.quantity }}</span>
+                        <span class="increase" @click.stop="cartStore.changeQuantity('increase', data._id)">+</span>
+                    </div>
+                    <div v-else class="add-btn" @click.stop="cartStore.addToCart(data)">
                         <span><vue-feather type="shopping-cart" size="1em" stroke="#fff"
                                 stroke-width="2"></vue-feather></span>
                         <span>Add</span>
@@ -47,6 +59,7 @@ const addToCart = () => {
 <style scoped lang="scss">
 .product {
     width: 250px;
+    max-width: 25%;
     padding: 0;
     color: #212121;
     border: 0;
@@ -80,16 +93,20 @@ const addToCart = () => {
             align-items: center;
             justify-content: center;
             cursor: pointer;
+
             &::after {
                 content: '';
                 position: absolute;
-                top: 1.5em;
-                left: 1.5em;
-                width: 80%;
-                height: 80%;
-                background-position: center;
-                filter: blur(15px);
+                top: .3em;
+                left: .3em;
+                width: 95%;
+                height: 95%;
                 background-image: v-bind(img);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                filter: blur(3px);
+                opacity: (.3);
                 z-index: -100;
             }
 
@@ -99,7 +116,6 @@ const addToCart = () => {
                 position: absolute;
                 border-radius: 5%;
                 background: transparent;
-                // box-shadow: 0px 0px 0px 10px #fff;
                 width: 100%;
                 height: 100%;
                 z-index: 100;
@@ -107,17 +123,17 @@ const addToCart = () => {
 
             span {
                 position: absolute;
-                background-color: #ffffff79;
+                background: #ffffff79;
                 padding: .3em;
                 border-radius: 50%;
                 display: flex;
                 top: 1em;
                 right: 1em;
-                z-index: 10;
+                z-index: 100;
             }
 
             img {
-                max-height:100% ;
+                max-height: 100%;
                 max-width: 100%;
                 border-radius: 5%;
             }
@@ -138,7 +154,7 @@ const addToCart = () => {
                 .product-name {
                     max-width: 100%;
                     max-height: 2.5em;
-
+                    min-height: 2.5em;
                     font-size: 1.1em;
                     white-space: wrap;
                     overflow: hidden;
@@ -165,6 +181,31 @@ const addToCart = () => {
                     display: flex;
                     justify-content: space-evenly;
                     cursor: pointer;
+                    transition: all .2s;
+                    &:hover {
+                        background: #0b65a8;
+                    }
+                }
+
+                .add-btn-2 {
+                    background-color: #fff;
+                    width: 100px;
+                    border-radius: 15px;
+                    color: #414e5a;
+                    border: 1px solid #159347;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    cursor: pointer;
+
+                    .increase,
+                    .decrease {
+                        height: 100%;
+                        padding: .4em 1em;
+                        border-radius: 5px;
+                        transition: all .3s ease;
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -195,7 +236,6 @@ const addToCart = () => {
             display: flex;
             flex-direction: column;
 
-            // justify-content: space-evenly;
             .row1 {
 
                 .price {
@@ -210,18 +250,43 @@ const addToCart = () => {
                     width: 100px;
                     border-radius: 15px;
                     padding: 0.4em 0;
-                    // margin: 0 0.5em;
                     color: #fff;
                     display: flex;
                     justify-content: space-evenly;
+                    transition: all .2s;
                     cursor: pointer;
+
+                    &:hover {
+                        background: #0b65a8;
+                    }
+                }
+
+                .add-btn-2 {
+                    background-color: #fff;
+                    width: 100px;
+                    border-radius: 15px;
+                    color: #414e5a;
+                    border: 1px solid #159347;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    cursor: pointer;
+
+                    .increase,
+                    .decrease {
+                        height: 100%;
+                        padding: .4em 1em;
+                        border-radius: 5px;
+                        transition: all .3s ease;
+                        cursor: pointer;
+                        
+                    }
                 }
             }
         }
 
         .product-2-img {
             transition: max-height .25s ease-out;
-            border: 1px solid #e5e6e9;
             position: relative;
             border-radius: 10px;
             padding: 0.7em;
@@ -234,26 +299,39 @@ const addToCart = () => {
             &::after {
                 content: '';
                 position: absolute;
-                top: 1em;
-                left: 1em;
-                right: 1em;
-                bottom: 1em;
-                width: 80%;
-                height: 80%;
-                background-position: center;
-                filter: blur(10px);
+                top: .3em;
+                left: .3em;
+                width: 95%;
+                height: 95%;
                 background-image: v-bind(img);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                filter: blur(3px);
+                opacity: (.3);
                 z-index: -100;
             }
 
-            img {
-                height: 100%;
+            &::before {
+                content: '';
+                border: 1px solid #e5e6e9;
+                position: absolute;
+                border-radius: 5%;
+                background: transparent;
                 width: 100%;
+                height: 100%;
+                z-index: 100;
+            }
+
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
             }
 
             span {
                 position: absolute;
-                background-color: #ffffff;
+                background: #ffffff79;
                 padding: .5em;
                 border-radius: 50%;
                 display: flex;

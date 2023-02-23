@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { RouterView } from 'vue-router'
-import Header from './components/header.vue';
 import { onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useProductStore } from '@/stores/product';
@@ -20,7 +19,7 @@ const scroll = (e: any) => {
   const { scrollTop, clientHeight, scrollHeight } = e.target
   if (scrollTop + clientHeight >= scrollHeight) {
 
-    if (productStore.count > 20) {
+    if (productStore.count  > 20) {
       productStore.getPage()
     }
 
@@ -43,13 +42,11 @@ const scroll = (e: any) => {
 
 <template>
   <div class="scroll" @scroll="scroll">
-    <Header />
 
     <RouterView />
-  </div>
+</div>
 </template>
 <style lang="scss" scoped>
-
 .scroll {
   height: 100vh;
   overflow: scroll;

@@ -104,6 +104,7 @@ onMounted(() => {
             span {
                 color: #414e5a;
                 font-weight: 600;
+                font-size: 12px;
             }
         }
 
@@ -116,10 +117,15 @@ onMounted(() => {
             box-sizing: border-box;
 
             span {
-                font-weight: 400;
+
+                font-weight: 600;
                 margin: 0 0.3em;
+                font-size: 14px;
+                &:first-child{
+                font-size: 12px;
+                }
             }
-            
+
             .category {
                 display: flex;
                 align-items: center;
@@ -156,11 +162,12 @@ onMounted(() => {
 
             label {
                 cursor: pointer;
+                font-size: 14px;
             }
 
             .header {
                 color: #718190;
-                font-size: 14px;
+                font-size: 12px;
             }
 
             .price-ul {
@@ -168,6 +175,7 @@ onMounted(() => {
                 flex-direction: column;
                 color: #414e5a;
                 height: 120px;
+                font-size: 14px;
                 margin: 0.5em 0;
             }
 
@@ -217,7 +225,7 @@ onMounted(() => {
 
                     &:focus {
                         .brand-search {
-                            border-bottom: 2px solid #071c92;
+                            border-bottom: 2px solid #0b65a8;
                         }
                     }
                 }

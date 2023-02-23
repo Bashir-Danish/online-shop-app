@@ -48,23 +48,23 @@ showSingUPModal = false;
       <div class="social-links">
         <ul class="social-list">
           <li>
-            <a href=""><vue-feather type="mail" size="1.4em" fill="#ececec" stroke="#159347"
+            <a href=""><vue-feather type="mail" size="1em" fill="#ececec" stroke="#159347"
                 stroke-width="1"></vue-feather></a>
           </li>
           <li class="social-item">
-            <a href=""><vue-feather type="facebook" size="0.8em" fill="#159347" stroke="#159347"
+            <a href=""><vue-feather type="facebook" size="0.7em" fill="#159347" stroke="#159347"
                 stroke-width="1"></vue-feather></a>
           </li>
           <li class="social-item">
-            <a href=""><vue-feather type="linkedin" size="0.8em" fill="#159347" stroke="#159347"
+            <a href=""><vue-feather type="linkedin" size="0.7em" fill="#159347" stroke="#159347"
                 stroke-width="1"></vue-feather></a>
           </li>
           <li class="social-item">
-            <a href=""><vue-feather type="instagram" size="0.8em" fill="#159347" stroke="#ececec"
+            <a href=""><vue-feather type="instagram" size="0.7em" fill="#159347" stroke="#ececec"
                 stroke-width="1"></vue-feather></a>
           </li>
           <li class="social-item">
-            <a href=""><vue-feather type="twitter" size="0.8em" fill="#159347" stroke="#159347"
+            <a href=""><vue-feather type="twitter" size="0.7em" fill="#159347" stroke="#159347"
                 stroke-width="1"></vue-feather></a>
           </li>
         </ul>
@@ -143,8 +143,8 @@ header {
     .social-list {
       .social-item {
         background-color: #ececec;
-        width: 1.3em;
-        height: 1.3em;
+        width: 1em;
+        height: 1em;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -188,7 +188,7 @@ header {
       span {
         margin: 0 0.5em;
         padding: 0;
-        font-size: 1.1em;
+        font-size: 1em;
         font-weight: 100;
         display: flex;
         align-items: center;

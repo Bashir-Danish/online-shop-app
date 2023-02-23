@@ -21,8 +21,12 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
                     </div>
                 </div>
             </div>
@@ -34,8 +38,28 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div><div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
                     </div>
                 </div>
             </div>
@@ -47,8 +71,12 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
                     </div>
                 </div>
             </div>
@@ -60,8 +88,12 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
                     </div>
                 </div>
             </div>
@@ -73,53 +105,137 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <div class="product-img">
+                    <Placeholder hight="13em" width="19em" border-radius="5px" />
+                </div>
+                <div class="desc-wrapper">
+                    <div class="row1">
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.2em 0 0 0" />
+                        <Placeholder hight=".5em" width="100%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                    <div class="row1">
+                        <Placeholder hight=".6em" width="30%" border-radius="2px" margin="0.2em 0" />
+                        <Placeholder hight=".7em" width="40%" border-radius="2px" margin="0.3em 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <div class="product-img">
-                    <Placeholder hight="13em" width="19em" border-radius="5px" />
-                </div>
-                <div class="desc-wrapper">
-                    <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <div class="product-img">
-                    <Placeholder hight="13em" width="19em" border-radius="5px" />
-                </div>
-                <div class="desc-wrapper">
-                    <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <div class="product-img">
-                    <Placeholder hight="13em" width="19em" border-radius="5px" />
-                </div>
-                <div class="desc-wrapper">
-                    <div class="row1">
-                        <Placeholder hight="1em" width="90%" border-radius="5px" margin="0.5em 0" />
-                        <Placeholder hight="1em" width="40%" border-radius="5px" margin="0.5em 0" />
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 <style scoped lang="scss">

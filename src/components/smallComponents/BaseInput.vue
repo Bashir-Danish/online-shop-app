@@ -34,6 +34,7 @@ const mColor = ref(false)
 
 function validate() {
 
+    console.log(props.modelValue)
     if (props.modelValue && props.inputType === "email") {
         let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(props.modelValue)) {
@@ -55,6 +56,16 @@ function validate() {
         } else {
             message.value = "A-Z , a-z, 0-9 ,@"
             authStore.isValid.isPassword = false
+            mColor.value = false;
+        }
+    }
+    if (props.modelValue && props.inputType === "pincode") {
+        const re = /^(?:[A-Z0-9]+([- ]?[A-Z0-9]+)*)?$/;
+        if (re.test(props.modelValue)) {
+            message.value = "Pincode is valid"
+            mColor.value = true
+        } else {
+            message.value = "invalid Pincode"
             mColor.value = false;
         }
     }
@@ -87,7 +98,8 @@ onMounted(() => (
 
 <template>
     <div class="inputBox">
-        <input :id="inputId" :type="inputType" :value="modelValue" :required="isRequired"
+        <!-- <input type="pincode"> -->
+        <input  :type="inputType" :value="modelValue" :required="isRequired"
             @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()"
             @keyup="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()">
         <span class="label" :style="[props.modelValue && { transform: 'translateY(-1.5em)', fontSize: '14px' }]">{{

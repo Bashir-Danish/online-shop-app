@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import ProductDetailView from '@/views/ProductDetailView.vue'
-import CartView from '@/views/cartView.vue'
+import Cart from '@/views/CartView.vue'
+import CartView from '@/components/cart.vue'
+import checkout from '@/components/checkout.vue'
 
 
 const router = createRouter({
@@ -12,17 +14,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      // children: [
-      //   {
-      //     path: "/login",
-      //     component: Login,
-      //   }
-      //   ,
-      //   {
-      //     path: "/signup",
-      //     component: SingUp,
-      //   }
-      // ]
     },
     {
       path: '/about',
@@ -31,8 +22,19 @@ const router = createRouter({
     },
     {
       path: '/cart',
-      name: 'cart',
-      component: CartView
+      component: Cart,
+      children: [
+        {
+          path: '',
+          name: 'cart',
+          component:CartView
+        }
+        ,{
+          path: 'checkout-flow',
+          name: 'checkout',
+          component:checkout
+        }
+      ]
     },
     {
       path: '/product/:id',

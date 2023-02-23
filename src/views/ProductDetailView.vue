@@ -1,22 +1,33 @@
 <script setup lang="ts">
 import axios from "@/plugins/axios";
 import Product from "@/components/product.vue";
-import { ref, onBeforeMount } from "vue";
+import Header from '@/components/header.vue';
+
+import { ref, computed, onBeforeMount } from "vue";
+import { useCartStore } from "@/stores/cart";
+
+
+const cartStore = useCartStore()
 const url = window.location.href;
 const lastParam = url.split("/").slice(-1)[0];
 const product = ref<any>();
 const similar = ref<any[]>([]);
 
 const showImg = ref();
+const bgImg = ref()
 const changeImg = (img: any) => {
     showImg.value = img;
+    bgImg.value = 'url(http://localhost:4000' + img + ')';
 };
+
+
 onBeforeMount(async () => {
     await axios
         .get(`/product/${lastParam}`)
         .then((res: any) => {
             product.value = res.data.product;
             showImg.value = product.value.img[0];
+            bgImg.value = 'url(http://localhost:4000' + product.value.img[0] + ')';
         })
         .catch((err) => {
             console.log(err);
@@ -25,7 +36,7 @@ onBeforeMount(async () => {
     if (product.value) {
         similar.value = [];
         await axios
-            .get(`/product/match/${product.value.subCategory}`)
+            .get(`/product/match/${product.value.category}`)
             .then((res: any) => {
                 similar.value = res.data.products;
             })
@@ -34,16 +45,21 @@ onBeforeMount(async () => {
             });
     }
 });
+cartStore.loadCart()
 
+const existItem = computed(() => {
+    let item = cartStore.items.find(el => el._id == product.value._id)
+    return item
+})
 const scrollSide = (e: any) => {
     const list = document.getElementById("product-list");
-    // console.log(list)
     console.log(list?.scrollIntoView({ behavior: "smooth" }));
     list?.scrollIntoView({ behavior: "smooth" });
 };
 </script>
 
 <template>
+    <Header />
     <div class="background-container">
         <div class="prd-path">
             Home > {{ product.category }} > {{ product.name }}
@@ -51,11 +67,13 @@ const scrollSide = (e: any) => {
         <div class="product-details-div">
             <div class="col-1">
                 <div class="img-list">
-                    <div class="img" v-for="img in product.img">
-                        <img :src="'http://localhost:4000' + img" :alt="img" @mouseover="changeImg(img)" />
+                    <div class="img" v-for="img in product.img" @mouseover="changeImg(img)">
+                        <img :src="'http://localhost:4000' + img" :alt="img" />
                     </div>
                 </div>
                 <div class="img-slider">
+                    <span class="bg-filter"
+                        :style="{ backgroundImage: 'url(http://localhost:4000' + showImg + ')' }"></span>
                     <span class="heart"><vue-feather type="heart" size="1.5em" stroke="#414e5a"
                             stroke-width="2"></vue-feather></span>
                     <img :src="'http://localhost:4000' + showImg" :alt="showImg" />
@@ -94,20 +112,28 @@ const scrollSide = (e: any) => {
                     <div>Enter pincode for exact delivery dates and charge</div>
                 </div>
                 <div class="delivery-action">
-                    <button>
+                    <div v-if="existItem" class="add-btn-2">
+                        <span class="decrease" @click.stop="cartStore.changeQuantity('decrease', product._id)">
+                            <vue-feather type="minus" stroke="#fff" size="1em" stroke-width="3"></vue-feather></span>
+                        <span class="count">{{ existItem.quantity }}</span>
+                        <span class="increase" @click.stop="cartStore.changeQuantity('increase', product._id)">
+                            <vue-feather type="plus" stroke="#fff" size="1em" stroke-width="3"></vue-feather>
+                        </span>
+                    </div>
+                    <div v-else class="add-btn-1" @click.stop="cartStore.addToCart(product)">
                         <span><vue-feather type="shopping-cart" size=".9em" stroke-width="3"
                                 stroke="#fff"></vue-feather></span>
                         <span>Add To Cart</span>
-                    </button>
+                    </div>
                     <div>
-                        <span><img src="@/assets/shield.png" alt="" /></span>
+                        <span><img src="@/assets/photos/shield.png" alt="" /></span>
                         <span>Safe and Secure payments.100% Authentic products</span>
                     </div>
                 </div>
                 <div class="Specifications">
                     <h2>Specifications</h2>
                     <ul>
-                        <li v-for="spec in product.Specifications.reverse()">
+                        <li v-for="spec in product.Specifications.slice().reverse()" :key="spec._id">
                             <span class="name">{{ spec.name }}</span>
                             <span class="value">{{ spec.value }}</span>
                         </li>
@@ -118,8 +144,8 @@ const scrollSide = (e: any) => {
                     <div>
                         <div class="rate">
                             <span>
-                                <vue-feather v-for="i in 5" :id="i" type="star" size="1.2em" fill="#F1F6F5"
-                                    stroke-width="1" stroke="#DDDDDD"></vue-feather>
+                                <vue-feather v-for="i in 5" :id="i" type="star" size="1.2em" fill="#F1F6F5" stroke-width="1"
+                                    stroke="#DDDDDD"></vue-feather>
                             </span>
                             <span>Be the First to Review</span>
                         </div>
@@ -206,7 +232,7 @@ const scrollSide = (e: any) => {
                 }
 
                 img {
-                    width: 4em;
+                    max-width: 100%;
                     height: 4em;
                 }
             }
@@ -216,9 +242,23 @@ const scrollSide = (e: any) => {
                 width: 80%;
                 border: #e5e6e9 1px solid;
                 border-radius: 5px;
-                padding: 0.3em;
                 margin: 2em 0.5em;
                 position: relative;
+                display: flex;
+                justify-content: center;
+                position: relative;
+
+                .bg-filter {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: blur(3px);
+                    opacity: (.1);
+                    z-index: -100;
+                }
 
                 .heart {
                     position: absolute;
@@ -235,8 +275,8 @@ const scrollSide = (e: any) => {
                 }
 
                 img {
-                    height: 100%;
-                    width: 100%;
+                    max-height: 100%;
+                    max-width: 100%;
                     border-radius: 5px;
                 }
             }
@@ -356,26 +396,52 @@ const scrollSide = (e: any) => {
 
             .delivery-action {
                 background: rgba(46, 55, 97, 0.05);
-                padding: 3em 1em 1em 1em;
+                padding: 2em 1em 1em 1em;
 
-                button {
+                .add-btn-1 {
                     background: #159347;
+                    width: fit-content;
                     box-shadow: 0 0 5px 0 rgb(0 0 0 / 20%);
-                    border: none;
-                    outline: none;
-                    font-size: 1em;
                     color: #ffffff;
-                    font-weight: 600;
-                    padding: 1em 2.5em;
+                    font-weight: 550;
+                    font-size: 14px;
+                    padding: 1.2em 2em;
                     border-radius: 5px;
                     transition: all 0.4s ease;
+                    cursor: pointer;
 
                     &:hover {
-                        background: #071c92;
+                        background: #0b65a8;
+                    }
+                }
+
+                .add-btn-2 {
+                    display: flex;
+                    align-items: center;
+                    font-weight: 700;
+                    transition: all 0.4s ease;
+
+                    .count {
+                        width: 1.5em;
+                        margin: 0 1em;
+                        font-size: 1.5em;
+                        text-align: center;
                     }
 
-                    span {
-                        padding: 0 4px;
+                    .decrease,
+                    .increase {
+                        background-color: #159347;
+                        font-size: 1em;
+                        padding: .85em;
+                        color: #e5e6e9;
+                        border-radius: 5px;
+                        margin: 0;
+                        transition: all 0.4s ease;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #0b65a8;
+                        }
                     }
                 }
 
@@ -470,7 +536,7 @@ const scrollSide = (e: any) => {
                             transition: all 0.4s ease;
 
                             &:hover {
-                                background: #071c92;
+                                background: #0b65a8;
                             }
                         }
                     }
