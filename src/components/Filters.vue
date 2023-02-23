@@ -88,6 +88,7 @@ onMounted(() => {
     position: sticky;
     top: 75px;
     max-width: 220px;
+    min-width: 220px;
     height: 88vh;
     outline: none;
     border-top-left-radius: 10px;

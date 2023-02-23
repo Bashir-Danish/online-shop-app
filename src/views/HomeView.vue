@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
@@ -8,6 +8,7 @@ import { useCartStore } from '@/stores/cart'
 import AnimatedPlaceholder from '@/components/smallComponents/AnimatedPlaceholder.vue'; '@/components/smallComponents/AnimatedPlaceholder.vue';
 import Header from '@/components/header.vue';
 
+const sort = ref()
 const productStore = useProductStore();
 const cartStore = useCartStore();
 
@@ -15,19 +16,20 @@ onMounted(() => {
   if (localStorage.getItem("listView")) {
     productStore.listView = JSON.parse(localStorage.getItem("listView") as string);
   }
-  if (localStorage.getItem("sort")) {
-    productStore.filters.sort = JSON.parse(localStorage.getItem("sort") as string);
-    productStore.params.append('sort', productStore.filters.sort)
-  }
   if (localStorage.getItem("tags")) {
     productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
+  }
+  if (localStorage.getItem("sort")) {
+    sort.value = JSON.parse(localStorage.getItem("sort") as string);
+    productStore.params.delete("sort");
+    productStore.params.append("sort", sort.value);
   }
   cartStore.loadCart()
   productStore.getProduct()
 })
 </script>
 <template>
-    <Header />
+  <Header />
 
   <div class="content">
     <main>
@@ -36,18 +38,14 @@ onMounted(() => {
       <div class="main-content">
         <div class="product-headers">
           <div class="first-header">
-            <div class="count" v-if="productStore.count">
+            <div class="count">
               <div class="cat-name">All Items</div>
               <span>( {{ productStore.count }} items )</span>
             </div>
-            <div v-else>
-              <AnimatedPlaceholder hight="1.3em" width="150px" border-radius="5px" margin=".4em" />
-            </div>
+
             <div class="sort">
               <span>Sort By</span>
-              <select name="sort" id="sort" v-model="productStore.filters.sort"
-                @change="productStore.getFilters('sort', 'test', $event)">
-                <!-- <option value=""></option> -->
+              <select name="sort" v-model="sort" id="sort" @change="productStore.getFilters('sort', 't', $event)">
                 <option value="all">All</option>
                 <!-- <option value="popular">Popularity</option> -->
                 <option value="newest">Newest</option>
@@ -65,11 +63,13 @@ onMounted(() => {
             </div>
           </div>
           <div class="second-header">
-            <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
-              <span class="tag">{{ Object.values(tag).toString() }}</span>
-              <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em" stroke="#000"
-                  stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
-            </div>
+            <TransitionGroup name="tag" mode="out-in" appear>
+              <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
+                <span class="tag">{{ Object.values(tag).toString() }}</span>
+                <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em"
+                    stroke="#000" stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
+              </div>
+            </TransitionGroup>
           </div>
         </div>
         <div v-if="!productStore.productLoading && productStore.product"
@@ -82,7 +82,7 @@ onMounted(() => {
         </div>
       </div>
     </main>
-</div>
+  </div>
 </template>
 <style scoped lang="scss">
 .content {
@@ -177,10 +177,12 @@ onMounted(() => {
         .second-header {
           display: flex;
           flex-wrap: wrap;
+          transition: all .5s ease;
 
-          div {
+          .pro-filter-item {
+            transition: all .5s ease;
             min-width: 4em;
-            margin-bottom: .5em;
+            margin: 0 .5em .5em .5em;
             padding: 5px;
             border-radius: 5px;
             position: relative;
@@ -214,6 +216,7 @@ onMounted(() => {
             }
 
             .tag {
+
               &:hover~.tag-close {
                 opacity: 1;
               }
@@ -243,5 +246,38 @@ onMounted(() => {
       }
     }
   }
+}
+
+.tag-enter-from {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.tag-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tag-enter-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.tag-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tag-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.tag-leave-active {
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+}
+
+.tag-move {
+  transition: all 0.3s ease;
 }
 </style>

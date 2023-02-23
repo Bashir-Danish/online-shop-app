@@ -10,19 +10,11 @@ export const useProductStore = defineStore("product", () => {
   const category = ref<any[]>([]);
   const search = ref("");
   const listView = ref<any>();
-  const count = ref<number>(0);
+  const count = ref<number>();
 
   const productLoading = ref(false);
   const filterLoading = ref(false);
-  let tags = <any>ref([]);
-
-  const filters = ref({
-    category: <string[]>[],
-    subCategory: <string[]>[],
-    brand: <string[]>[],
-    price: 0,
-    sort: "all",
-  });
+  let tags = ref<any[]>([]);
 
   let params = new URLSearchParams();
 
@@ -32,19 +24,22 @@ export const useProductStore = defineStore("product", () => {
 
   const brandsData = computed(() => {
     let checked = <string[]>[];
-    if (search.value) {
-      return brands.value.filter((item) =>
+    let allBrands = brands.value;
+    if (search.value !== "") {
+      allBrands = allBrands.filter((item) =>
         item.brandName.toLowerCase().includes(search.value.toLowerCase())
       );
+    } else {
+      allBrands = brands.value;
     }
-    if (tags.value.length) {
+    if (tags.value) {
       tags.value.find((el: any) => {
         if (Object.keys(el).toString() == "brand") {
           checked.push(el.brand);
         }
       });
     }
-    brands.value.forEach((el: any) => {
+    allBrands.forEach((el: any) => {
       if (checked.includes(el.brandName)) {
         el["checked"] = true;
       } else {
@@ -52,7 +47,7 @@ export const useProductStore = defineStore("product", () => {
       }
     });
 
-    return brands.value;
+    return allBrands;
   });
 
   const priceData = computed(() => {
@@ -84,48 +79,39 @@ export const useProductStore = defineStore("product", () => {
   ////////////////////////////////////////////
   //////////////// Actions ///////////////////
   ////////////////////////////////////////////
-
   const getFilters = (type: string, value: any, event: any) => {
-    tags.value = [];
+    var obj = <any>{};
     if (type === "category") {
-      filters.value.category.push(value);
+      obj["category"] = value;
+      tags.value.push(obj);
     } else if (type === "subcategory") {
-      filters.value.subCategory.push(value);
-    } else if (type === "brand") {
-      if (event.target.checked) {
-        filters.value.brand.push(value);
-      } else {
-        filters.value.brand.splice(filters.value.brand.indexOf(value), 1);
-        tags.value.splice(tags.value.indexOf(value), 1);
-      }
+      obj["subcategory"] = value;
+      tags.value.push(obj);
     } else if (type === "sort") {
       params.delete("sort");
-      localStorage.removeItem("sort");
       localStorage.setItem("sort", JSON.stringify(event.target.value));
       params.append("sort", event.target.value);
-    } else {
-      filters.value.price = value;
-    }
-    let keys = Object.keys(filters.value);
-    let values = Object.values(filters.value);
-
-    for (let i = 0; i < values.length; i++) {
-      let value = values[i];
-      let key = keys[i];
-      if (Array.isArray(value)) {
-        value.map((el) => {
-          var obj = <any>{};
-          obj[key] = el;
-          tags.value.push(obj);
-        });
+      getProduct();
+    } else if (type === "price") {
+      tags.value = tags.value.filter(
+        (e) => Object.keys(e).toString() !== "price"
+      );
+      obj["price"] = value;
+      tags.value.push(obj);
+    } else if (type === "brand") {
+      obj["brand"] = value;
+      if (event.target.checked) {
+        tags.value.push(obj);
       } else {
-        var obj = <any>{};
-        obj[key] = value;
-        if (value > 0) tags.value.push(obj);
+        tags.value.splice(
+          tags.value.findIndex((a) => a.brand === value),
+          1
+        );
       }
     }
     localStorage.setItem("tags", JSON.stringify(tags.value));
   };
+
   // access ann search on brands
   const removeTag = (tag: {}) => {
     const key = Object.keys(tag).toString();
@@ -134,54 +120,25 @@ export const useProductStore = defineStore("product", () => {
       return item[key] != value;
     });
     localStorage.setItem("tags", JSON.stringify(tags.value));
-
-    if (Object.keys(tag).toString() === "brand") {
-      filters.value.brand.splice(
-        filters.value.brand.indexOf(Object.values(tag).toString()),
-        1
-      );
-    }
-    if (Object.keys(tag).toString() === "category") {
-      filters.value.category.splice(
-        filters.value.category.indexOf(Object.values(tag).toString()),
-        1
-      );
-    }
-    if (Object.keys(tag).toString() === "subCategory") {
-      filters.value.subCategory.splice(
-        filters.value.subCategory.indexOf(Object.values(tag).toString()),
-        1
-      );
-    }
-    if (Object.keys(tag).toString() === "price") {
-      filters.value.price = 0;
-    }
   };
   watch(
-    () => tags.value,
+    () => Object.values(tags.value),
     () => {
-      if (tags.value) {
-        params.delete("category");
-        params.delete("subCategory");
-        params.delete("brand");
-        params.delete("price");
-        // params.delete("sort");
-
-        tags.value.forEach((el: any) => {
-          params.append(
-            Object.keys(el).toString(),
-            Object.values(el).toString()
-          );
-        });
-        getProduct();
-      }
+      params.delete("category");
+      params.delete("subCategory");
+      params.delete("brand");
+      params.delete("price");
+      tags.value.forEach((el: any) => {
+        params.append(Object.keys(el).toString(), Object.values(el).toString());
+      });
+      getProduct();
     }
   );
-  let offset = 0;
 
+  let offset = 0;
   async function getProduct() {
     productLoading.value = true;
-    filterLoading.value = true;
+    // filterLoading.value = true;
     params.delete("offset");
     offset = 0;
     let request = {
@@ -252,7 +209,6 @@ export const useProductStore = defineStore("product", () => {
     priceData,
     category,
     productLoading,
-    filters,
     brandsData,
     search,
     tags,
