@@ -343,11 +343,6 @@ const router = useRouter()
     }
 }
 
-
-
-
-
-
 .product-divider {
     border-bottom: 1px solid #e5e6e9;
     width: 95%;

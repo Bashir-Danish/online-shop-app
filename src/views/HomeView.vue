@@ -5,7 +5,7 @@ import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
 import { useCartStore } from '@/stores/cart'
-import AnimatedPlaceholder from '@/components/smallComponents/AnimatedPlaceholder.vue'; '@/components/smallComponents/AnimatedPlaceholder.vue';
+import listViewSkeleton from '@/components/vueSkeleton/listViewSkeleton.vue';
 import Header from '@/components/header.vue';
 
 const sort = ref()
@@ -13,9 +13,6 @@ const productStore = useProductStore();
 const cartStore = useCartStore();
 
 onMounted(() => {
-  if (localStorage.getItem("listView")) {
-    productStore.listView = JSON.parse(localStorage.getItem("listView") as string);
-  }
   if (localStorage.getItem("tags")) {
     productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
   }
@@ -42,7 +39,6 @@ onMounted(() => {
               <div class="cat-name">All Items</div>
               <span>( {{ productStore.count }} items )</span>
             </div>
-
             <div class="sort">
               <span>Sort By</span>
               <select name="sort" v-model="sort" id="sort" @change="productStore.getFilters('sort', 't', $event)">
@@ -55,10 +51,10 @@ onMounted(() => {
               <div class="view-buttons">
                 <vue-feather type="list" size="1.2em" :stroke="productStore.listViewData ? 'black' : '#ccc'"
                   :stroke-width="productStore.listViewData ? '2' : '3'"
-                  @click="productStore.listView = true"></vue-feather>
+                  @click.stop="productStore.listView = true"></vue-feather>
                 <vue-feather type="grid" size="1.2em" :fill="productStore.listViewData ? '#ccc' : '#474747'"
                   :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"
-                  @click="productStore.listView = false"></vue-feather>
+                  @click.stop="productStore.listView = false"></vue-feather>
               </div>
             </div>
           </div>
@@ -67,18 +63,19 @@ onMounted(() => {
               <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
                 <span class="tag">{{ Object.values(tag).toString() }}</span>
                 <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em"
-                    stroke="#000" stroke-width="2" @click="productStore.listView = false"></vue-feather></span>
+                    stroke="#000" stroke-width="2"></vue-feather></span>
               </div>
             </TransitionGroup>
           </div>
         </div>
         <div v-if="!productStore.productLoading && productStore.product"
-          :class="productStore.listView ? 'listViewProduct' : 'products-container'">
+          :class="productStore.listViewData ? 'listViewProduct' : 'products-container'">
           <Product :list-view-product="productStore.listViewData" v-for="product in productStore.product"
             :data="product" />
         </div>
         <div class="main-content" v-else>
-          <ProductSkeleton />
+          <listViewSkeleton v-if="productStore.listViewData" />
+          <ProductSkeleton v-else />
         </div>
       </div>
     </main>

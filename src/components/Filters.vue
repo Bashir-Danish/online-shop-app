@@ -184,9 +184,9 @@ onMounted(() => {
                 display: flex;
                 flex-direction: column;
                 color: #414e5a;
-                max-height: 160px;
-                min-height: 160px;
-                margin: 0.5em 0;
+                max-height: 180px;
+                min-height: 180px;
+                margin:0 .5em;
                 overflow-y: scroll;
                 @include hideScrollbar();
                 -ms-overflow-style: none;
@@ -215,7 +215,7 @@ onMounted(() => {
                 align-items: center;
                 border-bottom: 2px solid #d8d8d8;
                 width: fit-content;
-                margin: 1em 0;
+                margin: .5em 0;
                 padding: .5em 0;
 
                 input {

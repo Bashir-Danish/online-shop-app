@@ -1,6 +1,6 @@
 @mixin hideScrollbar() {
     &::-webkit-scrollbar {
-        width:8px;
+        width:5px;
         height: 0px;
     }
     &::-webkit-scrollbar-thumb {
@@ -10,7 +10,7 @@
 
 @mixin scrollbar() {
     &::-webkit-scrollbar {
-        width:8px;
+        width:5px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: rgba(0, 0, 0, .2)

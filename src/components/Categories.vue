@@ -45,7 +45,7 @@ const closeAll = (item: any) => {
     overflow-y: scroll;
     height: calc(100% - 70px);
     max-height: calc(100% - 70px);
-    width: 99%;
+    width: 100% ;
     border-bottom-left-radius: 2%;
     border-bottom-right-radius: 2%;
     @include hideScrollbar();

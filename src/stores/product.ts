@@ -9,7 +9,7 @@ export const useProductStore = defineStore("product", () => {
   const price = ref<any[]>([]);
   const category = ref<any[]>([]);
   const search = ref("");
-  const listView = ref<any>();
+  const listView = ref<boolean>();
   const count = ref<number>();
 
   const productLoading = ref(false);
@@ -67,11 +67,11 @@ export const useProductStore = defineStore("product", () => {
     return price.value;
   });
   const listViewData = computed(() => {
-    if (listView.value == true) {
-      localStorage.setItem("listView", JSON.stringify(true));
-    }
-    if (listView.value == false) {
-      localStorage.setItem("listView", JSON.stringify(false));
+    if (listView.value == undefined) {
+      listView.value =
+        JSON.parse(localStorage.getItem("listView") as string) ?? false;
+    } else {
+      localStorage.setItem("listView", JSON.stringify(listView.value));
     }
     return listView.value;
   });
@@ -125,7 +125,7 @@ export const useProductStore = defineStore("product", () => {
     () => Object.values(tags.value),
     () => {
       params.delete("category");
-      params.delete("subCategory");
+      params.delete("subcategory");
       params.delete("brand");
       params.delete("price");
       tags.value.forEach((el: any) => {
@@ -152,7 +152,7 @@ export const useProductStore = defineStore("product", () => {
         setTimeout(() => {
           productLoading.value = false;
           filterLoading.value = false;
-        }, 500);
+        }, 400);
       })
       .catch((err) => {
         console.log(err);

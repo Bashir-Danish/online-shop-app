@@ -256,7 +256,7 @@ const scrollSide = (e: any) => {
                     background-size: cover;
                     background-repeat: no-repeat;
                     filter: blur(3px);
-                    opacity: (.1);
+                    opacity: (.3);
                     z-index: -100;
                 }
 

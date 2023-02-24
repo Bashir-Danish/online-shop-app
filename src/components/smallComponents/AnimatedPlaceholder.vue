@@ -45,6 +45,8 @@ defineProps({
         bottom: 0px;
         width: 100%;
         height: 100%;
+        border-radius: v-bind(borderRadius);
+
         /* transform: translateX(20px); */
         background: -webkit-gradient(linear, left right,
                 right top, from(transparent),

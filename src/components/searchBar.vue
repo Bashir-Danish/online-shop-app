@@ -9,10 +9,11 @@ import { useCartStore } from '@/stores/cart'
 const productStore = useProductStore()
 const cartStore = useCartStore()
 const router = useRouter();
+
 const loader = ref(false)
 const search = ref('')
 const names = ref([])
-
+let flag = false
 const searchName = async (value: string, name: string) => {
     names.value = []
     productStore.productLoading = true
@@ -22,6 +23,7 @@ const searchName = async (value: string, name: string) => {
             .then((res: any) => {
                 productStore.product = res.data.products
                 productStore.count = productStore.product.length
+                flag = true
             })
             .catch((err) => {
                 console.log(err)
@@ -31,6 +33,7 @@ const searchName = async (value: string, name: string) => {
         search.value = name
         productStore.params.delete('name')
         productStore.params.append('name', name.toString())
+        flag = true
         productStore.getProduct()
     }
     setTimeout(() => {
@@ -65,8 +68,11 @@ const highlight = (str: string, char: string) => {
 const deleteName = () => {
     search.value = '';
     names.value = [];
-    productStore.params.delete('name')
-    productStore.getProduct()
+    if (flag) {
+        productStore.params.delete('name')
+        productStore.getProduct()
+        flag = false
+    }
 }
 
 </script>
@@ -85,7 +91,7 @@ const deleteName = () => {
                     <Transition name="list" mode="out-in" appear>
                         <ul class="auto-complete-container" v-if="!loader">
                             <li v-for="{ name } in names" @click="searchName('nameInput', name)">
-                                <span class="span"><vue-feather type="search" size="1.1em" stroke="#414e5a"
+                                <span class="span"><vue-feather type="search" size="1.3em" stroke="#000"
                                         stroke-width="2"></vue-feather>
                                     <p v-html="highlight(name, search)"></p>
                                 </span>
@@ -94,8 +100,8 @@ const deleteName = () => {
                     </Transition>
                     <div class="loader">
                         <half-circle-spinner v-if="loader" :animation-duration="1000" :size="20" color="#0b65a8" />
-                        <vue-feather @click="deleteName" type="x" v-if="search && !loader" size="1.3em" stroke="#000"
-                            stroke-width="2"></vue-feather>
+                        <vue-feather @click="deleteName" type="x" v-if="search && !loader || flag" size="1.3em"
+                            stroke="#000" stroke-width="2"></vue-feather>
                     </div>
                 </div>
                 <button @click.stop="searchName('searchInput', search)" class="search-button"><vue-feather type="search"
@@ -207,6 +213,7 @@ const deleteName = () => {
                         padding: 0 0.5em;
                         transition: all 0.5s ease;
                         display: flex;
+                        font-size: 14px;
                         align-items: center;
                         color: #313131;
                         cursor: pointer;
