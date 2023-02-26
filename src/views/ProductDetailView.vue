@@ -175,27 +175,27 @@ const scrollSide = (e: any) => {
     position: relative;
     width: 100%;
     padding: 0 1em 1em 1em;
-    background-color: rgba(46, 55, 97, 0.05);
+    background: $backGround;
 
     .prd-path {
         padding: 0.5em 0.5em;
-        color: rgb(121, 121, 121);
+        color: $gray-6;
         max-width: 1366px;
         margin: 0 auto;
     }
 
     .divider {
-        border-top: 0.3px solid #e5e6e9;
-        border-left: 0.3px solid #e5e6e9;
+        border-top: 0.3px solid $gray-3;
+        border-left: 0.3px solid $gray-3;
     }
 
     .product-details-div {
         position: relative;
         max-width: 1366px;
         display: flex;
-        background-color: #fff;
+        background: $white;
         border-radius: 10px;
-        box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+        box-shadow: $dOp-2 0px 0px 8px;
         margin: 0 auto;
 
         .col-1 {
@@ -224,10 +224,10 @@ const scrollSide = (e: any) => {
                     justify-content: center;
                     margin-bottom: 0.5em;
                     border-radius: 3px;
-                    border: #e5e6e9 1px solid;
+                    border: $gray-3 1px solid;
 
                     &:hover {
-                        border: #84a3ff 1px solid;
+                        border: $lightBlue 1px solid;
                     }
                 }
 
@@ -240,7 +240,7 @@ const scrollSide = (e: any) => {
             .img-slider {
                 height: 28em;
                 width: 80%;
-                border: #e5e6e9 1px solid;
+                border: $gray-3 1px solid;
                 border-radius: 5px;
                 margin: 2em 0.5em;
                 position: relative;
@@ -271,7 +271,7 @@ const scrollSide = (e: any) => {
                     align-items: center;
                     justify-content: center;
                     border-radius: 50%;
-                    background-color: rgba(255, 255, 255, 0.473);
+                    background: $bgOp-4;
                 }
 
                 img {
@@ -304,7 +304,7 @@ const scrollSide = (e: any) => {
                     span {
                         display: block;
                         text-align: center;
-                        color: #414e5a;
+                        color: $gray-6;
                         font-size: 14px;
                         position: absolute;
                         right: 1em;
@@ -327,7 +327,7 @@ const scrollSide = (e: any) => {
 
                         &:last-child {
                             margin: 0 1em;
-                            color: #0086ff;
+                            color: $lightBlue;
 
                             &:hover {
                                 text-decoration: underline;
@@ -345,21 +345,21 @@ const scrollSide = (e: any) => {
             }
 
             .delivery-details {
-                background: rgba(46, 55, 97, 0.05);
+                background: $backGround;
                 padding: 1em 1em;
 
                 h4 {
                     font-weight: 400;
-                    color: #414e5a;
+                    color: $gray-7;
                 }
 
                 .pinCode {
                     display: flex;
-                    height: 2.2em;
-                    border-radius: 3px;
+                    height: 2.3em;
+                    border-radius: 5px;
                     background: #ffffff;
                     width: fit-content;
-                    border: 1px solid rgb(0 0 0 / 20%);
+                    border: 1px solid $gray-3;
                     margin: 0.5em 0;
 
                     input {
@@ -375,11 +375,12 @@ const scrollSide = (e: any) => {
                         border: none;
                         outline: none;
                         background: rgb(94, 94, 94);
-                        border-top-right-radius: 3px;
-                        border-bottom-right-radius: 3px;
-                        color: #fff;
+                        border-top-right-radius: 5px;
+                        border-bottom-right-radius: 5px;
+                        color: $white;
                         padding: 0.5em 1.5em;
-                        font-weight: 800;
+                        font-size: 12px;
+                        font-weight: 600;
                     }
 
                     span {
@@ -390,18 +391,18 @@ const scrollSide = (e: any) => {
                 }
 
                 div {
-                    color: #414e5a;
+                    color: $gray-7;
                 }
             }
 
             .delivery-action {
-                background: rgba(46, 55, 97, 0.05);
+                background: $backGround;
                 padding: 2em 1em 1em 1em;
 
                 .add-btn-1 {
-                    background: #159347;
+                    background: $green;
                     width: fit-content;
-                    box-shadow: 0 0 5px 0 rgb(0 0 0 / 20%);
+                    box-shadow: 0 0 5px 0 $dOp-3;
                     color: #ffffff;
                     font-weight: 550;
                     font-size: 14px;
@@ -411,7 +412,8 @@ const scrollSide = (e: any) => {
                     cursor: pointer;
 
                     &:hover {
-                        background: #0b65a8;
+                        background: $blue;
+                        box-shadow: 0 0 5px 0 $dOp-5;
                     }
                 }
 
@@ -430,17 +432,17 @@ const scrollSide = (e: any) => {
 
                     .decrease,
                     .increase {
-                        background-color: #159347;
+                        background: $green;
                         font-size: 1em;
                         padding: .85em;
-                        color: #e5e6e9;
+                        color: $gray-1;
                         border-radius: 5px;
                         margin: 0;
                         transition: all 0.4s ease;
                         cursor: pointer;
 
                         &:hover {
-                            background-color: #0b65a8;
+                            background: $blue;
                         }
                     }
                 }
@@ -464,7 +466,7 @@ const scrollSide = (e: any) => {
                 padding: 1em;
 
                 h2 {
-                    border-bottom: 1px dashed #e5e6e9;
+                    border-bottom: 1px dashed $gray-4;
                     padding: 0.9em 0;
                 }
 
@@ -478,12 +480,13 @@ const scrollSide = (e: any) => {
 
                         .name {
                             width: 30%;
-                            color: rgb(141, 141, 141);
+                            font-size: 14px;
+                            color: $gray-5;
                         }
 
                         .value {
                             width: 70%;
-                            color: #414e5a;
+                            color: $gray-6;
                         }
                     }
                 }
@@ -493,7 +496,7 @@ const scrollSide = (e: any) => {
                 padding: 1em;
 
                 h2 {
-                    border-bottom: 1px dashed #e5e6e9;
+                    border-bottom: 1px dashed $gray-4;
                     padding: 0.9em 0;
                 }
 
@@ -506,11 +509,11 @@ const scrollSide = (e: any) => {
                     .rate {
                         width: 50%;
                         flex-direction: column;
-                        border-right: 1px solid #e5e6e9;
+                        border-right: 1px solid $gray-3;
 
                         span {
                             margin: 0.25em 0;
-                            color: #414e5a;
+                            color: $gray-7;
                         }
                     }
 
@@ -520,12 +523,12 @@ const scrollSide = (e: any) => {
 
                         span {
                             margin: 0.25em 0;
-                            color: #414e5a;
+                            color: $gray-7;
                         }
 
                         button {
-                            background: #159347;
-                            box-shadow: 0 0 5px 0 rgb(0 0 0 / 20%);
+                            background: $green;
+                            box-shadow: 0 0 5px 0 $dOp-4;
                             border: none;
                             outline: none;
                             font-size: 1em;
@@ -536,7 +539,7 @@ const scrollSide = (e: any) => {
                             transition: all 0.4s ease;
 
                             &:hover {
-                                background: #0b65a8;
+                                background: $blue;
                             }
                         }
                     }
@@ -547,11 +550,11 @@ const scrollSide = (e: any) => {
 
     .similar-products {
         position: relative;
-        background-color: #fff;
+        background: $white;
         max-width: 1366px;
         height: fit-content;
         border-radius: 10px;
-        box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+        box-shadow: $dOp-2 0px 0px 8px;
         margin: 0 auto;
         padding: 1em 1em;
         margin: 1em auto 0 auto;
@@ -573,8 +576,6 @@ const scrollSide = (e: any) => {
                 position: absolute;
                 left: 1em;
                 top: 50%;
-                //   left: 50%;
-                // margin: auto 0;
                 z-index: 100;
             }
 

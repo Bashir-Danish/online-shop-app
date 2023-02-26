@@ -1,3 +1,61 @@
+//
+// Color system
+//
+
+// stylelint-disable
+$backGround: rgba(46, 55, 97, 0.05);
+
+$white:    #fff !default;
+$gray-1: #f5f5f5 !default;
+$gray-2: #e9ecef !default;
+$gray-3: #dee2e6 !default;
+$gray-4: #ced4da !default;
+$gray-5: #adb5bd !default;
+$gray-6: #6c757d !default;
+$gray-7: #414e5a !default;
+$gray-8: #343a40 !default;
+$gray-9: #212529 !default;
+
+$bgOp-1 : rgba(255, 255, 255, 0.111) !default;
+$bgOp-2 : rgba(255, 255, 255, 0.222) !default;
+$bgOp-3 : rgba(255, 255, 255, 0.333) !default;
+$bgOp-4 : rgba(255, 255, 255, 0.444) !default;
+$bgOp-5 : rgba(255, 255, 255, 0.555) !default;
+$bgOp-6 : rgba(255, 255, 255, 0.666) !default;
+$bgOp-7 : rgba(255, 255, 255, 0.777) !default;
+$bgOp-8 : rgba(255, 255, 255, 0.888) !default;
+$bgOp-9 : rgba(255, 255, 255, 0.9) !default;
+
+$dOp-1 : rgba(0, 0, 0, 0.111) !default;
+$dOp-2 : rgba(0, 0, 0, 0.222) !default;
+$dOp-3 : rgba(0, 0, 0, 0.333) !default;
+$dOp-4 : rgba(0, 0, 0, 0.444) !default;
+$dOp-5 : rgba(0, 0, 0, 0.555) !default;
+$dOp-6 : rgba(0, 0, 0, 0.666) !default;
+$dOp-7 : rgba(0, 0, 0, 0.777) !default;
+$dOp-8 : rgba(0, 0, 0, 0.888) !default;
+$dOp-9 : rgba(0, 0, 0, 0.9) !default;
+
+$black:    #000 !default;
+
+$lightBlue:    #0086ff !default;
+$blue:    #0b65a8 !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #159347 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$primary: #79efb4 !default;
+
+
+
+
+
 @mixin hideScrollbar() {
     &::-webkit-scrollbar {
         width:5px;

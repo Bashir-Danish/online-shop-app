@@ -163,6 +163,8 @@ onMounted(() => (
 
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .LoginForm {
     position: fixed;
     left: 0;
@@ -172,11 +174,11 @@ onMounted(() => (
     margin-right: auto;
     width: 47%;
     height: 80%;
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 1em;
-    -webkit-box-shadow: 2px 111px 300px -33px rgba(3, 2, 7, 0.27);
-    -moz-box-shadow: 2px 111px 300px -33px rgba(8, 3, 15, 0.27);
-    box-shadow: 2px 111px 300px -33px rgba(7, 3, 20, 0.27);
+    -webkit-box-shadow: 2px 111px 300px -33px $gray-8;
+    -moz-box-shadow: 2px 111px 300px -33px $gray-8;
+    box-shadow: 2px 111px 300px -33px $gray-8;
     display: flex;
     z-index: 210;
 
@@ -203,7 +205,7 @@ onMounted(() => (
             justify-content: center;
             font-size: 14px;
             font-weight: 400;
-            color: #159347;
+            color: $green;
 
             p {
                 margin-left: 1em;
@@ -217,7 +219,7 @@ onMounted(() => (
         }
 
         h1 {
-            color: #159347;
+            color: $green;
             font-weight: 600;
             text-align: left;
             padding-left: 2em;
@@ -227,7 +229,7 @@ onMounted(() => (
             width: 50%;
             display: flex;
             margin-right: 50px;
-            color: #159347;
+            color: $green;
             font-weight: 200;
         }
     }
@@ -236,11 +238,15 @@ onMounted(() => (
         position: relative;
         width: 70%;
         height: 100%;
-        border-left: 1px solid #cccccc;
-        background-color: #ffffff;
+        border-left: 1px solid $gray-3;
+        background-color: $white;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
-
+        .errorS {
+                color: $gray-5;
+                font-size: 14px;
+                font-weight: 400;
+            }
         .first-form {
             width: 85%;
             height: 100%;
@@ -251,7 +257,7 @@ onMounted(() => (
 
             .divider {
                 margin-top: 2em;
-                background-color: #cccccc;
+                background-color: $gray-3;
                 width: 90%;
                 display: flex;
                 align-items: center;
@@ -260,15 +266,15 @@ onMounted(() => (
                 span {
                     width: 2em;
                     height: 2em;
-                    color: rgb(130, 130, 130);
-                    background-color: #ffffff;
+                    color:$gray-6;
+                    background-color: $white;
                     text-align: center;
                     font-size: 20px;
                 }
             }
 
             .goSignup {
-                color: #0086ff;
+                color: $lightBlue;
                 font-size: 16px;
                 font-weight: 400;
                 margin: 10px;
@@ -280,7 +286,7 @@ onMounted(() => (
             position: absolute;
             width: 95%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.76);
+            background: $bgOp-7;
             z-index: 100;
             display: flex;
             align-items: flex-start;
@@ -301,11 +307,7 @@ onMounted(() => (
             align-items: center;
             margin: 7em auto;
 
-            .errorS {
-                color: #c2bebe;
-                font-size: 14px;
-                font-weight: 400;
-            }
+            
 
             .loadSpinner {
                 position: relative;
@@ -321,18 +323,18 @@ onMounted(() => (
                 .otp {
                     width: 2em;
                     height: 2em;
-                    color: #159347;
+                    color: $green;
                     font-size: 16px;
                     margin: 0 0.5em;
                     border: none;
                     text-align: center;
                     border-radius: 8px;
-                    background: linear-gradient(145deg, #e6e1e1, #ffffff);
-                    box-shadow: 6px 6px 12px #e2dddd,
-                        -6px -6px 12px #ffffff;
+                    background: linear-gradient(145deg, $gray-2, $white);
+                    box-shadow: 6px 6px 12px $gray-4,
+                        -6px -6px 12px $white;
 
                     &:focus {
-                        outline: 0.3px #159347 solid;
+                        outline: 0.3px $green solid;
                     }
 
                 }
@@ -345,15 +347,16 @@ onMounted(() => (
         width: 90%;
         border: none;
         border-radius: 5px;
-        background-color: #159347;
+        background-color: $green;
         transition: all 0.5s ease;
         font-size: 18px;
-        color: #ffffff;
+        color: $white;
         margin-top: 1em;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.301);
-
+        box-shadow: 2px 2px 10px $gray-3;
+        
         &:hover {
-            background-color: #071c92;
+            box-shadow: 2px 2px 10px $gray-5;
+            background-color: $blue;
         }
     }
 
@@ -367,14 +370,14 @@ onMounted(() => (
     }
 
     .divider {
-        background-color: #cccccc;
+        background: $gray-3;
         width: 75%;
         margin: 0 auto;
         height: 0.5px;
     }
 
     .loginLink {
-        color: #0086ff;
+        color: $lightBlue;
         font-size: 16px;
         font-weight: 400;
         margin: 10px;

@@ -23,6 +23,8 @@ defineProps({
 
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .placeholder {
     height: v-bind(hight);
     margin: v-bind(margin);
@@ -35,7 +37,7 @@ defineProps({
     max-height: 100%;
     border-radius: v-bind(borderRadius);
     position: relative;
-    background-color: #f1f1f1;
+    background-color: $gray-1;
 
     /* The moving element */
     &::after {
@@ -50,11 +52,11 @@ defineProps({
         /* transform: translateX(20px); */
         background: -webkit-gradient(linear, left right,
                 right top, from(transparent),
-                color-stop(rgba(226, 226, 226, 0.2)),
+                color-stop($bgOp-1),
                 to(transparent));
 
         background: linear-gradient(90deg, transparent,
-                rgba(70, 70, 70, 0.1), transparent);
+        $dOp-1, transparent);
         /* Adding animation */
         animation: loading 0.8s ease infinite;
     }
@@ -62,14 +64,9 @@ defineProps({
 
 /* Loading Animation */
 @keyframes loading {
-    // 0% {
-    //     background-position: -150px;
-    //     /* transform: ba(-80px); */
-    // }
 
     100% {
         background-position: 150px;
-        /* transform: ba(-80px); */
     }
 }
 </style>

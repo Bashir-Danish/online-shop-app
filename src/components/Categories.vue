@@ -17,7 +17,7 @@ const closeAll = (item: any) => {
         <div class="cat-field" v-for=" category in productStore.category" :key="category._id">
             <div class="open-cat">
                 <div class="main-cat" @click="closeAll(category)">
-                    <h4>{{ category.category }}</h4>
+                    <span>{{ category.category }}</span>
                     <vue-feather type="plus" size="1rem" stroke="#5e5e5e" stroke-width="2"
                         v-if="!category.open"></vue-feather><vue-feather type="minus" size="1rem" stroke="#5e5e5e"
                         stroke-width="1" v-if="category.open"></vue-feather>
@@ -41,11 +41,12 @@ const closeAll = (item: any) => {
 <style lang="scss" scoped>
 @import '@/assets/variables';
 @import '@/assets/mixin.scss';
+
 .cat-wrapper {
     overflow-y: scroll;
     height: calc(100% - 70px);
     max-height: calc(100% - 70px);
-    width: 100% ;
+    width: 100%;
     border-bottom-left-radius: 2%;
     border-bottom-right-radius: 2%;
     @include hideScrollbar();
@@ -54,11 +55,9 @@ const closeAll = (item: any) => {
         @include scrollbar()
     }
 
-   
-
     .main-cat {
-        color: rgb(75, 75, 75);
         padding: 1em 25px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -74,8 +73,14 @@ const closeAll = (item: any) => {
         }
 
         &:hover {
-            background: rgb(255, 255, 255);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+            background: $white;
+            background: linear-gradient(90deg, $white 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+        }
+
+        span {
+            color: $gray-7;
+            font-size: 14px;
+            font-weight: 600;
         }
     }
 
@@ -99,6 +104,7 @@ const closeAll = (item: any) => {
     text-align: right;
     width: 100%;
     height: auto;
+    font-size: 14px;
     display: flex;
     align-items: flex-end;
     flex-direction: column;
@@ -112,24 +118,23 @@ const closeAll = (item: any) => {
     transform-origin: top;
 
     li {
-        color: rgb(75, 75, 75);
+        color: $gray-7;
         width: 70%;
-        padding: 1rem;
-        border-bottom: 1px solid #e5e6e9;
+        padding: .9rem 1em;
+        border-bottom: 1px solid $gray-3;
         text-align: left;
         cursor: pointer;
 
         &:hover {
-            background: rgb(255, 255, 255);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+            background: $white;
+            background: linear-gradient(90deg, $white 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
         }
     }
 
-    h4 {
+    span {
         width: 70%;
         padding: 1rem;
-        border-bottom: 1px solid #e5e6e9;
-        color: rgb(80, 100, 141);
+        border-bottom: 1px solid $gray-3;
         text-align: left;
         cursor: pointer;
     }
@@ -140,7 +145,7 @@ const closeAll = (item: any) => {
 
 
 .cat-divider {
-    border-bottom: 1px solid #e5e6e9;
+    border-bottom: 1px solid $gray-3;
     width: 80%;
     display: flex;
     float: right;

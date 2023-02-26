@@ -42,12 +42,14 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     </div>
 </template>
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .side-bar-s {
     position: sticky;
     top: 75px;
     width: 220px;
     border-top-left-radius: 10px;
-    background-color: #ffffff;
+    background-color: $white;
 
     .header-section {
         padding: .5em;
@@ -69,7 +71,6 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                     align-items: center;
                     justify-content: flex-start;
                     padding: 10px 0;
-                    color: #414e5a;
                     font-weight: 900;
 
                     span {
@@ -84,7 +85,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     }
 
     .filter-section {
-        border-top: 1px solid #e5e6e9;
+        border-top: 1px solid $gray-3;
     }
 
     .price,
@@ -95,7 +96,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
             cursor: pointer;
         }
 
-        border-bottom: 1px solid #e5e6e9;
+        border-bottom: 1px solid $gray-3;
     }
 }
 </style>

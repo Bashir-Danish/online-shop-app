@@ -41,12 +41,14 @@ const scroll = (e: any) => {
 </script>
 
 <template>
+
   <div class="scroll" @scroll="scroll">
 
     <RouterView />
 </div>
 </template>
 <style lang="scss" scoped>
+
 .scroll {
   height: 100vh;
   overflow: scroll;

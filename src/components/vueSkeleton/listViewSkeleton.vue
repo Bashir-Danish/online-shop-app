@@ -6,11 +6,11 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
         <div class="product">
             <div class="product-details">
                 <div class="product-img">
-                    <Placeholder hight="10em" width="10em" border-radius="5px" margin="0" />
+                    <Placeholder hight="10em" width="10em" border-radius="5px" margin=".1em 0 0 0 " />
                 </div>
                 <div class="desc-wrapper">
                     <div class="row1">
-                        <Placeholder hight="1em" width="50%" border-radius="2px" margin="0 0 .5em 2em" />
+                        <Placeholder hight="1em" width="50%" border-radius="2px" margin=".1em 0 .5em 2em" />
                     </div>
                     <div class="row1">
                         <Placeholder hight="1em" width="5%" border-radius="2px" margin="1em 0 .5em 2em" />
@@ -161,6 +161,8 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     </div>
 </template>
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .products-container-s {
     display: flex;
     flex-direction: column;
@@ -194,7 +196,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     }
 
     .product-divider {
-        border-bottom: 1px solid #e5e6e9;
+        border-bottom: 1px solid $gray-3;
         width: 96%;
         margin: .5em auto .5em auto;
     }

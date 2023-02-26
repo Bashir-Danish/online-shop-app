@@ -10,7 +10,7 @@ export const useProductStore = defineStore("product", () => {
   const category = ref<any[]>([]);
   const search = ref("");
   const listView = ref<boolean>();
-  const count = ref<number>();
+  const count = ref<number>(0);
 
   const productLoading = ref(false);
   const filterLoading = ref(false);

@@ -8,7 +8,7 @@ import { useCartStore } from '@/stores/cart'
 import listViewSkeleton from '@/components/vueSkeleton/listViewSkeleton.vue';
 import Header from '@/components/header.vue';
 
-const sort = ref()
+const sort = ref('all')
 const productStore = useProductStore();
 const cartStore = useCartStore();
 
@@ -82,6 +82,9 @@ onMounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
+
+@import '@/assets/variables.scss';
+
 .content {
   padding: 0 1em;
 
@@ -93,24 +96,24 @@ onMounted(() => {
     margin-top: 20px;
     position: relative;
     margin: 20px auto 0 auto;
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    box-shadow: $dOp-2 0px 0px 8px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 
     .divider-border {
-      border-right: 1px solid #d8d8d8;
+      border-right: 1px solid $gray-3;
     }
 
     .main-content {
       width: 100%;
-      background-color: #ffffff;
+      background: $white;
       border-top-right-radius: 10px;
       position: relative;
       z-index: 90;
 
       .product-headers {
         margin: 0 1.5em;
-        border-bottom: 1px solid #e5e6e9;
+        border-bottom: 1px solid $gray-3;
 
         .first-header {
           display: flex;
@@ -120,7 +123,7 @@ onMounted(() => {
 
           .count {
             display: flex;
-            color: #414e5a;
+            color: $gray-7;
           }
 
           .sort {
@@ -132,7 +135,7 @@ onMounted(() => {
             select {
               outline: none;
               width: 30%;
-              border: 1px solid #d8d8d8;
+              border: 1px solid $gray-4;
               border-radius: 5px;
               position: relative;
               cursor: pointer;
@@ -140,14 +143,14 @@ onMounted(() => {
 
               option {
                 transition: .5s all ease;
-                color: #414e5a;
+                color: $gray-7;
                 min-height: 3em;
               }
 
             }
 
             span {
-              color: #414e5a;
+              color: $gray-7;
               margin-right: 1em;
             }
 
@@ -163,7 +166,7 @@ onMounted(() => {
                 border-radius: 5px;
 
                 &:hover {
-                  background-color: #e5e6e9;
+                  background: $gray-1;
                 }
 
               }
@@ -183,18 +186,18 @@ onMounted(() => {
             padding: 5px;
             border-radius: 5px;
             position: relative;
-            color: #414e5a;
+            color: $gray-7;
             transition: all .5s ease;
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .09);
+            box-shadow: 0px 0px 10px 0px $gray-2;
             cursor: pointer;
 
             &:hover {
-              box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+              box-shadow: 0 0 10px 0 $gray-3;
             }
 
             .tag-close {
               position: absolute;
-              background-color: #ffffff;
+              background: $white;
               width: 1.5em;
               height: 1.5em;
               border-radius: 50%;

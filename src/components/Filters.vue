@@ -58,8 +58,7 @@ onMounted(() => {
                 <ul class="brand-ul">
                     <li class="brand-li" v-for="brand in productStore.brandsData">
                         <input type="checkbox" :id="brand._id"
-                            @change="productStore.getFilters('brand', brand.brandName, $event)"
-                            :checked="brand.checked">
+                            @change="productStore.getFilters('brand', brand.brandName, $event)" :checked="brand.checked">
                         <label :for="brand._id">{{ brand.brandName }}</label>
                     </li>
                 </ul>
@@ -91,6 +90,7 @@ onMounted(() => {
     min-width: 220px;
     height: 88vh;
     outline: none;
+    color: $gray-6;
     border-top-left-radius: 10px;
     box-shadow: none;
     z-index: 80;
@@ -103,39 +103,39 @@ onMounted(() => {
             align-items: baseline;
 
             span {
-                color: #414e5a;
                 font-weight: 600;
                 font-size: 12px;
             }
         }
 
         .all-category {
-            background: #fff;
+            background: $white;
             width: 100%;
             padding: 10px;
             margin-top: 0.5em;
-            color: #7b7b7b;
+            color: $gray-5;
             box-sizing: border-box;
 
             span {
-
                 font-weight: 600;
                 margin: 0 0.3em;
                 font-size: 14px;
-                &:first-child{
-                font-size: 12px;
+
+                &:first-child {
+                    font-size: 12px;
                 }
             }
 
             .category {
                 display: flex;
                 align-items: center;
+                font-size: 14px;
                 justify-content: flex-start;
                 padding: 10px 0;
-                color: #414e5a;
+                color: $gray-6;
 
                 .cat-icon {
-                    border: 1px solid #afadad;
+                    border: 1px solid $gray-4;
                     display: inline-flex;
                     padding: 2px;
                     border-radius: 5px;
@@ -154,12 +154,12 @@ onMounted(() => {
     }
 
     .filter-section {
-        border-top: 1px solid #e5e6e9;
+        border-top: 1px solid $gray-3;
 
         .price,
         .brand {
             padding: 0.8em 1.3em;
-            border-bottom: 1px solid #e5e6e9;
+            border-bottom: 1px solid $gray-3;
 
             label {
                 cursor: pointer;
@@ -167,14 +167,12 @@ onMounted(() => {
             }
 
             .header {
-                color: #718190;
                 font-size: 12px;
             }
 
             .price-ul {
                 display: flex;
                 flex-direction: column;
-                color: #414e5a;
                 height: 120px;
                 font-size: 14px;
                 margin: 0.5em 0;
@@ -183,10 +181,9 @@ onMounted(() => {
             .brand-ul {
                 display: flex;
                 flex-direction: column;
-                color: #414e5a;
                 max-height: 180px;
                 min-height: 180px;
-                margin:0 .5em;
+                margin: 0 .5em;
                 overflow-y: scroll;
                 @include hideScrollbar();
                 -ms-overflow-style: none;
@@ -213,7 +210,7 @@ onMounted(() => {
             .brand-search {
                 display: flex;
                 align-items: center;
-                border-bottom: 2px solid #d8d8d8;
+                border-bottom: 2px solid $gray-3;
                 width: fit-content;
                 margin: .5em 0;
                 padding: .5em 0;
@@ -223,12 +220,6 @@ onMounted(() => {
                     border: none;
                     outline: none;
                     padding-left: 1em;
-
-                    &:focus {
-                        .brand-search {
-                            border-bottom: 2px solid #0b65a8;
-                        }
-                    }
                 }
             }
 
@@ -252,15 +243,15 @@ onMounted(() => {
     left: 0;
     right: 0;
     margin: 0 auto;
-    background-color: #ffffff;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    background: $white;
+    box-shadow: 2px 2px 20px $gray-8;
     transition: box-shadow 1.5s ease;
     border-radius: 2%;
     z-index: 300;
 
     &:hover {
         .modal-header {
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 10px 0px $dOp-1;
             clip-path: inset(0px 0px -10px 0px);
         }
     }
@@ -269,15 +260,13 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid #e5e6e9;
-
-        /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1); */
+        border-bottom: 1px solid $gray-3;
         .header {
             margin: 1em;
         }
 
         button {
-            background-color: transparent;
+            background: transparent;
             border: none;
             width: 2em;
             height: 2em;
@@ -285,8 +274,8 @@ onMounted(() => {
             cursor: pointer;
 
             &:hover {
-                background-color: #e5e6e9;
-                border-radius: 20%;
+                background: $gray-1;
+                border-radius: 25%;
             }
         }
     }
@@ -348,8 +337,8 @@ onMounted(() => {
     position: fixed;
     width: 100%;
     height: 120vh;
-    background-color: rgba(0, 0, 0, .5);
-    box-shadow: 10px 10px 10px 10000px rgba(0, 0, 0, .5);
+    background:$dOp-5;
+    box-shadow: 10px 10px 10px 10000px $dOp-5;
     display: flex;
     align-items: center;
     justify-content: center;

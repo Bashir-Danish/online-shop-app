@@ -111,6 +111,8 @@ onMounted(() => (
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .inputBox {
     position: relative;
     width: 100%;
@@ -122,18 +124,18 @@ onMounted(() => (
         width: 90%;
         border: none;
         outline: none;
-        color: #2b2b2b;
-        border-bottom: #cccccc 1px solid;
+        color: $gray-6;
+        border-bottom: $gray-3 1px solid;
         font-size: 18px;
         margin-bottom: 2em;
 
         &:focus {
-            border-bottom: 0.5px #0654b9 solid;
+            border-bottom: 0.5px $blue solid;
         }
 
         &:focus~.label,
         &:valid~.label {
-            color: #0654b9;
+            color: $blue;
             transform: translateY(-1.7em);
             font-size: 14px;
         }
@@ -165,7 +167,7 @@ onMounted(() => (
         letter-spacing: 0.5px all;
         transition: 0.5s;
         font-weight: 200;
-        color: #159347;
+        color: $green;
     }
 
     .message {
@@ -173,7 +175,7 @@ onMounted(() => (
         left: 1.5em;
         top: 3.5em;
         transition: 0.5s ease-in-out;
-        background-color: #ffffff;
+        background-color: $white;
         font-size: 14px;
     }
 }

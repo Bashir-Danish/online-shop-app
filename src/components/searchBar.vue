@@ -128,8 +128,8 @@ const deleteName = () => {
 .search-Bar {
     width: 100%;
     height: 75px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;
+    background:$white;
+    box-shadow: $dOp-1 0px 1px 4px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -140,7 +140,7 @@ const deleteName = () => {
         height: 75px;
         margin: auto;
         display: flex;
-        background-color: rgb(255, 255, 255);
+        background: $white;
         position: sticky;
         top: 0;
         z-index: 100;
@@ -152,7 +152,7 @@ const deleteName = () => {
             justify-content: center;
             font-size: 14px;
             font-weight: 400;
-            color: #159347;
+            color: $green;
             text-decoration: none;
             cursor: pointer;
 
@@ -178,11 +178,9 @@ const deleteName = () => {
 
                 .input {
                     height: 36px;
-                    color: #919191;
                     outline: none;
                     width: 100%;
-                    background: #ffffff;
-                    border: 1px solid #c2c2c2;
+                    border: 1px solid $gray-4;
                     padding-left: 10px;
                     font-size: 1.1em;
                     border-radius: 2px 0 0 2px;
@@ -192,13 +190,13 @@ const deleteName = () => {
                 }
 
                 .auto-complete-container {
-                    background: #ffffff;
+                    background: $white;
                     width: calc(100%);
                     position: absolute;
                     height: fit-content;
                     max-height: 30em;
                     top: 36px;
-                    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px;
+                    box-shadow: $dOp-2 0px 1px 10px;
                     clip-path: inset(0px -10px -10px -10px);
                     border-bottom-left-radius: 5px;
                     border-bottom-right-radius: 5px;
@@ -215,13 +213,13 @@ const deleteName = () => {
                         display: flex;
                         font-size: 14px;
                         align-items: center;
-                        color: #313131;
+                        color: $gray-7;
                         cursor: pointer;
 
                         span {
                             padding: 0.5em;
                             width: 100%;
-                            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                            border-bottom: 1px solid $gray-3;
                             display: flex;
                             align-items: center;
 
@@ -237,7 +235,7 @@ const deleteName = () => {
                         }
 
                         &:hover {
-                            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
+                            background: linear-gradient(90deg, $white 0%, rgba(192, 193, 194, 0.9416141456582633) 0%, rgba(207, 208, 209, 1) 0%, rgba(228, 229, 229, 1) 0%, rgba(235, 236, 236, 1) 0%, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 84%);
                         }
                     }
                 }
@@ -252,19 +250,19 @@ const deleteName = () => {
 
             .search-button {
                 height: 36px;
-                color: #ffffff;
+                color: $white;
                 padding: 0 1.5em;
                 border-bottom-right-radius: 4px;
                 border-top-right-radius: 4px;
                 border: none;
                 outline: none;
-                background-color: #159347;
+                background: $green;
                 display: flex;
                 align-items: center;
                 cursor: pointer;
 
                 &:hover {
-                    background: #0b65a8;
+                    background: $blue;
                 }
 
                 i {
@@ -286,23 +284,20 @@ const deleteName = () => {
                 width: 8em;
                 height: 2.5em;
                 //  font-size: 1em; 
-                background-color: transparent;
+                background: transparent;
                 border: none;
-                outline: 1px solid #159347;
-                color: #159347;
+                outline: 1px solid $green;
+                color: $green;
                 border-radius: 3px;
                 cursor: pointer;
 
                 &:hover {
-                    background: #0b65a8;
-                    outline: 1px solid #0b65a8;
-
-                    color: #fff;
+                    background: $blue;
+                    outline: 1px solid $blue;
+                    color: $white;
 
                     .cart-basket i {
-
-                        color: #fff;
-
+                        color: $white;
                     }
                 }
             }
@@ -312,13 +307,13 @@ const deleteName = () => {
                 margin: 1em;
 
                 i {
-                    color: #159347;
+                    color: $green;
                 }
 
                 span {
                     position: absolute;
-                    background-color: rgb(163, 6, 6);
-                    color: #ffffff;
+                    background: rgb(163, 6, 6);
+                    color: $white;
                     font-size: 10px;
                     display: flex;
                     align-items: center;

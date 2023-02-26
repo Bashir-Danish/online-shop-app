@@ -103,25 +103,25 @@ showSingUPModal = false;
 
 <style scoped lang="scss">
 @import '@/assets/mixin.scss';
-
+@import '@/assets/variables.scss';
 
 header {
   width: 100%;
   height: 30px;
-  background-color: #159347;
+  background: $green;
 
 }
 
 .header-center {
   max-width: 1366px;
   width: 100%;
-  color: #ececec;
+  color: $gray-2;
   margin: 0;
   height: 30px;
   margin: auto;
   display: flex;
   justify-content: space-between;
-  background-color: #159347;
+  background: $green ;
 
   ul {
     list-style-type: none;
@@ -132,7 +132,7 @@ header {
 
   a {
     text-decoration: none;
-    color: #ececec;
+    color: $gray-2;
   }
 
   .social-links {
@@ -142,7 +142,7 @@ header {
 
     .social-list {
       .social-item {
-        background-color: #ececec;
+        background: $gray-2;
         width: 1em;
         height: 1em;
         display: flex;
@@ -203,8 +203,7 @@ header {
   }
 
   @include small-down {
-    background: #fff;
-    // background-color: aqua;
+    background: $white;
     .social-links {
       display: none;
     }
@@ -215,7 +214,7 @@ header {
         display: none;
       }
       span{
-        color: #159347 ;
+        color: $green ;
       }
       .signup-login {
         display: none;
@@ -245,7 +244,7 @@ header {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(20, 20, 31, 0.733);
+  background: $dOp-5;
   display: flex;
   align-items: center;
   justify-content: center;

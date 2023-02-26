@@ -57,18 +57,20 @@ const router = useRouter()
     </div>
 </template>
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .product {
     width: 250px;
     max-width: 25%;
     padding: 0;
-    color: #212121;
+    color: $gray-7;
     border: 0;
     border-radius: 3%;
     transition: box-shadow 1s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
     &:hover {
-        box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 5px 10px 5px $dOp-1;
         cursor: pointer;
 
         img {
@@ -112,7 +114,7 @@ const router = useRouter()
 
             &::before {
                 content: '';
-                border: 1px solid #e5e6e9;
+                border: 1px solid $gray-4;
                 position: absolute;
                 border-radius: 5%;
                 background: transparent;
@@ -123,7 +125,7 @@ const router = useRouter()
 
             span {
                 position: absolute;
-                background: #ffffff79;
+                background: $bgOp-4;
                 padding: .3em;
                 border-radius: 50%;
                 display: flex;
@@ -155,44 +157,39 @@ const router = useRouter()
                     max-width: 100%;
                     max-height: 2.5em;
                     min-height: 2.5em;
-                    font-size: 1.1em;
+                    font-size: 15px;
                     white-space: wrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    color: #414e5a;
                 }
 
                 .price {
-                    color: #414e5a;
-                    margin: .5em 0;
+                    margin-top: .5em;
                 }
             }
 
             .row2 {
-                flex-grow: 1;
-                margin-top: 0;
-
                 .add-btn {
-                    background-color: #159347;
+                    background: $green;
                     width: 100px;
                     border-radius: 15px;
                     padding: 0.4em 0;
-                    color: #fff;
+                    color: $white;
                     display: flex;
                     justify-content: space-evenly;
                     cursor: pointer;
                     transition: all .2s;
+
                     &:hover {
-                        background: #0b65a8;
+                        background: $blue;
                     }
                 }
 
                 .add-btn-2 {
-                    background-color: #fff;
+                    background: $white;
                     width: 100px;
                     border-radius: 15px;
-                    color: #414e5a;
-                    border: 1px solid #159347;
+                    border: 1px solid $green;
                     display: flex;
                     align-items: center;
                     justify-content: space-evenly;
@@ -220,7 +217,7 @@ const router = useRouter()
 .product-2 {
     width: 100%;
     padding: 0;
-    color: #212121;
+    color: $gray-7;
     border: 0;
     border-radius: 3%;
     transition: box-shadow 0.7s ease;
@@ -239,34 +236,33 @@ const router = useRouter()
             .row1 {
 
                 .price {
-                    margin: 1.5em 0;
+                    margin: 1.5em  0;
                 }
             }
 
             .row2 {
 
                 .add-btn {
-                    background-color: #159347;
+                    background: $green;
                     width: 100px;
                     border-radius: 15px;
                     padding: 0.4em 0;
-                    color: #fff;
+                    color: $white;
                     display: flex;
                     justify-content: space-evenly;
                     transition: all .2s;
                     cursor: pointer;
 
                     &:hover {
-                        background: #0b65a8;
+                        background: $blue;
                     }
                 }
 
                 .add-btn-2 {
-                    background-color: #fff;
+                    background: $white;
                     width: 100px;
                     border-radius: 15px;
-                    color: #414e5a;
-                    border: 1px solid #159347;
+                    border: 1px solid $green;
                     display: flex;
                     align-items: center;
                     justify-content: space-evenly;
@@ -279,7 +275,7 @@ const router = useRouter()
                         border-radius: 5px;
                         transition: all .3s ease;
                         cursor: pointer;
-                        
+
                     }
                 }
             }
@@ -314,7 +310,7 @@ const router = useRouter()
 
             &::before {
                 content: '';
-                border: 1px solid #e5e6e9;
+                border: 1px solid $gray-3;
                 position: absolute;
                 border-radius: 5%;
                 background: transparent;
@@ -331,7 +327,7 @@ const router = useRouter()
 
             span {
                 position: absolute;
-                background: #ffffff79;
+                background: $gray-1;
                 padding: .5em;
                 border-radius: 50%;
                 display: flex;
@@ -344,7 +340,7 @@ const router = useRouter()
 }
 
 .product-divider {
-    border-bottom: 1px solid #e5e6e9;
+    border-bottom: 1px solid $gray-3;
     width: 95%;
     margin: 0.5em auto 1.5em auto;
 }

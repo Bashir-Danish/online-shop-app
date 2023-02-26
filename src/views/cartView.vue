@@ -21,16 +21,18 @@ const router = useRouter();
     </div>
 </template>
 <style scoped lang="scss">
+
+@import '@/assets/variables.scss';
 .cart {
-    background-color: rgba(46, 55, 97, 0.05);
+    background-color: $backGround;
     min-height: 100%;
     position: relative;
 
     .cart-header {
         width: 100%;
         height: 75px;
-        background-color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        background-color: $white;
+        box-shadow: $dOp-2 0px 1px 4px;
         position: sticky;
         top: 0;
         z-index: 300;
@@ -42,7 +44,7 @@ const router = useRouter();
             justify-content: center;
             font-size: 14px;
             font-weight: 400;
-            color: #159347;
+            color: $green;
             text-decoration: none;
             cursor: pointer;
 

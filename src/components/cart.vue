@@ -113,7 +113,7 @@ onMounted(() => {
                     <span class="approx">
                         <span>Approx. Delivery Charge <vue-feather type="info" size="1em" stroke-width="2"
                                 title="These are approximate delivery charges please enter your pincode for
-                                                                                                exact charge"></vue-feather>
+                                                                                                    exact charge"></vue-feather>
                         </span>
                         <span>Free</span>
                     </span>
@@ -155,17 +155,20 @@ onMounted(() => {
     <div class="container" v-if="pinCodeModal" @click="pinCodeModal = false"></div>
 </template>
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .cart-div {
     padding: 1.3em 2em;
     display: flex;
     position: relative;
+    color: $gray-7;
 
     .cart-items {
         position: relative;
         width: 75%;
         min-height: 80vh;
-        background-color: rgb(255, 255, 255);
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px;
+        background: $white;
+        box-shadow: $dOp-2 0px 0px 8px;
         border-radius: 3px;
 
         .cart-items-count {
@@ -177,11 +180,11 @@ onMounted(() => {
 
                 span {
                     margin: 0.5em;
-                    color: #414e5a;
+                    color: $gray-6;
 
                     &:last-child {
                         font-size: 12px;
-                        color: #0086ff;
+                        color: $lightBlue;
 
                         &:hover {
                             text-decoration: underline;
@@ -203,32 +206,30 @@ onMounted(() => {
                     align-items: center;
 
                     i {
-                        color: #0086ff;
-                        background-color: #fff;
+                        color: $lightBlue;
+                        background: $white;
 
                     }
 
                     span {
-                        color: #414e5a;
+                        color: $gray-6;
                         font-weight: 700;
                         margin: 0 .5em;
                     }
                 }
 
                 button {
-                    background-color: transparent;
-                    color: #0086ff;
+                    background: transparent;
+                    color: $lightBlue;
                     font-size: 12px;
-                    height: fit-content;
-                    border: #e5e6e9 1px solid;
+                    border: $gray-3 1px solid;
                     border-radius: 5px;
-                    outline: none;
                     padding: .4em 1.5em;
                     cursor: pointer;
 
                     &:hover {
-                        color: #fff;
-                        background-color: #0086ff;
+                        color: $white;
+                        background: $lightBlue;
                     }
                 }
             }
@@ -271,7 +272,7 @@ onMounted(() => {
                             right: 0;
                             margin: 0 auto;
                             width: 95%;
-                            border-bottom: #e5e6e9 1px solid;
+                            border-bottom: $gray-2 1px solid;
 
                         }
 
@@ -312,7 +313,7 @@ onMounted(() => {
 
                                 &::before {
                                     content: '';
-                                    border: 1px solid #e5e6e9;
+                                    border: 1px solid $gray-2;
                                     position: absolute;
                                     border-radius: 5%;
                                     background: transparent;
@@ -335,7 +336,7 @@ onMounted(() => {
                                     font-size: 14px;
 
                                     &:hover {
-                                        color: #0086ff;
+                                        color: $lightBlue;
                                     }
                                 }
 
@@ -360,10 +361,10 @@ onMounted(() => {
                                         margin-right: 1em;
 
                                         &:hover {
-                                            color: #0086ff;
+                                            color: $lightBlue;
 
                                             i {
-                                                color: red;
+                                                color: $red;
                                             }
 
                                         }
@@ -379,10 +380,10 @@ onMounted(() => {
                                         }
 
                                         &:hover {
-                                            color: #0086ff;
+                                            color: $lightBlue;
 
                                             i {
-                                                color: #0086ff;
+                                                color: $lightBlue;
                                             }
                                         }
                                     }
@@ -403,7 +404,7 @@ onMounted(() => {
                         height: 2em;
                         width: fit-content;
                         display: flex;
-                        border: #e5e6e9 1px solid;
+                        border: $gray-2 1px solid;
                         border-radius: 5px;
 
                         .count {
@@ -421,7 +422,7 @@ onMounted(() => {
                             cursor: pointer;
 
                             &:hover {
-                                background: #e5e6e9;
+                                background: $gray-2;
                             }
                         }
                     }
@@ -436,8 +437,8 @@ onMounted(() => {
         }
 
         .continueBtn {
-            background: #fff;
-            box-shadow: rgba(0, 0, 0, .2) 0px 1px 10px;
+            background: $white;
+            box-shadow: $dOp-2 0px 1px 10px;
             clip-path: inset(-15px 0px 0px 0px);
             position: sticky;
             bottom: 0px;
@@ -449,10 +450,10 @@ onMounted(() => {
             button {
                 background: transparent;
                 font-size: 14px;
-                color: #159347;
+                color: $green;
                 padding: .6em 2.5em;
                 border-radius: 4px;
-                border: 1px solid #159347;
+                border: 1px solid $green;
                 outline: none;
                 display: flex;
                 align-items: center;
@@ -460,9 +461,9 @@ onMounted(() => {
                 cursor: pointer;
 
                 &:hover {
-                    border: 1px solid #0b65a8;
-                    background: #0b65a8;
-                    color: #fff;
+                    border: 1px solid $blue;
+                    background: $blue;
+                    color: $white;
                 }
             }
         }
@@ -475,11 +476,11 @@ onMounted(() => {
         top: 80px;
 
         .apply-coupon {
-            background: #fff;
+            background: $white;
             margin: 0 1em;
             width: 100%;
             padding: 1em;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px;
+            box-shadow: $dOp-2 0px 0px 8px;
             border-radius: 3px;
 
             .border {
@@ -489,7 +490,7 @@ onMounted(() => {
                 display: flex;
                 justify-content: space-between;
                 border-radius: 3px;
-                border: #6d6d6d 1px dashed;
+                border: $gray-6 1px dashed;
 
                 .col-1 {
                     display: flex;
@@ -508,8 +509,8 @@ onMounted(() => {
                 }
 
                 &:hover {
-                    color: #0086ff;
-                    border: 1px dashed #0086ff;
+                    color: $lightBlue;
+                    border: 1px dashed $lightBlue;
                     cursor: pointer;
                 }
             }
@@ -517,19 +518,19 @@ onMounted(() => {
         }
 
         .payment {
-            background: #fff;
+            background: $white;
             margin: 1em;
             width: 100%;
             padding: 1em;
             border-radius: 3px;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px;
+            box-shadow: $dOp-2 0px 0px 8px;
 
             .row-1 {
                 display: flex;
                 flex-direction: column;
-                color: #6d6d6d;
+                color: $gray-6;
                 font-size: 14px;
-                border-bottom: 1px dashed #6d6d6d;
+                border-bottom: 1px dashed $gray-6 ;
                 padding: 1em 0;
                 position: relative;
 
@@ -554,12 +555,12 @@ onMounted(() => {
                             cursor: pointer;
 
                             &:hover {
-                                color: #000;
+                                color: $black;
                             }
                         }
 
                         &:last-child {
-                            color: #159347;
+                            color: $green;
                         }
                     }
                 }
@@ -571,7 +572,7 @@ onMounted(() => {
                 .total {
                     display: flex;
                     justify-content: space-between;
-                    color: #000;
+                    color: $black;
                     font-size: 14px;
                     font-weight: 600;
                     padding: .5em 0 0;
@@ -579,20 +580,20 @@ onMounted(() => {
 
                 .checkout {
                     font-size: 10px;
-                    color: #6d6d6d;
+                    color: $gray-6;
 
                     button {
                         width: 100%;
                         padding: .9em;
                         margin-top: 1em;
                         border-radius: 5px;
-                        background-color: #159347;
-                        color: #fff;
+                        background: $green;
+                        color: $white;
                         border: none;
                         cursor: pointer;
 
                         &:hover {
-                            background: #0b65a8;
+                            background: $blue;
                         }
                     }
                 }
@@ -603,8 +604,8 @@ onMounted(() => {
 
 .no-items {
     min-height: 83vh;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px;
+    background: $white;
+    box-shadow: $dOp-2 0px 0px 8px;
     margin: 1em;
     border-radius: 10px;
     display: flex;
@@ -617,17 +618,17 @@ onMounted(() => {
     }
 
     h3 {
-        color: #414e5a;
+        color: $gray-6;
     }
 
     span {
-        color: #414e5a;
+        color: $gray-6;
         padding: .5em;
     }
 
     button {
-        background: #159347;
-        color: #fff;
+        background: $green;
+        color: $white;
         transition: all .5s ease;
         padding: .8em 4em;
         margin: .5em;
@@ -636,7 +637,7 @@ onMounted(() => {
         cursor: pointer;
 
         &:hover {
-            background: #0b65a8;
+            background: $blue;
         }
     }
 }
@@ -656,7 +657,7 @@ onMounted(() => {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5);
+    background: $dOp-5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -672,9 +673,9 @@ onMounted(() => {
     left: 0;
     right: 0;
     margin: auto;
-    background: #fff;
+    background: $white;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 25px;
+    box-shadow: $dOp-1 0px 0px 25px;
     z-index: 1000;
 
     .modal-header {
@@ -705,15 +706,15 @@ onMounted(() => {
             height: 3em;
             bottom: 0;
             left: 0;
-            background-color: #159347;
-            color: #fff;
+            background: $green;
+            color: $white;
             border: none;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
             cursor: pointer;
 
             &:hover {
-                background-color: #0b65a8;
+                background: $blue;
             }
         }
     }
