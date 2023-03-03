@@ -37,11 +37,16 @@ export const useCartStore = defineStore("cart", () => {
       img: product.img[0],
       quantity: 1,
     };
-    items.value.push(item);
-    localStorage.setItem("items", JSON.stringify(items.value));
+    const exis = items.value.find((e) => e._id == product._id);
+    console.log(exis);
+    if (!items.value.find((e) => e._id == product._id)) {
+      items.value.push(item);
+      localStorage.setItem("items", JSON.stringify(items.value));
+    }
+    console.log(items.value);
   }
   function changeQuantity(act: string, id: string) {
-    total.value = 0
+    total.value = 0;
     items.value.find((i) => {
       if (i._id === id) {
         if (act == "increase") {
@@ -56,7 +61,7 @@ export const useCartStore = defineStore("cart", () => {
       }
     });
     items.value.forEach((e) => {
-      total.value += (e.price * e.quantity);
+      total.value += e.price * e.quantity;
     });
     localStorage.setItem("items", JSON.stringify(items.value));
   }

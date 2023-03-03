@@ -179,6 +179,7 @@ export const useProductStore = defineStore("product", () => {
 
   async function fetchBrandAndPrice() {
     filterLoading.value = true;
+    productLoading.value = true;
     await _axios
       .all([
         axios.get("/category/all"),
@@ -194,7 +195,8 @@ export const useProductStore = defineStore("product", () => {
           if (brands.value && price.value && category.value) {
             setTimeout(() => {
               filterLoading.value = false;
-            }, 500);
+              productLoading.value = false;
+            }, 300);
           }
           // if (product.value) productLoading.value = false;
         })

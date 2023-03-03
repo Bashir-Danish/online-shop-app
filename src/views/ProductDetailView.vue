@@ -5,8 +5,10 @@ import Header from '@/components/header.vue';
 
 import { ref, computed, onBeforeMount } from "vue";
 import { useCartStore } from "@/stores/cart";
+import { useAuthStore } from "@/stores/auth";
 
 
+const authStore = useAuthStore()
 const cartStore = useCartStore()
 const url = window.location.href;
 const lastParam = url.split("/").slice(-1)[0];
@@ -45,10 +47,20 @@ onBeforeMount(async () => {
             });
     }
 });
+const liked = computed(() => {
+    let like;
+    if (authStore.isLoggedIn == true) {
+        like = authStore.user.wishList.some((item: any) => item._id == product.value?._id)
+    } else {
+        like = false
+    }
+
+    return like
+})
 cartStore.loadCart()
 
 const existItem = computed(() => {
-    let item = cartStore.items.find(el => el._id == product.value._id)
+    let item = cartStore.items.find(el => el._id == product.value?._id)
     return item
 })
 const scrollSide = (e: any) => {
@@ -62,20 +74,24 @@ const scrollSide = (e: any) => {
     <Header />
     <div class="background-container">
         <div class="prd-path">
-            Home > {{ product.category }} > {{ product.name }}
+            Home > {{ product?.category }} > {{ product?.name }}
         </div>
         <div class="product-details-div">
             <div class="col-1">
                 <div class="img-list">
-                    <div class="img" v-for="img in product.img" @mouseover="changeImg(img)">
+                    <div class="img" v-for="img in product?.img" @mouseover="changeImg(img)">
                         <img :src="'http://localhost:4000' + img" :alt="img" />
                     </div>
                 </div>
                 <div class="img-slider">
                     <span class="bg-filter"
                         :style="{ backgroundImage: 'url(http://localhost:4000' + showImg + ')' }"></span>
-                    <span class="heart"><vue-feather type="heart" size="1.5em" stroke="#414e5a"
-                            stroke-width="2"></vue-feather></span>
+                    <span class="heart" @click.stop="authStore.addToWishlist(product, liked)">
+                        <div class="heart-icon" v-if="liked">
+                        </div>
+                        <vue-feather v-else type="heart" size="1.5em" stroke="#414e5a" stroke-width="2"></vue-feather>
+                    </span>
+
                     <img :src="'http://localhost:4000' + showImg" :alt="showImg" />
                 </div>
             </div>
@@ -83,7 +99,7 @@ const scrollSide = (e: any) => {
             <div class="col-2">
                 <div class="header">
                     <div class="productText">
-                        <h2>{{ product.name }}</h2>
+                        <h2>{{ product?.name }}</h2>
                         <span>
                             <vue-feather type="share" size="2em" stroke-width="1.5" stroke="#414e5a"></vue-feather>
                             <span>SHARE</span>
@@ -97,7 +113,7 @@ const scrollSide = (e: any) => {
                         <span>Be the First to Review</span>
                     </div>
                     <div class="price">
-                        <h1>${{ product.price }}</h1>
+                        <h1>${{ product?.price }}</h1>
                     </div>
                 </div>
                 <div class="delivery-details">
@@ -133,7 +149,7 @@ const scrollSide = (e: any) => {
                 <div class="Specifications">
                     <h2>Specifications</h2>
                     <ul>
-                        <li v-for="spec in product.Specifications.slice().reverse()" :key="spec._id">
+                        <li v-for="spec in product?.Specifications.slice().reverse()" :key="spec._id">
                             <span class="name">{{ spec.name }}</span>
                             <span class="value">{{ spec.value }}</span>
                         </li>
@@ -170,6 +186,8 @@ const scrollSide = (e: any) => {
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
+@import '@/assets/mixin.scss';
+
 
 .background-container {
     position: relative;
@@ -179,14 +197,14 @@ const scrollSide = (e: any) => {
 
     .prd-path {
         padding: 0.5em 0.5em;
-        color: $gray-6;
+        color: $gray-15;
         max-width: 1366px;
         margin: 0 auto;
     }
 
     .divider {
-        border-top: 0.3px solid $gray-3;
-        border-left: 0.3px solid $gray-3;
+        border-top: 0.3px solid $gray-2;
+        border-left: 0.3px solid $gray-2;
     }
 
     .product-details-div {
@@ -224,7 +242,7 @@ const scrollSide = (e: any) => {
                     justify-content: center;
                     margin-bottom: 0.5em;
                     border-radius: 3px;
-                    border: $gray-3 1px solid;
+                    border: $gray-2 1px solid;
 
                     &:hover {
                         border: $lightBlue 1px solid;
@@ -240,7 +258,7 @@ const scrollSide = (e: any) => {
             .img-slider {
                 height: 28em;
                 width: 80%;
-                border: $gray-3 1px solid;
+                border: $gray-2 1px solid;
                 border-radius: 5px;
                 margin: 2em 0.5em;
                 position: relative;
@@ -272,6 +290,23 @@ const scrollSide = (e: any) => {
                     justify-content: center;
                     border-radius: 50%;
                     background: $bgOp-4;
+
+                    .heart-icon {
+                        background: url("@/assets/photos/heart.png") no-repeat;
+                        height: 70px;
+                        width: 70px;
+                        background-position: left;
+                        background-size: 2900%;
+                        cursor: pointer;
+                        position: absolute;
+                        animation: like-anim .5s steps(28) forwards;
+                    }
+
+                    @keyframes like-anim {
+                        to {
+                            background-position: right;
+                        }
+                    }
                 }
 
                 img {
@@ -304,7 +339,7 @@ const scrollSide = (e: any) => {
                     span {
                         display: block;
                         text-align: center;
-                        color: $gray-6;
+                        color: $gray-15;
                         font-size: 14px;
                         position: absolute;
                         right: 1em;
@@ -350,7 +385,7 @@ const scrollSide = (e: any) => {
 
                 h4 {
                     font-weight: 400;
-                    color: $gray-7;
+                    color: $gray-18;
                 }
 
                 .pinCode {
@@ -359,7 +394,7 @@ const scrollSide = (e: any) => {
                     border-radius: 5px;
                     background: #ffffff;
                     width: fit-content;
-                    border: 1px solid $gray-3;
+                    border: 1px solid $gray-2;
                     margin: 0.5em 0;
 
                     input {
@@ -391,7 +426,7 @@ const scrollSide = (e: any) => {
                 }
 
                 div {
-                    color: $gray-7;
+                    color: $gray-18;
                 }
             }
 
@@ -466,7 +501,7 @@ const scrollSide = (e: any) => {
                 padding: 1em;
 
                 h2 {
-                    border-bottom: 1px dashed $gray-4;
+                    border-bottom: 1px dashed $gray-10;
                     padding: 0.9em 0;
                 }
 
@@ -481,12 +516,12 @@ const scrollSide = (e: any) => {
                         .name {
                             width: 30%;
                             font-size: 14px;
-                            color: $gray-5;
+                            color: $gray-8;
                         }
 
                         .value {
                             width: 70%;
-                            color: $gray-6;
+                            color: $gray-15;
                         }
                     }
                 }
@@ -509,11 +544,11 @@ const scrollSide = (e: any) => {
                     .rate {
                         width: 50%;
                         flex-direction: column;
-                        border-right: 1px solid $gray-3;
+                        border-right: 1px solid $gray-2;
 
                         span {
                             margin: 0.25em 0;
-                            color: $gray-7;
+                            color: $gray-18;
                         }
                     }
 
@@ -523,7 +558,7 @@ const scrollSide = (e: any) => {
 
                         span {
                             margin: 0.25em 0;
-                            color: $gray-7;
+                            color: $gray-18;
                         }
 
                         button {

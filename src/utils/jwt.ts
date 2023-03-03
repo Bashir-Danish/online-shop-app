@@ -16,15 +16,5 @@ export const saveUser = (user :any )=> {
 export const destroyToken = () => {
   window.localStorage.removeItem('tokenId');
 };
-export const addToCart = (product :any) => {
-  // let cartItem = window.localStorage.getItem('product');
-  // let count = window.localStorage.getItem('cartCount');
-  // if (cartItem ) {
-  //   window.localStorage.setItem('cartItem', product);
-  //   window.localStorage.setItem('cartCount', count++ );
-  // }
 
-};
-
-
-export default { getToken, saveToken, destroyToken ,saveUser ,addToCart};
+export default { getToken, saveToken, destroyToken ,saveUser };

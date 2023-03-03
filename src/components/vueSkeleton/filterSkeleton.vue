@@ -9,7 +9,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
                 <Placeholder hight="1.3em" width="30%" border-radius="5px" />
             </div>
             <div class="all-category">
-                <Placeholder hight="1.3em" width="40%" border-radius="5px" margin="1em 1em 0 1em" />
+                <Placeholder hight="1.3em" width="40%" border-radius="5px" margin=".5em 1em 0 1em" />
                 <div class="category">
                     <Placeholder hight="1.3em" width="85%" border-radius="5px" margin=".4em" />
                 </div>
@@ -53,10 +53,11 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
 
     .header-section {
         padding: .5em;
+
         .filter-header {
             display: flex;
             justify-content: space-between;
-            margin: 1em 1em 0 1em;
+            margin: .5em 1em 0 .5em;
             align-items: baseline;
 
             .all-category {
@@ -85,7 +86,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     }
 
     .filter-section {
-        border-top: 1px solid $gray-3;
+        border-top: 1px solid $gray-2;
     }
 
     .price,
@@ -96,7 +97,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
             cursor: pointer;
         }
 
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
     }
 }
 </style>

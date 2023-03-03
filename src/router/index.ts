@@ -1,47 +1,70 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import ProductDetailView from '@/views/ProductDetailView.vue'
-import Cart from '@/views/CartView.vue'
-import CartView from '@/components/cart.vue'
-import checkout from '@/components/checkout.vue'
-
+import { createRouter, createWebHistory } from "vue-router";
+import home from "@/views/HomeVue.vue";
+import jwt from "@/utils/jwt";
 
 const router = createRouter({
   history: createWebHistory(),
-  
+
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: ProductDetailView
-    },
-    {
-      path: '/cart',
-      component: Cart,
+      path: "/",
+      component: home,
       children: [
         {
-          path: '',
-          name: 'cart',
-          component:CartView
-        }
-        ,{
-          path: 'checkout-flow',
-          name: 'checkout',
-          component:checkout
-        }
-      ]
+          path: "",
+          name: "home",
+          component: () => import("@/components/Home/Home.vue"),
+        },
+        {
+          path: "my-account",
+          name: "account",
+          component: () => import("@/components/Home/myAccount.vue"),
+          meta: {
+            isAuth: true,
+          },
+        },
+        {
+          path: "wishlist",
+          name: "wishlist",
+          component: () => import("@/components/Home/wishlist.vue"),
+          meta: {
+            isAuth: true,
+          },
+        },
+      ],
     },
     {
-      path: '/product/:id',
-      name: 'product',
-      component: ProductDetailView
+      path: "/cart",
+      component: () => import("@/views/CartView.vue"),
+      children: [
+        {
+          path: "",
+          name: "cart",
+          component: () => import("@/components/cart.vue"),
+        },
+        {
+          path: "checkout-flow",
+          name: "checkout",
+          component: () => import("@/components/checkout.vue"),
+        },
+      ],
+    },
+    {
+      path: "/product/:id",
+      name: "product",
+      component: () => import("@/views/ProductDetailView.vue"),
+    },
+  ],
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((e) => e.meta.isAuth)) {
+    if (!jwt.getToken()) {
+      next({ name: "home" });
+    } else {
+      next();
     }
-  ]
-})
-
-export default router
+  } else {
+    next();
+  }
+});
+export default router;

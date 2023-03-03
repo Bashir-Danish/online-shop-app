@@ -1,16 +1,15 @@
 <script setup lang="ts">
 
 import { RouterView } from 'vue-router'
-import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useProductStore } from '@/stores/product';
 import jwt from '@/utils/jwt'
 
-
 const authStore = useAuthStore();
 const productStore = useProductStore();
 
-onMounted(() => {
+onBeforeMount(() => {
   if (jwt.getToken()) authStore.verifyToken()
 })
 
@@ -19,7 +18,7 @@ const scroll = (e: any) => {
   const { scrollTop, clientHeight, scrollHeight } = e.target
   if (scrollTop + clientHeight >= scrollHeight) {
 
-    if (productStore.count  > 20) {
+    if (productStore.count > 20) {
       productStore.getPage()
     }
 
@@ -41,14 +40,12 @@ const scroll = (e: any) => {
 </script>
 
 <template>
-
   <div class="scroll" @scroll="scroll">
 
     <RouterView />
-</div>
+  </div>
 </template>
 <style lang="scss" scoped>
-
 .scroll {
   height: 100vh;
   overflow: scroll;

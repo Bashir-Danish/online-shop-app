@@ -1,24 +1,44 @@
 <script setup lang="ts">
-import SignUP from "./auth/signup.vue";
-import Login from "./auth/login.vue";
 import SearchBar from "./searchBar.vue";
 import { RouterLink } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, defineAsyncComponent } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore();
 
-const showSingUPModal = ref(false);
-const showLoginModal = ref(false);
+const SignUP = defineAsyncComponent(() =>
+  import('./auth/signup.vue')
+)
+const Login = defineAsyncComponent(() =>
+  import('./auth/login.vue')
+)
+const showAccDropdown = ref(false);
+const dropdown = ref(false);
 
+const router = useRouter();
+
+const closeDropdown = () => {
+  setTimeout(() => {
+    if (!dropdown.value) {
+      showAccDropdown.value = false
+    }
+  }, 300);
+}
+const Logout = () => {
+  showAccDropdown.value = false
+  authStore.isLoggedIn = false
+  router.push({ path: '/', name: 'home' })
+  localStorage.removeItem('tokenId')
+}
 watch(
   () => authStore.isLoggedIn,
   () => {
     if (authStore.isLoggedIn == true) {
       setTimeout(() => {
-        showSingUPModal.value = false;
-        showLoginModal.value = false;
-      }, 1500);
+        authStore.showSingUPModal = false;
+        authStore.showLoginModal = false;
+      }, 500);
     }
   }
 );
@@ -26,21 +46,20 @@ watch(
 
 <template>
   <header>
-    <div class="container" v-if="showLoginModal || showSingUPModal" @click="
-  showLoginModal = false;
-showSingUPModal = false;
-    "></div>
-    <TransitionGroup name="modals" mode="out-in">
-      <SignUP v-if="showSingUPModal" @closeSignUPModal="showSingUPModal = false" @gotoLogin="
+    <div class="container" v-if="authStore.showLoginModal || authStore.showSingUPModal" @click="
+      authStore.showLoginModal = false;
+    authStore.showSingUPModal = false;"></div>
+    <TransitionGroup name="modals">
+      <SignUP v-if="authStore.showSingUPModal" @closeSignUPModal="authStore.showSingUPModal = false" @gotoLogin="
         () => {
-          showSingUPModal = false;
-          showLoginModal = true;
+          authStore.showSingUPModal = false;
+          authStore.showLoginModal = true;
         }
       " />
-      <Login v-if="showLoginModal" @closeLoginModal="showLoginModal = false" @gotoSignup="
+      <Login v-if="authStore.showLoginModal" @closeLoginModal="authStore.showLoginModal = false" @gotoSignup="
         () => {
-          showLoginModal = false;
-          showSingUPModal = true;
+          authStore.showLoginModal = false;
+          authStore.showSingUPModal = true;
         }
       " />
     </TransitionGroup>
@@ -77,24 +96,49 @@ showSingUPModal = false;
       <div class="right-section">
         <RouterLink to="/"><vue-feather type="map-pin" size="1em" fill="#159347" stroke="#ececec"
             stroke-width="2"></vue-feather>
-            <span>Malad West</span>  
+          <span>Malad West</span>
         </RouterLink>
         <RouterLink to="/"><vue-feather type="truck" size="1em" fill="#159347" stroke="#ececec"
             stroke-width="2"></vue-feather>
           <span>Track Order</span>
         </RouterLink>
         <div class="signup-login" v-if="!authStore.isLoggedIn">
-          <span @click="showLoginModal = true"><vue-feather type="user" size="1em" fill="#159347" stroke="#ececec"
-              stroke-width="2"></vue-feather>
+          <span @click="authStore.showLoginModal = true"><vue-feather type="user" size="1em" fill="#159347"
+              stroke="#ececec" stroke-width="2"></vue-feather>
             Log In</span>
           <span>|</span>
-          <span @click="showSingUPModal = true">Sign Up</span>
+          <span @click="authStore.showSingUPModal = true">Sign Up</span>
         </div>
-        <div v-else>
-          <span @click="showLoginModal = true"><vue-feather type="user" size="1em" fill="#159347" stroke="#ececec"
-              stroke-width="2"></vue-feather>
-            Account</span>
+        <div class="signup-login" v-else @mousemove.native="showAccDropdown = true" @mouseleave="closeDropdown()">
+          <vue-feather type="user" size="1em" fill="#159347" stroke="#ececec" stroke-width="2"></vue-feather>
+          <span>Hi {{ authStore.user.username }} {{ authStore.user.lastName }}</span>
+          <vue-feather type="chevron-down" size="1.2em" fill="#159347" stroke="#ececec" stroke-width="2"></vue-feather>
         </div>
+        <TransitionGroup name="dropdown">
+          <div class="drop-down" v-if="showAccDropdown" @mouseover.stop="{ showAccDropdown = true; dropdown = true }"
+            @mouseleave="{ dropdown = false ; closeDropdown() }">
+            <div class="item" @click="router.push({ path: '/my-account', name: 'account' })  ; showAccDropdown = false">
+              <span class="icon"><vue-feather type="lock" size="1em" stroke="#343a40"
+                  stroke-width="2"></vue-feather></span>
+              <span>Account</span>
+            </div>
+
+            <div class="item"><span class="icon"><vue-feather type="user" size="1em" stroke="#343a40"
+                  stroke-width="2"></vue-feather></span> <span>Profile</span></div>
+
+            <div class="item"><span class="icon"><vue-feather type="archive" size="1em" stroke="#343a40"
+                  stroke-width="2"></vue-feather></span> <span>Orders</span></div>
+
+            <div class="item" @click.stop="router.push({ path: '/wishlist', name: 'wishlist' })">
+              <span class="icon"><vue-feather type="heart" size="1em" stroke="#343a40"
+                  stroke-width="2"></vue-feather></span>
+              <span>Wishlist</span>
+            </div>
+            <div class="item" @click.stop="Logout"><span class="icon"><vue-feather type="power" size="1em"
+                  stroke="#343a40" stroke-width="2"></vue-feather></span> <span>Logout</span></div>
+          </div>
+        </TransitionGroup>
+
       </div>
     </div>
   </header>
@@ -113,9 +157,10 @@ header {
 }
 
 .header-center {
+  position: relative;
   max-width: 1366px;
   width: 100%;
-  color: $gray-2;
+  color: $gray-1;
   margin: 0;
   height: 30px;
   margin: auto;
@@ -132,7 +177,7 @@ header {
 
   a {
     text-decoration: none;
-    color: $gray-2;
+    color: $gray-1;
   }
 
   .social-links {
@@ -142,7 +187,7 @@ header {
 
     .social-list {
       .social-item {
-        background: $gray-2;
+        background: $gray-1;
         width: 1em;
         height: 1em;
         display: flex;
@@ -183,16 +228,62 @@ header {
     margin: 0 1.5em;
 
     .signup-login {
+      height: 100%;
       display: flex;
+      align-items: center;
+      cursor: pointer;
 
       span {
         margin: 0 0.5em;
-        padding: 0;
-        font-size: 1em;
-        font-weight: 100;
         display: flex;
         align-items: center;
-        cursor: pointer;
+      }
+    }
+
+    .drop-down {
+      position: absolute;
+      top: 100%;
+
+      right: 2%;
+      background: $white;
+      box-shadow: $dOp-3 0px 3px 8px;
+      border-radius: 10px;
+      height: 210px;
+      width: 170px;
+      color: $gray-18;
+      padding: .5em 0;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      z-index: 1000;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 10px solid $white;
+      }
+
+      .item {
+        display: flex;
+        transition: all .3s ease;
+        padding: .8em 0;
+
+        .icon {
+          padding: 0 .5em;
+        }
+
+        &:hover {
+          background: $gray-1;
+        }
       }
     }
 
@@ -204,18 +295,22 @@ header {
 
   @include small-down {
     background: $white;
+
     .social-links {
       display: none;
     }
-  
+
     .right-section {
       font-size: 10px;
-      i{
+
+      i {
         display: none;
       }
-      span{
+
+      span {
         color: $green ;
       }
+
       .signup-login {
         display: none;
       }
@@ -248,7 +343,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 200;
+  z-index: 300;
 }
 
 .modals-enter-from {
@@ -285,6 +380,44 @@ header {
 }
 
 .modals-move {
+  transition: all 0.5s ease;
+}
+
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+.dropdown-enter-from {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.dropdown-enter-to {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.dropdown-enter-active {
+  transition: all 0.5s ease-in-out;
+  transform-origin: top;
+}
+
+.dropdown-leave-from {
+  opacity: 1;
+  // transform: scaleY(1);
+}
+
+.dropdown-leave-to {
+  opacity: 0;
+}
+
+.dropdown-leave-active {
+  transition: all .3s ease-in;
+  transform-origin: top;
+  position: absolute;
+}
+
+.dropdown-move {
   transition: all 0.5s ease;
 }
 </style>

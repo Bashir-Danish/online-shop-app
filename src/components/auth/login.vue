@@ -38,9 +38,9 @@ const verify = () => {
 
 }
 const login = () => {
-    isLoading.value = true
     authStore.errorMassage = ''
     if (authStore.isValid.isEmail && authStore.isValid.isPassword) {
+        isLoading.value = true
         authStore.login(formData.value);
     }
 }
@@ -180,7 +180,7 @@ onMounted(() => (
     -moz-box-shadow: 2px 111px 300px -33px $gray-8;
     box-shadow: 2px 111px 300px -33px $gray-8;
     display: flex;
-    z-index: 210;
+    z-index: 400;
 
     .close {
         background-color: transparent;
@@ -238,7 +238,7 @@ onMounted(() => (
         position: relative;
         width: 70%;
         height: 100%;
-        border-left: 1px solid $gray-3;
+        border-left: 1px solid $gray-2;
         background-color: $white;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
@@ -257,7 +257,7 @@ onMounted(() => (
 
             .divider {
                 margin-top: 2em;
-                background-color: $gray-3;
+                background-color: $gray-2;
                 width: 90%;
                 display: flex;
                 align-items: center;
@@ -266,7 +266,7 @@ onMounted(() => (
                 span {
                     width: 2em;
                     height: 2em;
-                    color:$gray-6;
+                    color:$gray-15;
                     background-color: $white;
                     text-align: center;
                     font-size: 20px;
@@ -352,7 +352,7 @@ onMounted(() => (
         font-size: 18px;
         color: $white;
         margin-top: 1em;
-        box-shadow: 2px 2px 10px $gray-3;
+        box-shadow: 2px 2px 10px $gray-2;
         
         &:hover {
             box-shadow: 2px 2px 10px $gray-5;
@@ -370,7 +370,7 @@ onMounted(() => (
     }
 
     .divider {
-        background: $gray-3;
+        background: $gray-2;
         width: 75%;
         margin: 0 auto;
         height: 0.5px;

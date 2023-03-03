@@ -78,7 +78,7 @@ const closeAll = (item: any) => {
         }
 
         span {
-            color: $gray-7;
+            color: $gray-18;
             font-size: 14px;
             font-weight: 600;
         }
@@ -118,10 +118,10 @@ const closeAll = (item: any) => {
     transform-origin: top;
 
     li {
-        color: $gray-7;
+        color: $gray-18;
         width: 70%;
         padding: .9rem 1em;
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
         text-align: left;
         cursor: pointer;
 
@@ -134,18 +134,14 @@ const closeAll = (item: any) => {
     span {
         width: 70%;
         padding: 1rem;
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
         text-align: left;
         cursor: pointer;
     }
 }
 
-
-
-
-
 .cat-divider {
-    border-bottom: 1px solid $gray-3;
+    border-bottom: 1px solid $gray-2;
     width: 80%;
     display: flex;
     float: right;

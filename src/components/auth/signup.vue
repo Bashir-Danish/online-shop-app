@@ -168,7 +168,7 @@ onMounted(() => (
     -moz-box-shadow: 2px 111px 300px -33px $gray-8;
     box-shadow: 2px 111px 300px -33px $gray-8;
     display: flex;
-    z-index: 210;
+    z-index: 400;
 
     .info-section {
         width: 45%;
@@ -216,7 +216,7 @@ onMounted(() => (
     .form-groups {
         position: relative;
         width: 70%;
-        border-left: 1px solid $gray-3;
+        border-left: 1px solid $gray-2;
         background-color: $white;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
@@ -337,7 +337,7 @@ onMounted(() => (
         font-size: 18px;
         color: $white;
         margin-top: 2.5em;
-        box-shadow: 2px 2px 10px $gray-3;
+        box-shadow: 2px 2px 10px $gray-2;
         
         &:hover {
             box-shadow: 2px 2px 10px $gray-5;
@@ -358,7 +358,7 @@ onMounted(() => (
 
 
 .divider {
-    background-color: $gray-3;
+    background-color: $gray-2;
     width: 75%;
     margin: 0 auto;
     height: 0.5px;
@@ -380,42 +380,6 @@ onMounted(() => (
 
 /* ////////////////////////////////////////////////// */
 
-.modals-enter-from {
-    opacity: 0;
-    transform: scale(0);
-    transform: translateX(-5em);
-}
-
-.modals-enter-to {
-    opacity: 1;
-    transform: scale(1);
-    transform: translateX(0);
-}
-
-.modals-enter-active {
-    transition: all 0.5s ease-in-out;
-}
-
-.modals-leave-from {
-    opacity: 1;
-    transform: scale(1);
-    transform: translateX(0);
-}
-
-.modals-leave-to {
-    opacity: 0;
-    transform: scale(0.5);
-    transform: translateX(5em);
-}
-
-.modals-leave-active {
-    transition: all 0.5s ease;
-    position: absolute;
-}
-
-.modals-move {
-    transition: all 0.5s ease;
-}
 
 
 .signUp-loader-item {

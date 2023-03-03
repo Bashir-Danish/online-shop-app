@@ -33,8 +33,6 @@ const mColor = ref(false)
 
 
 function validate() {
-
-    console.log(props.modelValue)
     if (props.modelValue && props.inputType === "email") {
         let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(props.modelValue)) {
@@ -124,8 +122,8 @@ onMounted(() => (
         width: 90%;
         border: none;
         outline: none;
-        color: $gray-6;
-        border-bottom: $gray-3 1px solid;
+        color: $gray-18;
+        border-bottom: $gray-2 1px solid;
         font-size: 18px;
         margin-bottom: 2em;
 

@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useProductStore } from '@/stores/product'
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, defineAsyncComponent, ref } from 'vue';
 import filterSkeletonVue from './vueSkeleton/filterSkeleton.vue';
-import category from '@/components/Categories.vue'
 const productStore = useProductStore();
 
 const categoryModal = ref(false);
 
 
+const category = defineAsyncComponent(() =>
+  import('@/components/Categories.vue')
+)
 
 
 onMounted(() => {
@@ -65,7 +67,7 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <TransitionGroup name="category" mode="out-in">
+    <TransitionGroup name="category">
         <div class="category-modal" v-if="categoryModal">
             <div class="modal-header">
                 <div class="header">Select Category</div>
@@ -90,7 +92,7 @@ onMounted(() => {
     min-width: 220px;
     height: 88vh;
     outline: none;
-    color: $gray-6;
+    color: $gray-15;
     border-top-left-radius: 10px;
     box-shadow: none;
     z-index: 80;
@@ -132,7 +134,7 @@ onMounted(() => {
                 font-size: 14px;
                 justify-content: flex-start;
                 padding: 10px 0;
-                color: $gray-6;
+                color: $gray-15;
 
                 .cat-icon {
                     border: 1px solid $gray-4;
@@ -154,12 +156,12 @@ onMounted(() => {
     }
 
     .filter-section {
-        border-top: 1px solid $gray-3;
+        border-top: 1px solid $gray-2;
 
         .price,
         .brand {
             padding: 0.8em 1.3em;
-            border-bottom: 1px solid $gray-3;
+            border-bottom: 1px solid $gray-2;
 
             label {
                 cursor: pointer;
@@ -210,7 +212,7 @@ onMounted(() => {
             .brand-search {
                 display: flex;
                 align-items: center;
-                border-bottom: 2px solid $gray-3;
+                border-bottom: 2px solid $gray-2;
                 width: fit-content;
                 margin: .5em 0;
                 padding: .5em 0;
@@ -244,7 +246,7 @@ onMounted(() => {
     right: 0;
     margin: 0 auto;
     background: $white;
-    box-shadow: 2px 2px 20px $gray-8;
+    box-shadow: 2px 2px 20px $gray-15;
     transition: box-shadow 1.5s ease;
     border-radius: 2%;
     z-index: 300;
@@ -260,7 +262,7 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
         .header {
             margin: 1em;
         }

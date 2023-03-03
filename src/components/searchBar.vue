@@ -16,9 +16,10 @@ const names = ref([])
 let flag = false
 const searchName = async (value: string, name: string) => {
     names.value = []
-    productStore.productLoading = true
-    productStore.filterLoading = true
-    if (value == 'searchInput') {
+    router.push({ name: 'home', path: '/' })
+    if (value == 'searchInput' && search.value) {
+        productStore.productLoading = true
+        productStore.filterLoading = true
         await axios.get(`/product/search/${name}`)
             .then((res: any) => {
                 productStore.product = res.data.products
@@ -30,6 +31,8 @@ const searchName = async (value: string, name: string) => {
             });
     }
     if (value == 'nameInput') {
+        productStore.productLoading = true
+        productStore.filterLoading = true
         search.value = name
         productStore.params.delete('name')
         productStore.params.append('name', name.toString())
@@ -124,15 +127,16 @@ const deleteName = () => {
 </template>
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
+@import '@/assets/mixin.scss';
 
 .search-Bar {
     width: 100%;
     height: 75px;
-    background:$white;
+    background: $white;
     box-shadow: $dOp-1 0px 1px 4px;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 200;
 
     .search-Bar-Container {
         max-width: 1366px;
@@ -180,6 +184,7 @@ const deleteName = () => {
                     height: 36px;
                     outline: none;
                     width: 100%;
+                    color: $gray-15;
                     border: 1px solid $gray-4;
                     padding-left: 10px;
                     font-size: 1.1em;
@@ -213,13 +218,13 @@ const deleteName = () => {
                         display: flex;
                         font-size: 14px;
                         align-items: center;
-                        color: $gray-7;
+                        color: $gray-18;
                         cursor: pointer;
 
                         span {
                             padding: 0.5em;
                             width: 100%;
-                            border-bottom: 1px solid $gray-3;
+                            border-bottom: 1px solid $gray-2;
                             display: flex;
                             align-items: center;
 

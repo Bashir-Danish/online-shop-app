@@ -1,11 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useCartStore } from "@/stores/cart";
+import { useAuthStore } from "@/stores/auth";
 
-
+// const liked = ref(false)
+const router = useRouter()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+
+
 const props = defineProps([
     'data',
     'listViewProduct']
@@ -14,10 +19,18 @@ const existItem = computed(() => {
     let item = cartStore.items.find(el => el._id == props.data._id)
     return item
 })
+
+const liked = computed(() => {
+    let like;
+    if (authStore.isLoggedIn == true) {
+        like = authStore.user.wishList.some((item: any) => item._id == props.data._id)
+    } else {
+        like = false
+    }
+    return like
+})
+
 const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
-
-
-const router = useRouter()
 
 </script>
 <template>
@@ -25,11 +38,13 @@ const router = useRouter()
         <div :class="listViewProduct ? 'product-2-details' : 'product-details'"
             @click.native="router.push({ path: '/product/' + data._id })">
             <div :class="listViewProduct ? 'product-2-img' : 'product-img'">
-
-                <span class="heart" @click.stop=""><vue-feather type="heart" :size="listViewProduct ? '1em' : '1.1em'"
-                        stroke="#414e5a" stroke-width="2"></vue-feather></span>
+                <span class="heart" @click.stop="authStore.addToWishlist(data, liked)">
+                    <div class="heart-icon" v-if="liked">
+                    </div>
+                    <vue-feather type="heart" v-else :size="listViewProduct ? '1em' : '1.2em'" stroke="#414e5a"
+                        stroke-width="2"></vue-feather>
+                </span>
                 <img :src="'http://localhost:4000' + data.img[0]" :alt="img">
-
             </div>
             <div :class="listViewProduct ? 'desc-wrapper-2' : 'desc-wrapper'">
                 <div class="row1">
@@ -58,16 +73,25 @@ const router = useRouter()
 </template>
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
+@import '@/assets/mixin.scss';
+
+
 
 .product {
     width: 250px;
     max-width: 25%;
+    flex-grow: 1;
     padding: 0;
-    color: $gray-7;
+    color: $gray-18;
     border: 0;
     border-radius: 3%;
     transition: box-shadow 1s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    @include medium-down {
+        max-width: 33.33%;
+        width: 33.33%;
+    }
 
     &:hover {
         box-shadow: 0px 5px 10px 5px $dOp-1;
@@ -123,15 +147,36 @@ const router = useRouter()
                 z-index: 100;
             }
 
-            span {
+            .heart {
                 position: absolute;
                 background: $bgOp-4;
-                padding: .3em;
+                width: 2em;
+                height: 2em;
                 border-radius: 50%;
                 display: flex;
-                top: 1em;
-                right: 1em;
+                justify-content: center;
+                align-items: center;
+                top: .5em;
+                right: .5em;
                 z-index: 100;
+            }
+
+
+            .heart-icon {
+                background: url("@/assets/photos/heart.png") no-repeat;
+                height: 60px;
+                width: 60px;
+                background-position: left;
+                background-size: 2900%;
+                cursor: pointer;
+                position: absolute;
+                animation: like-anim .5s steps(28) forwards;
+            }
+
+            @keyframes like-anim {
+                to {
+                    background-position: right;
+                }
             }
 
             img {
@@ -217,7 +262,7 @@ const router = useRouter()
 .product-2 {
     width: 100%;
     padding: 0;
-    color: $gray-7;
+    color: $gray-18;
     border: 0;
     border-radius: 3%;
     transition: box-shadow 0.7s ease;
@@ -236,7 +281,7 @@ const router = useRouter()
             .row1 {
 
                 .price {
-                    margin: 1.5em  0;
+                    margin: 1.5em 0;
                 }
             }
 
@@ -285,7 +330,7 @@ const router = useRouter()
             transition: max-height .25s ease-out;
             position: relative;
             border-radius: 10px;
-            padding: 0.7em;
+            // padding: 0.7em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -310,7 +355,7 @@ const router = useRouter()
 
             &::before {
                 content: '';
-                border: 1px solid $gray-3;
+                border: 1px solid $gray-2;
                 position: absolute;
                 border-radius: 5%;
                 background: transparent;
@@ -325,22 +370,42 @@ const router = useRouter()
                 max-width: 100%;
             }
 
-            span {
+            .heart {
                 position: absolute;
-                background: $gray-1;
-                padding: .5em;
+                background: $bgOp-4;
+                width: 1.5em;
+                height: 1.5em;
                 border-radius: 50%;
                 display: flex;
+                justify-content: center;
+                align-items: center;
                 top: .5em;
                 right: .5em;
                 z-index: 100;
+            }
+
+            .heart-icon {
+                background: url("@/assets/photos/heart.png") no-repeat;
+                height: 50px;
+                width: 50px;
+                background-position: left;
+                background-size: 2900%;
+                cursor: pointer;
+                animation: like-anim .5s steps(28) forwards;
+                position: absolute;
+            }
+
+            @keyframes like-anim {
+                to {
+                    background-position: right;
+                }
             }
         }
     }
 }
 
 .product-divider {
-    border-bottom: 1px solid $gray-3;
+    border-bottom: 1px solid $gray-2;
     width: 95%;
     margin: 0.5em auto 1.5em auto;
 }

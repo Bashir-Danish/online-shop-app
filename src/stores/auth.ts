@@ -5,11 +5,17 @@ import jwtUtil from "@/utils/jwt";
 import type { registerPayload, loginPayload } from "@/types/auth.types";
 
 export const useAuthStore = defineStore("auth", () => {
-  const isLoggedIn = ref(false);
+  const showSingUPModal = ref(false);
+  const showLoginModal = ref(false);
+  const isLoggedIn = ref();
   const isVerified = ref(false);
   const loading = ref(false);
   const showOtp = ref(false);
   const errorMassage = ref("");
+  const user = ref<any>();
+
+  // const wishItems = ref<any[]>([]);
+
   const isValid = ref({
     isEmail: false,
     isPassword: false,
@@ -17,18 +23,23 @@ export const useAuthStore = defineStore("auth", () => {
   });
 
   async function verifyToken() {
+    loading.value = true;
     try {
       await axios
         .get("/users/auth")
         .then((response) => {
           if (response.status == 200) {
             isLoggedIn.value = true;
-          } else {
-            isLoggedIn.value = false;
+            user.value = response.data.user;
+            loading.value = false;
+            console.log(user.value);
           }
         })
         .catch((error) => {
-          // console.log(error.status)
+          isLoggedIn.value = false;
+          if (isLoggedIn.value == false) {
+            window.localStorage.removeItem("tokenId");
+          }
         });
     } catch (err) {
       console.log(err);
@@ -41,7 +52,6 @@ export const useAuthStore = defineStore("auth", () => {
       await axios
         .post("/users/sendOtp", { email })
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             errorMassage.value = "Enter the code";
             showOtp.value = true;
@@ -49,7 +59,6 @@ export const useAuthStore = defineStore("auth", () => {
           }
         })
         .catch((error) => {
-          console.log(error.response.data);
           errorMassage.value = error.response.data.message;
           loading.value = false;
         });
@@ -63,7 +72,6 @@ export const useAuthStore = defineStore("auth", () => {
       await axios
         .post("/users/verify", { email, code })
         .then((response) => {
-          // console.log(response.data);
           if (response.data == "Verified") {
             errorMassage.value = response.data;
             showOtp.value = false;
@@ -74,7 +82,6 @@ export const useAuthStore = defineStore("auth", () => {
           }
         })
         .catch((error) => {
-          // console.log(error.response.data);
           errorMassage.value = error.response.data;
           loading.value = false;
         });
@@ -95,9 +102,12 @@ export const useAuthStore = defineStore("auth", () => {
           address,
         })
         .then((res) => {
-          jwtUtil.saveToken(res.data.user.token);
-          isLoggedIn.value = true;
-          jwtUtil.saveUser(JSON.stringify(res.data.user));
+          if (res.status == 201) {
+            user.value = res.data.user;
+            jwtUtil.saveToken(res.data.token);
+            // jwtUtil.saveUser(JSON.stringify(res.data.user));
+            isLoggedIn.value = true;
+          }
         })
         .catch((error) => {
           loading.value = false;
@@ -136,8 +146,8 @@ export const useAuthStore = defineStore("auth", () => {
         .post("/users/login", formData)
         .then((res) => {
           if (res.status == 200) {
+            user.value = res.data.user;
             jwtUtil.saveToken(res.data.token);
-            jwtUtil.saveUser(JSON.stringify(res.data.user));
             isLoggedIn.value = true;
           }
         })
@@ -156,7 +166,6 @@ export const useAuthStore = defineStore("auth", () => {
           if (res.status == 200) {
             errorMassage.value = res.data.message;
             isLoggedIn.value = true;
-            // console.log(res.data.message)
           }
         })
         .catch((error) => {
@@ -166,6 +175,33 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(error);
     }
   }
+  async function addToWishlist(product: any, like: boolean) {
+    if (isLoggedIn.value === true) {
+      if (like == false) {
+        let obj = {
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          img: product.img,
+        };
+
+        user.value.wishList.push(obj);
+      } else {
+        user.value.wishList = user.value.wishList.filter(
+          (el: any) => el._id !== product._id
+        );
+      }
+      await axios
+        .post("/users/addToWish", {
+          id: user.value._id,
+          wishlist: user.value.wishList,
+        })
+        .then((res) => {})
+        .catch((error) => {});
+    } else {
+      showLoginModal.value = true;
+    }
+  }
   return {
     errorMassage,
     isValid,
@@ -173,6 +209,9 @@ export const useAuthStore = defineStore("auth", () => {
     showOtp,
     isVerified,
     isLoggedIn,
+    user,
+    showSingUPModal,
+    showLoginModal,
     verifyToken,
     register,
     verify,
@@ -180,5 +219,7 @@ export const useAuthStore = defineStore("auth", () => {
     sendLoginCode,
     login,
     resetPass,
+    addToWishlist,
+    // getWishItem,
   };
 });

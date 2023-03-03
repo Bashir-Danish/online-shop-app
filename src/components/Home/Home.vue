@@ -1,33 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
 import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
-import { useCartStore } from '@/stores/cart'
-import listViewSkeleton from '@/components/vueSkeleton/listViewSkeleton.vue';
-import Header from '@/components/header.vue';
+
 
 const sort = ref('all')
 const productStore = useProductStore();
-const cartStore = useCartStore();
 
-onMounted(() => {
-  if (localStorage.getItem("tags")) {
-    productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
-  }
-  if (localStorage.getItem("sort")) {
-    sort.value = JSON.parse(localStorage.getItem("sort") as string);
-    productStore.params.delete("sort");
-    productStore.params.append("sort", sort.value);
-  }
-  cartStore.loadCart()
-  productStore.getProduct()
-})
+
 </script>
 <template>
-  <Header />
-
   <div class="content">
     <main>
       <Filters />
@@ -49,17 +33,21 @@ onMounted(() => {
                 <option value="high">Price High to Low</option>
               </select>
               <div class="view-buttons">
-                <vue-feather type="list" size="1.2em" :stroke="productStore.listViewData ? 'black' : '#ccc'"
-                  :stroke-width="productStore.listViewData ? '2' : '3'"
-                  @click.stop="productStore.listView = true"></vue-feather>
-                <vue-feather type="grid" size="1.2em" :fill="productStore.listViewData ? '#ccc' : '#474747'"
-                  :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"
-                  @click.stop="productStore.listView = false"></vue-feather>
+                <span class="view-icon">
+                  <vue-feather type="list" size="1.1em" :stroke="productStore.listViewData ? 'black' : '#ccc'"
+                    :stroke-width="productStore.listViewData ? '2' : '3'"
+                    @click.stop="productStore.listView = true"></vue-feather>
+                </span>
+                <span class="view-icon">
+                  <vue-feather type="grid" size="1.1em" :fill="productStore.listViewData ? '#ccc' : '#474747'"
+                    :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"
+                    @click.stop="productStore.listView = false"></vue-feather>
+                </span>
               </div>
             </div>
           </div>
           <div class="second-header">
-            <TransitionGroup name="tag" mode="out-in" appear>
+            <TransitionGroup name="tag" appear>
               <div v-if="productStore.tags" v-for="tag in productStore.tags" class="pro-filter-item">
                 <span class="tag">{{ Object.values(tag).toString() }}</span>
                 <span class="tag-close" @click="productStore.removeTag(tag)"><vue-feather type="x" size="1em"
@@ -82,8 +70,8 @@ onMounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
-
 @import '@/assets/variables.scss';
+@import '@/assets/mixin.scss';
 
 .content {
   padding: 0 1em;
@@ -101,7 +89,7 @@ onMounted(() => {
     border-top-left-radius: 10px;
 
     .divider-border {
-      border-right: 1px solid $gray-3;
+      border-right: 1px solid $gray-2;
     }
 
     .main-content {
@@ -113,17 +101,18 @@ onMounted(() => {
 
       .product-headers {
         margin: 0 1.5em;
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
+        transition: all .5s ease;
 
         .first-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin: .5em .5em;
 
           .count {
             display: flex;
-            color: $gray-7;
+            font-size: 15px;
+            color: $gray-18;
           }
 
           .sort {
@@ -135,7 +124,7 @@ onMounted(() => {
             select {
               outline: none;
               width: 30%;
-              border: 1px solid $gray-4;
+              border: 1px solid $gray-2;
               border-radius: 5px;
               position: relative;
               cursor: pointer;
@@ -143,33 +132,62 @@ onMounted(() => {
 
               option {
                 transition: .5s all ease;
-                color: $gray-7;
+                color: $gray-18;
                 min-height: 3em;
               }
 
             }
 
             span {
-              color: $gray-7;
+              color: $gray-18;
+              font-size: 14px;
               margin-right: 1em;
             }
 
             .view-buttons {
-              display: inline-flex;
-              justify-content: space-evenly;
-              width: 80px;
+              display: flex;
+              justify-content: end;
+              align-items: center;
+              width: 15%;
+              margin: 0 0 .5em .5em;
               cursor: pointer;
 
-              i {
+              .view-icon {
+                width: 2.5em;
+                height: 2.2em;
                 padding: .5em;
-                transition: all .3s ease-in-out;
-                border-radius: 5px;
+                margin: .5em 0 0 .1em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
 
-                &:hover {
+                &::after {
+                  content: '';
+                  width: 100%;
+                  height: 100%;
                   background: $gray-1;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  bottom: 0;
+                  right: 0;
+                  z-index: -1;
+                  border-radius: 5px;
+                  transform: scale(0);
+                  transition: all .4s ease;
                 }
 
+                &:hover:after {
+                  transform: scale(1);
+                }
+
+                i {
+                  font-size: 20px;
+                }
               }
+
+
             }
           }
         }
@@ -186,13 +204,13 @@ onMounted(() => {
             padding: 5px;
             border-radius: 5px;
             position: relative;
-            color: $gray-7;
+            color: $gray-18;
             transition: all .5s ease;
             box-shadow: 0px 0px 10px 0px $gray-2;
             cursor: pointer;
 
             &:hover {
-              box-shadow: 0 0 10px 0 $gray-3;
+              box-shadow: 0 0 10px 0 $gray-2;
             }
 
             .tag-close {
@@ -228,10 +246,7 @@ onMounted(() => {
 
       .products-container {
         display: flex;
-        // flex-basis: (100 / 4) * 1%;
         flex-wrap: wrap;
-        // flex-grow: 1;
-        // flex-shrink: 1;
         row-gap: 1.5em;
         margin: 0 1.5em 1em 1.5em;
       }

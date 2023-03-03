@@ -38,10 +38,10 @@ onMounted(() => {
                         <th>Amount</th>
                     </thead>
                     <tbody>
-                        <tr v-for="item in cartStore.items">
+                        <tr v-for="item in cartStore.items" :key="item._id">
                             <td @click.native="router.push({ path: '/product/' + item._id })">
                                 <div class="item-img">
-                                    <!-- <span :style="{ backgroundImage: 'url(http://localhost:4000' + item.img + ')' }"></span> -->
+                                <span :style="{ backgroundImage: 'url(http://localhost:4000' + item.img + ')' }"></span>
                                     <img :src="'http://localhost:4000' + item.img" alt="" srcset="">
                                 </div>
                                 <div class="item-desc">
@@ -113,7 +113,7 @@ onMounted(() => {
                     <span class="approx">
                         <span>Approx. Delivery Charge <vue-feather type="info" size="1em" stroke-width="2"
                                 title="These are approximate delivery charges please enter your pincode for
-                                                                                                    exact charge"></vue-feather>
+                                                                                                        exact charge"></vue-feather>
                         </span>
                         <span>Free</span>
                     </span>
@@ -138,7 +138,7 @@ onMounted(() => {
         <span>Looks Like You haven't made Your Choice Yet</span>
         <button @click="router.push({ name: 'home', path: '/' })">Start Shopping</button>
     </div>
-    <TransitionGroup name="pincode" mode="out-in">
+    <TransitionGroup name="pincode">
         <div class="pincode-modal" v-if="pinCodeModal">
             <div class="modal-header">
                 <button @click="pinCodeModal = false" type="button" class="close"><vue-feather type="x" size="1.8em"
@@ -161,7 +161,7 @@ onMounted(() => {
     padding: 1.3em 2em;
     display: flex;
     position: relative;
-    color: $gray-7;
+    color: $gray-15;
 
     .cart-items {
         position: relative;
@@ -180,7 +180,7 @@ onMounted(() => {
 
                 span {
                     margin: 0.5em;
-                    color: $gray-6;
+                    color: $gray-10;
 
                     &:last-child {
                         font-size: 12px;
@@ -212,7 +212,7 @@ onMounted(() => {
                     }
 
                     span {
-                        color: $gray-6;
+                        color: $gray-15;
                         font-weight: 700;
                         margin: 0 .5em;
                     }
@@ -222,7 +222,7 @@ onMounted(() => {
                     background: transparent;
                     color: $lightBlue;
                     font-size: 12px;
-                    border: $gray-3 1px solid;
+                    border: $gray-2 1px solid;
                     border-radius: 5px;
                     padding: .4em 1.5em;
                     cursor: pointer;
@@ -490,7 +490,7 @@ onMounted(() => {
                 display: flex;
                 justify-content: space-between;
                 border-radius: 3px;
-                border: $gray-6 1px dashed;
+                border: $gray-10 1px dashed;
 
                 .col-1 {
                     display: flex;
@@ -528,13 +528,14 @@ onMounted(() => {
             .row-1 {
                 display: flex;
                 flex-direction: column;
-                color: $gray-6;
+                color: $gray-15;
                 font-size: 14px;
-                border-bottom: 1px dashed $gray-6 ;
+                border-bottom: 1px dashed $gray-15 ;
                 padding: 1em 0;
                 position: relative;
 
                 .total {
+                    color: $gray-15;
                     display: inherit;
                     justify-content: space-between;
                     font-weight: 600;
@@ -572,7 +573,7 @@ onMounted(() => {
                 .total {
                     display: flex;
                     justify-content: space-between;
-                    color: $black;
+                    color: $gray-15;
                     font-size: 14px;
                     font-weight: 600;
                     padding: .5em 0 0;
@@ -580,7 +581,7 @@ onMounted(() => {
 
                 .checkout {
                     font-size: 10px;
-                    color: $gray-6;
+                    color: $gray-15;
 
                     button {
                         width: 100%;
@@ -618,11 +619,11 @@ onMounted(() => {
     }
 
     h3 {
-        color: $gray-6;
+        color: $gray-15;
     }
 
     span {
-        color: $gray-6;
+        color: $gray-15;
         padding: .5em;
     }
 

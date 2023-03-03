@@ -4,17 +4,41 @@
 
 // stylelint-disable
 $backGround: rgba(46, 55, 97, 0.05);
-
 $white:    #fff !default;
-$gray-1: #f5f5f5 !default;
-$gray-2: #e9ecef !default;
-$gray-3: #dee2e6 !default;
-$gray-4: #ced4da !default;
-$gray-5: #adb5bd !default;
-$gray-6: #6c757d !default;
-$gray-7: #414e5a !default;
-$gray-8: #343a40 !default;
-$gray-9: #212529 !default;
+
+
+$gray-1: #f2f2f2 !default;
+$gray-2: #e6e6e6 !default;
+$gray-3: #d9d9d9 !default;
+$gray-4: #cccccc !default;
+$gray-5: #bfbfbf !default;
+$gray-6: #b3b3b3 !default;
+$gray-7: #a6a6a6 !default;
+$gray-8: #999999 !default;
+$gray-9: #8c8c8c !default;
+$gray-10: #808080 !default;
+$gray-11: #818181 !default;
+$gray-12: #737373 !default;
+$gray-13: #666666 !default;
+$gray-14: #595959 !default;
+$gray-15: #4d4d4d !default;
+$gray-16: #404040 !default;
+$gray-17: #333333 !default;
+$gray-18: #262626 !default;
+$gray-19: #1a1a1a !default;
+$gray-20: #0d0d0d !default;
+
+
+
+// $gray-1: #f2f2f2 !default;
+// $gray-2: #d9d9d9 !default;
+// $gray-3: #bfbfbf !default;
+// $gray-4: #a6a6a6 !default;
+// $gray-5: #8c8c8c !default;
+// $gray-6: #737373 !default;
+// $gray-7: #595959 !default;
+// $gray-8: #404040 !default;
+// $gray-9: #262626 !default;
 
 $bgOp-1 : rgba(255, 255, 255, 0.111) !default;
 $bgOp-2 : rgba(255, 255, 255, 0.222) !default;
@@ -56,24 +80,3 @@ $primary: #79efb4 !default;
 
 
 
-@mixin hideScrollbar() {
-    &::-webkit-scrollbar {
-        width:5px;
-        height: 0px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: transparent
-    }
-}
-
-@mixin scrollbar() {
-    &::-webkit-scrollbar {
-        width:5px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, .2)
-    }
-    &::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.5)
-    }
-}

@@ -196,7 +196,7 @@ import Placeholder from '@/components/smallComponents/AnimatedPlaceholder.vue'
     }
 
     .product-divider {
-        border-bottom: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-2;
         width: 96%;
         margin: .5em auto .5em auto;
     }
