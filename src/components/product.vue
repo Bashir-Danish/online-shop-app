@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
+import { IosHeartEmpty } from '@vicons/ionicons4/'
 import { useRouter } from 'vue-router'
 import { useCartStore } from "@/stores/cart";
 import { useAuthStore } from "@/stores/auth";
@@ -41,10 +42,11 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 <span class="heart" @click.stop="authStore.addToWishlist(data, liked)">
                     <div class="heart-icon" v-if="liked">
                     </div>
-                    <vue-feather type="heart" v-else :size="listViewProduct ? '1em' : '1.2em'" stroke="#414e5a"
-                        stroke-width="2"></vue-feather>
+                    <Icon v-else :size="listViewProduct ? '1em' : '1.2em'">
+                        <IosHeartEmpty />
+                    </Icon>
                 </span>
-                <img :src="'http://localhost:4000' + data.img[0]" :alt="img">
+                <img :src="'http://localhost:4000' + data.img[0]" :alt="img[0]">
             </div>
             <div :class="listViewProduct ? 'desc-wrapper-2' : 'desc-wrapper'">
                 <div class="row1">
@@ -78,14 +80,13 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
 
 
 .product {
-    width: 250px;
     max-width: 25%;
     flex-grow: 1;
     padding: 0;
     color: $gray-18;
     border: 0;
     border-radius: 3%;
-    transition: box-shadow 1s ease;
+    transition: box-shadow .5s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
     @include medium-down {
@@ -138,7 +139,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
 
             &::before {
                 content: '';
-                border: 1px solid $gray-4;
+                border: 1px solid $gray-1;
                 position: absolute;
                 border-radius: 5%;
                 background: transparent;
@@ -159,16 +160,20 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 top: .5em;
                 right: .5em;
                 z-index: 100;
+                cursor: pointer;
+
+                &:hover {
+                    color: $red;
+                }
             }
 
 
             .heart-icon {
                 background: url("@/assets/photos/heart.png") no-repeat;
-                height: 60px;
-                width: 60px;
+                height: 55px;
+                width: 55px;
                 background-position: left;
                 background-size: 2900%;
-                cursor: pointer;
                 position: absolute;
                 animation: like-anim .5s steps(28) forwards;
             }
@@ -221,6 +226,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                     padding: 0.4em 0;
                     color: $white;
                     display: flex;
+                    align-items: center;
                     justify-content: space-evenly;
                     cursor: pointer;
                     transition: all .2s;
@@ -295,6 +301,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                     color: $white;
                     display: flex;
                     justify-content: space-evenly;
+                    align-items: center;
                     transition: all .2s;
                     cursor: pointer;
 
@@ -330,7 +337,6 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
             transition: max-height .25s ease-out;
             position: relative;
             border-radius: 10px;
-            // padding: 0.7em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -382,15 +388,19 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 top: .5em;
                 right: .5em;
                 z-index: 100;
+                cursor: pointer;
+
+                &:hover {
+                    color: $red;
+                }
             }
 
             .heart-icon {
                 background: url("@/assets/photos/heart.png") no-repeat;
-                height: 50px;
-                width: 50px;
+                height: 45px;
+                width: 45px;
                 background-position: left;
                 background-size: 2900%;
-                cursor: pointer;
                 animation: like-anim .5s steps(28) forwards;
                 position: absolute;
             }

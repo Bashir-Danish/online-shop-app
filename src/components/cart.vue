@@ -3,8 +3,15 @@ import { useCartStore } from '@/stores/cart'
 import { useRouter } from 'vue-router'
 import { onMounted, ref } from "vue";
 import BaseInput from "@/components/smallComponents/BaseInput.vue";
+import { useAuthStore } from "@/stores/auth";
+import { IosHeartEmpty } from '@vicons/ionicons4/'
 
-const router = useRouter();
+
+
+
+const router = useRouter()
+
+const authStore = useAuthStore();
 const cartStore = useCartStore();
 
 const pinCode = ref()
@@ -41,18 +48,27 @@ onMounted(() => {
                         <tr v-for="item in cartStore.items" :key="item._id">
                             <td @click.native="router.push({ path: '/product/' + item._id })">
                                 <div class="item-img">
-                                <span :style="{ backgroundImage: 'url(http://localhost:4000' + item.img + ')' }"></span>
-                                    <img :src="'http://localhost:4000' + item.img" alt="" srcset="">
+                                    <span
+                                        :style="{ backgroundImage: 'url(http://localhost:4000' + item.img[0] + ')' }"></span>
+                                    <img :src="'http://localhost:4000' + item.img[0]" alt="" srcset="">
                                 </div>
                                 <div class="item-desc">
                                     <span class="name">{{ item.name }}</span>
                                     <span class="price">${{ item.price }}</span>
 
                                     <div class="action">
-                                        <span class="wishlist" @click.stop="">
-                                            <span><vue-feather type="heart" size="1.2em"
-                                                    stroke-width="2"></vue-feather></span>
-                                            <span>MOVE TO WISHLIST</span>
+                                        <span class="wishlist"
+                                            @click.stop="authStore.addToWishlist(item, authStore.user.wishList.some((i: any) => i._id == item._id))">
+                                            <span class="heart">
+                                                <div class="heart-icon"
+                                                    v-if="authStore.user.wishList.some((i: any) => i._id == item._id)">
+                                                </div>
+                                                <Icon v-else size="1.1em">
+                                                    <IosHeartEmpty />
+                                                </Icon>
+                                            </span>
+                                            <span>
+                                                MOVE TO WISHLIST</span>
                                         </span>
                                         <span class="remove" @click.stop="cartStore.removeItem(item._id)">
                                             <span><vue-feather type="x" size="1.5em"
@@ -113,7 +129,7 @@ onMounted(() => {
                     <span class="approx">
                         <span>Approx. Delivery Charge <vue-feather type="info" size="1em" stroke-width="2"
                                 title="These are approximate delivery charges please enter your pincode for
-                                                                                                        exact charge"></vue-feather>
+                                                                                                                                                                            exact charge"></vue-feather>
                         </span>
                         <span>Free</span>
                     </span>
@@ -367,6 +383,43 @@ onMounted(() => {
                                                 color: $red;
                                             }
 
+                                            .heart {
+                                                color: $red;
+                                            }
+
+                                        }
+
+                                        .heart {
+                                            background: $bgOp-4;
+                                            width: 2em;
+                                            height: 2em;
+                                            border-radius: 50%;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            z-index: 100;
+                                            cursor: pointer;
+
+                                            &:hover {
+                                                color: $red;
+                                            }
+                                        }
+
+
+                                        .heart-icon {
+                                            background: url("@/assets/photos/heart.png") no-repeat;
+                                            height: 40px;
+                                            width: 40px;
+                                            background-position: left;
+                                            background-size: 2900%;
+                                            position: absolute;
+                                            animation: like-anim .5s steps(28) forwards;
+                                        }
+
+                                        @keyframes like-anim {
+                                            to {
+                                                background-position: right;
+                                            }
                                         }
                                     }
 

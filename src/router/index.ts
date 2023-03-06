@@ -17,8 +17,25 @@ const router = createRouter({
         },
         {
           path: "my-account",
-          name: "account",
-          component: () => import("@/components/Home/myAccount.vue"),
+          component: () => import("@/components/Home/accountView.vue"),
+          children: [
+            {
+              path: "",
+              name: "account",
+              component: () => import("@/components/Home/account/myAccount.vue"),
+              meta: {
+                isAuth: true,
+              },
+            },
+            {
+              path: "changePassword",
+              name: "changePassword",
+              component: () => import("@/components/Home/account/changePassword.vue"),
+              meta: {
+                isAuth: true,
+              },
+            },
+          ],
           meta: {
             isAuth: true,
           },
@@ -53,6 +70,10 @@ const router = createRouter({
       path: "/product/:id",
       name: "product",
       component: () => import("@/views/ProductDetailView.vue"),
+    },
+    {
+      path: "/:NotFound(.*)*",
+      component: () => import("@/views/notFound.vue"),
     },
   ],
 });

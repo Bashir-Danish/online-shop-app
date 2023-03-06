@@ -97,7 +97,7 @@ onMounted(() => (
 <template>
     <div class="inputBox">
         <!-- <input type="pincode"> -->
-        <input  :type="inputType" :value="modelValue" :required="isRequired"
+        <input :type="inputType" :value="modelValue" :required="isRequired"
             @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()"
             @keyup="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()">
         <span class="label" :style="[props.modelValue && { transform: 'translateY(-1.5em)', fontSize: '14px' }]">{{
@@ -135,7 +135,7 @@ onMounted(() => (
         &:valid~.label {
             color: $blue;
             transform: translateY(-1.7em);
-            font-size: 14px;
+            font-size: 12px;
         }
 
         &:not(:focus)~span {
@@ -158,7 +158,6 @@ onMounted(() => (
 
     .label {
         position: absolute;
-        font-size: 16px;
         top: 0.5em;
         left: 1.5em;
         text-align: left;

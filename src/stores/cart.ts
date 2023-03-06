@@ -5,7 +5,7 @@ interface item {
   _id: string;
   name: string;
   price: number;
-  img: string;
+  img: any;
   quantity: number;
 }
 
@@ -34,16 +34,14 @@ export const useCartStore = defineStore("cart", () => {
       _id: product._id,
       name: product.name,
       price: product.price,
-      img: product.img[0],
+      img: [],
       quantity: 1,
     };
-    const exis = items.value.find((e) => e._id == product._id);
-    console.log(exis);
+    item.img.push(product.img[0]);
     if (!items.value.find((e) => e._id == product._id)) {
       items.value.push(item);
       localStorage.setItem("items", JSON.stringify(items.value));
     }
-    console.log(items.value);
   }
   function changeQuantity(act: string, id: string) {
     total.value = 0;

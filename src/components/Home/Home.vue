@@ -1,14 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, defineAsyncComponent } from 'vue';
 import Filters from '@/components/Filters.vue'
 import Product from '@/components/product.vue';
-import ProductSkeleton from '@/components/vueSkeleton/productsSkeleton.vue';
 import { useProductStore } from '@/stores/product'
 
+import { useCartStore } from '@/stores/cart'
 
+
+const listViewSkeleton = defineAsyncComponent(() =>
+  import('@/components/vueSkeleton/listViewSkeleton.vue')
+)
+const ProductSkeleton = defineAsyncComponent(() =>
+  import('@/components/vueSkeleton/productsSkeleton.vue')
+)
 const sort = ref('all')
 const productStore = useProductStore();
+const cartStore = useCartStore();
 
+onMounted(() => {
+  productStore.getProduct()
+  cartStore.loadCart()
+  if (localStorage.getItem("tags")) {
+    productStore.tags = JSON.parse(localStorage.getItem("tags") as string);
+  }
+  if (localStorage.getItem("sort")) {
+    sort.value = JSON.parse(localStorage.getItem("sort") as string);
+    productStore.params.delete("sort");
+    productStore.params.append("sort", sort.value);
+  }
+})
 
 </script>
 <template>
@@ -25,7 +45,7 @@ const productStore = useProductStore();
             </div>
             <div class="sort">
               <span>Sort By</span>
-              <select name="sort" v-model="sort" id="sort" @change="productStore.getFilters('sort', 't', $event)">
+              <select name="sort" v-model="sort" id="sort" @change="productStore.getFilters('sort', sort, $event)">
                 <option value="all">All</option>
                 <!-- <option value="popular">Popularity</option> -->
                 <option value="newest">Newest</option>
@@ -33,15 +53,13 @@ const productStore = useProductStore();
                 <option value="high">Price High to Low</option>
               </select>
               <div class="view-buttons">
-                <span class="view-icon">
+                <span class="view-icon" @click.stop="productStore.listView = true">
                   <vue-feather type="list" size="1.1em" :stroke="productStore.listViewData ? 'black' : '#ccc'"
-                    :stroke-width="productStore.listViewData ? '2' : '3'"
-                    @click.stop="productStore.listView = true"></vue-feather>
+                    :stroke-width="productStore.listViewData ? '2' : '3'"></vue-feather>
                 </span>
-                <span class="view-icon">
+                <span class="view-icon" @click.stop="productStore.listView = false">
                   <vue-feather type="grid" size="1.1em" :fill="productStore.listViewData ? '#ccc' : '#474747'"
-                    :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"
-                    @click.stop="productStore.listView = false"></vue-feather>
+                    :stroke="productStore.listViewData ? '#ccc' : '#474747'" stroke-width="1"></vue-feather>
                 </span>
               </div>
             </div>
@@ -56,14 +74,13 @@ const productStore = useProductStore();
             </TransitionGroup>
           </div>
         </div>
-        <div v-if="!productStore.productLoading && productStore.product"
-          :class="productStore.listViewData ? 'listViewProduct' : 'products-container'">
-          <Product :list-view-product="productStore.listViewData" v-for="product in productStore.product"
-            :data="product" />
-        </div>
-        <div class="main-content" v-else>
+        <div class="main-content" v-if="productStore.productLoading">
           <listViewSkeleton v-if="productStore.listViewData" />
           <ProductSkeleton v-else />
+        </div>
+        <div v-else :class="productStore.listViewData ? 'listViewProduct' : 'products-container'">
+          <Product :list-view-product="productStore.listViewData" v-for="product in productStore.product"
+            :data="product" />
         </div>
       </div>
     </main>
@@ -129,7 +146,7 @@ const productStore = useProductStore();
               position: relative;
               cursor: pointer;
               padding: .3em 5px .3em 5px !important;
-
+              
               option {
                 transition: .5s all ease;
                 color: $gray-18;

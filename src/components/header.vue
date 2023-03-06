@@ -123,13 +123,13 @@ watch(
               <span>Account</span>
             </div>
 
-            <div class="item"><span class="icon"><vue-feather type="user" size="1em" stroke="#343a40"
-                  stroke-width="2"></vue-feather></span> <span>Profile</span></div>
+            <div class="item" @click.stop="showAccDropdown = false"><span class="icon"><vue-feather type="user" size="1em"
+                  stroke="#343a40" stroke-width="2"></vue-feather></span> <span>Profile</span></div>
 
-            <div class="item"><span class="icon"><vue-feather type="archive" size="1em" stroke="#343a40"
-                  stroke-width="2"></vue-feather></span> <span>Orders</span></div>
+            <div class="item" @click.stop="showAccDropdown = false"><span class="icon"><vue-feather type="archive"
+                  size="1em" stroke="#343a40" stroke-width="2"></vue-feather></span> <span>Orders</span></div>
 
-            <div class="item" @click.stop="router.push({ path: '/wishlist', name: 'wishlist' })">
+            <div class="item" @click.stop="router.push({ path: '/wishlist', name: 'wishlist' }); showAccDropdown = false">
               <span class="icon"><vue-feather type="heart" size="1em" stroke="#343a40"
                   stroke-width="2"></vue-feather></span>
               <span>Wishlist</span>
@@ -412,7 +412,7 @@ header {
 }
 
 .dropdown-leave-active {
-  transition: all .3s ease-in;
+  transition: all .1s ease-in;
   transform-origin: top;
   position: absolute;
 }

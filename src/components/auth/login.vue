@@ -62,7 +62,7 @@ watch(() => formData.value.sndPassword, () => {
     } else {
         authStore.errorMassage = "Passwords aren't match"
     }
-})
+});
 
 onMounted(() => (
     authStore.errorMassage = "",
@@ -96,8 +96,7 @@ onMounted(() => (
             <form autocomplete="off" @submit.prevent="login" v-if="!otpLoginForm">
                 <div class="first-form">
                     <BaseInput v-model="formData.email" input-type="email" input-id="Email" :is-required="true" />
-                    <BaseInput v-model="formData.password" input-type="password" input-id="Password"
-                        :is-required="true" />
+                    <BaseInput v-model="formData.password" input-type="password" input-id="Password" :is-required="true" />
                     <span class="errorS" v-if="authStore.errorMassage">{{ authStore.errorMassage }}</span>
 
                     <button class="button" type="submit">Log In</button>
@@ -137,7 +136,7 @@ onMounted(() => (
                             :disabled="!authStore.isValid.isEmail">Continue</button>
                         <button class="button" v-if="authStore.showOtp" type="button" @click="verify">Verify</button>
 
-                        <span class="loginLink" @click="$emit('gotoSignup')">Exiting User? Log In</span>
+                        <span class="loginLink" @click="$emit('gotoSignup')">Exiting User? Sign Up</span>
                     </div>
                 </transition-group>
             </form>
@@ -151,8 +150,8 @@ onMounted(() => (
                             :is-required="true" />
 
                         <span class="errorS" v-show="formData.sndPassword">{{ authStore.errorMassage }}</span>
-                        <button class="button" type="submit"
-                            :disabled="formData.password !== formData.sndPassword">Reset Password</button>
+                        <button class="button" type="submit" :disabled="formData.password !== formData.sndPassword">Reset
+                            Password</button>
                         <span class="loginLink" @click="$emit('gotoSignup')">Exiting User? Log In</span>
                     </div>
                 </transition-group>
@@ -242,11 +241,13 @@ onMounted(() => (
         background-color: $white;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
+
         .errorS {
-                color: $gray-5;
-                font-size: 14px;
-                font-weight: 400;
-            }
+            color: $gray-5;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
         .first-form {
             width: 85%;
             height: 100%;
@@ -266,7 +267,7 @@ onMounted(() => (
                 span {
                     width: 2em;
                     height: 2em;
-                    color:$gray-15;
+                    color: $gray-15;
                     background-color: $white;
                     text-align: center;
                     font-size: 20px;
@@ -307,7 +308,7 @@ onMounted(() => (
             align-items: center;
             margin: 7em auto;
 
-            
+
 
             .loadSpinner {
                 position: relative;
@@ -353,7 +354,7 @@ onMounted(() => (
         color: $white;
         margin-top: 1em;
         box-shadow: 2px 2px 10px $gray-2;
-        
+
         &:hover {
             box-shadow: 2px 2px 10px $gray-5;
             background-color: $blue;

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { onMounted } from "vue";
 import { Camera24Filled } from '@vicons/fluent/'
 import { Archive20Regular } from '@vicons/fluent/'
 import { Heart20Regular } from '@vicons/fluent/'
@@ -14,11 +13,6 @@ const router = useRouter()
 
 const authStore = useAuthStore();
 
-onMounted(() => {
-    // if (authStore.isLoggedIn == false) {
-    //     router.push({ path: '/', name: 'home' })
-    // }
-})
 </script>
 <template >
     <div class="background-color">
@@ -105,7 +99,8 @@ onMounted(() => {
                         <div class="item-subtext">Add or Edit Your Addresses</div>
                     </div>
                 </div>
-                <div class="change-pass item">
+                <div class="change-pass item"
+                    @click.native="router.push({ path: 'changePassword', name: 'changePassword' })">
                     <div class="left-side">
                         <Icon size="18" color="#0086ff">
                             <Key16Regular />
@@ -145,15 +140,17 @@ onMounted(() => {
             height: 70%;
             width: 100%;
             position: relative;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
 
             .img {
                 width: 100%;
                 height: 100%;
                 background-size: cover;
                 background-position: center;
-                position: relative;
                 border-top-right-radius: 10px;
                 border-top-left-radius: 10px;
+                position: relative;
 
                 label {
                     position: absolute;

@@ -32,7 +32,6 @@ export const useAuthStore = defineStore("auth", () => {
             isLoggedIn.value = true;
             user.value = response.data.user;
             loading.value = false;
-            console.log(user.value);
           }
         })
         .catch((error) => {
@@ -105,7 +104,6 @@ export const useAuthStore = defineStore("auth", () => {
           if (res.status == 201) {
             user.value = res.data.user;
             jwtUtil.saveToken(res.data.token);
-            // jwtUtil.saveUser(JSON.stringify(res.data.user));
             isLoggedIn.value = true;
           }
         })
@@ -175,6 +173,24 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(error);
     }
   }
+  async function changePass(currentPass: string, newPass: string) {
+    try {
+      await axios
+        .post("/users/changePass", {
+          id: user.value._id,
+          currentPass: currentPass,
+          newPass: newPass,
+        })
+        .then((res) => {
+          errorMassage.value = res.data.message;
+        })
+        .catch((error) => {
+          errorMassage.value = error.response.data.message;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async function addToWishlist(product: any, like: boolean) {
     if (isLoggedIn.value === true) {
       if (like == false) {
@@ -220,6 +236,6 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     resetPass,
     addToWishlist,
-    // getWishItem,
+    changePass,
   };
 });

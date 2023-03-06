@@ -46,7 +46,7 @@ onMounted(() => {
                         <input type="radio" name="p" :id="price._id"
                             @change="productStore.getFilters('price', price.price, $event)" :key="price._id"
                             :checked="price.checked">
-                        <label :for="price._id">{{ price.price }} _ Afg</label>
+                        <label :for="price._id">$ _ {{ price.price }}</label>
                     </li>
                 </ul>
             </div>

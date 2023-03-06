@@ -12,8 +12,8 @@ export const useProductStore = defineStore("product", () => {
   const listView = ref<boolean>();
   const count = ref<number>(0);
 
-  const productLoading = ref(false);
-  const filterLoading = ref(false);
+  const productLoading = ref(true);
+  const filterLoading = ref(true);
   let tags = ref<any[]>([]);
 
   let params = new URLSearchParams();

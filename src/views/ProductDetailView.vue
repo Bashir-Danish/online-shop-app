@@ -2,7 +2,8 @@
 import axios from "@/plugins/axios";
 import Product from "@/components/product.vue";
 import Header from '@/components/header.vue';
-
+import { IosArrowRtl24Regular } from '@vicons/fluent/'
+import { IosHeartEmpty } from '@vicons/ionicons4/'
 import { ref, computed, onBeforeMount } from "vue";
 import { useCartStore } from "@/stores/cart";
 import { useAuthStore } from "@/stores/auth";
@@ -74,7 +75,14 @@ const scrollSide = (e: any) => {
     <Header />
     <div class="background-container">
         <div class="prd-path">
-            Home > {{ product?.category }} > {{ product?.name }}
+            Home
+            <Icon size="10">
+                <IosArrowRtl24Regular />
+            </Icon>
+            {{ product?.category }}
+            <Icon size="10">
+                <IosArrowRtl24Regular />
+            </Icon> {{ product?.name }}
         </div>
         <div class="product-details-div">
             <div class="col-1">
@@ -89,7 +97,9 @@ const scrollSide = (e: any) => {
                     <span class="heart" @click.stop="authStore.addToWishlist(product, liked)">
                         <div class="heart-icon" v-if="liked">
                         </div>
-                        <vue-feather v-else type="heart" size="1.5em" stroke="#414e5a" stroke-width="2"></vue-feather>
+                        <Icon v-else size="1.5em">
+                            <IosHeartEmpty />
+                        </Icon>
                     </span>
 
                     <img :src="'http://localhost:4000' + showImg" :alt="showImg" />
@@ -177,7 +187,9 @@ const scrollSide = (e: any) => {
             <h2>Similar Products</h2>
             <div class="product-list" id="product-list">
                 <button class="next" @click="scrollSide">add</button>
-                <Product :data="product" v-for="product in similar" />
+                <div v-for="product in similar">
+                    <Product :data="product" />
+                </div>
                 <button class="prev" @click="scrollSide">add</button>
             </div>
         </div>
@@ -196,7 +208,8 @@ const scrollSide = (e: any) => {
     background: $backGround;
 
     .prd-path {
-        padding: 0.5em 0.5em;
+        padding: 0.8em 0.5em;
+        font-size: 14px;
         color: $gray-15;
         max-width: 1366px;
         margin: 0 auto;
@@ -289,7 +302,12 @@ const scrollSide = (e: any) => {
                     align-items: center;
                     justify-content: center;
                     border-radius: 50%;
+                    cursor: pointer;
                     background: $bgOp-4;
+
+                    &:hover {
+                        color: $red;
+                    }
 
                     .heart-icon {
                         background: url("@/assets/photos/heart.png") no-repeat;
@@ -297,7 +315,6 @@ const scrollSide = (e: any) => {
                         width: 70px;
                         background-position: left;
                         background-size: 2900%;
-                        cursor: pointer;
                         position: absolute;
                         animation: like-anim .5s steps(28) forwards;
                     }
@@ -590,10 +607,11 @@ const scrollSide = (e: any) => {
         height: fit-content;
         border-radius: 10px;
         box-shadow: $dOp-2 0px 0px 8px;
-        margin: 0 auto;
-        padding: 1em 1em;
+        padding: 1em;
         margin: 1em auto 0 auto;
         position: relative;
+        // display: grid;
+        // grid-template-columns: auto auto auto auto auto;
 
         h2 {
             padding: 0.5em 0 0 0;
@@ -607,6 +625,11 @@ const scrollSide = (e: any) => {
             gap: 1em;
             overflow-x: scroll;
 
+            div {
+                min-width: 255px;
+                max-width: 20%;
+            }
+
             .next {
                 position: absolute;
                 left: 1em;
@@ -618,8 +641,6 @@ const scrollSide = (e: any) => {
                 position: absolute;
                 right: 1em;
                 top: 50%;
-                //   left: 50%;
-                // margin: auto 0;
                 z-index: 100;
             }
         }
