@@ -261,8 +261,12 @@ onMounted(() => {
       }
 
       .products-container {
+        // display: grid;
+        // grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
         display: flex;
         flex-wrap: wrap;
+
         row-gap: 1.5em;
         margin: 0 1.5em 1em 1.5em;
       }

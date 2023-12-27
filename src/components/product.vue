@@ -78,7 +78,9 @@ const img = 'url(http://api.kdanish.com' + props.data.img[0] + ')'
 @import '@/assets/mixin.scss';
 
 .product {
-    max-width: 25%;
+    max-width: 24%;
+    min-width: 24%;
+    width: 24%;
     flex-grow: 1;
     padding: 0;
     color: $gray-18;
