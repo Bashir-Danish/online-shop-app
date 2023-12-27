@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 
 </script>
-
 <template>
     <div class="cart">
         <div class="cart-header">

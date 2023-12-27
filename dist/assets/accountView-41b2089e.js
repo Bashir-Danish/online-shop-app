@@ -1,0 +1,1 @@
+import{_ as c,g as r,o as e,y as o,j as s,D as a}from"./index-bb87d01e.js";const _={};function i(l,u){const t=r("router-view");return e(),o(t,null,{default:s(({Component:n})=>[(e(),o(a(n)))]),_:1})}const m=c(_,[["render",i]]);export{m as default};
