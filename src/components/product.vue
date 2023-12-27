@@ -31,7 +31,7 @@ const liked = computed(() => {
     return like
 })
 
-const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
+const img = 'url(http://api.kdanish.com' + props.data.img[0] + ')'
 
 </script>
 <template>
@@ -46,7 +46,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                         <IosHeartEmpty />
                     </Icon>
                 </span>
-                <img :src="'http://localhost:4000' + data.img[0]" :alt="img[0]">
+                <img :src="'http://api.kdanish.com' + data.img[0]" :alt="img[0]">
             </div>
             <div :class="listViewProduct ? 'desc-wrapper-2' : 'desc-wrapper'">
                 <div class="row1">

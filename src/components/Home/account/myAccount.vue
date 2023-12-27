@@ -21,7 +21,7 @@ const authStore = useAuthStore();
                 <div class="cover-img">
                     <!-- <img src="@/assets/photos/coverImg.webp" alt=""> -->
                     <div class="img"
-                        :style="{ backgroundImage: 'url(http://localhost:4000' + authStore.user?.coverImg + ')' }">
+                        :style="{ backgroundImage: 'url(http://api.kdanish.com' + authStore.user?.coverImg + ')' }">
                         <span class="camera-holder">
                             <Icon size="20">
                                 <Camera24Filled />
@@ -36,7 +36,7 @@ const authStore = useAuthStore();
                 </div>
                 <div class="profile">
                     <div class="img"
-                        :style="{ backgroundImage: 'url(http://localhost:4000' + authStore.user?.profile + ')' }">
+                        :style="{ backgroundImage: 'url(http://api.kdanish.com' + authStore.user?.profile + ')' }">
                     </div>
                     <div class="edit-icon">
                         <Icon size="20">

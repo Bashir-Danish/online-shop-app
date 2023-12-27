@@ -49,8 +49,8 @@ onMounted(() => {
                             <td @click.native="router.push({ path: '/product/' + item._id })">
                                 <div class="item-img">
                                     <span
-                                        :style="{ backgroundImage: 'url(http://localhost:4000' + item.img[0] + ')' }"></span>
-                                    <img :src="'http://localhost:4000' + item.img[0]" alt="" srcset="">
+                                        :style="{ backgroundImage: 'url(http://api.kdanish.com' + item.img[0] + ')' }"></span>
+                                    <img :src="'http://api.kdanish.com' + item.img[0]" alt="" srcset="">
                                 </div>
                                 <div class="item-desc">
                                     <span class="name">{{ item.name }}</span>

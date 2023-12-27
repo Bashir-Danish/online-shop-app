@@ -9,7 +9,7 @@ if (token) {
 }
 
 let config = {
-  baseURL: "http://localhost:4000/api/v1",
+  baseURL: "http://api.kdanish.com/api/v1",
   withCredentials: false,
   
 };

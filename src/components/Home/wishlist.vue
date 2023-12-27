@@ -35,8 +35,8 @@ const addToCart = (item: any) => {
                     @click.native="router.push({ path: '/product/' + item._id })">
                     <div class="item-img">
                         <span
-                            :style="{ backgroundImage: 'url(http://localhost:4000' + item.img[0] ?? item.img + ')' }"></span>
-                        <img :src="'http://localhost:4000' + (item.img[0] ?? item.img)" :alt="item?.img[0]">
+                            :style="{ backgroundImage: 'url(http://api.kdanish.com' + item.img[0] ?? item.img + ')' }"></span>
+                        <img :src="'http://api.kdanish.com' + (item.img[0] ?? item.img)" :alt="item?.img[0]">
                     </div>
                     <div class="details">
                         <div class="desc">
