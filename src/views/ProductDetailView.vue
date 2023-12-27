@@ -20,7 +20,7 @@ const showImg = ref();
 const bgImg = ref()
 const changeImg = (img: any) => {
     showImg.value = img;
-    bgImg.value = 'url(http://localhost:4000' + img + ')';
+    bgImg.value = 'url(http://api.kdanish.com' + img + ')';
 };
 
 
@@ -30,7 +30,7 @@ onBeforeMount(async () => {
         .then((res: any) => {
             product.value = res.data.product;
             showImg.value = product.value.img[0];
-            bgImg.value = 'url(http://localhost:4000' + product.value.img[0] + ')';
+            bgImg.value = 'url(http://api.kdanish.com' + product.value.img[0] + ')';
         })
         .catch((err) => {
             console.log(err);
@@ -88,12 +88,12 @@ const scrollSide = (e: any) => {
             <div class="col-1">
                 <div class="img-list">
                     <div class="img" v-for="img in product?.img" @mouseover="changeImg(img)">
-                        <img :src="'http://localhost:4000' + img" :alt="img" />
+                        <img :src="'http://api.kdanish.com' + img" :alt="img" />
                     </div>
                 </div>
                 <div class="img-slider">
                     <span class="bg-filter"
-                        :style="{ backgroundImage: 'url(http://localhost:4000' + showImg + ')' }"></span>
+                        :style="{ backgroundImage: 'url(http://api.kdanish.com' + showImg + ')' }"></span>
                     <span class="heart" @click.stop="authStore.addToWishlist(product, liked)">
                         <div class="heart-icon" v-if="liked">
                         </div>
@@ -102,7 +102,7 @@ const scrollSide = (e: any) => {
                         </Icon>
                     </span>
 
-                    <img :src="'http://localhost:4000' + showImg" :alt="showImg" />
+                    <img :src="'http://api.kdanish.com' + showImg" :alt="showImg" />
                 </div>
             </div>
             <div class="divider"></div>
