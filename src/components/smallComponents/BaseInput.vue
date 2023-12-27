@@ -100,7 +100,7 @@ onMounted(() => (
         <input :type="inputType" :value="modelValue" :required="isRequired"
             @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()"
             @keyup="$emit('update:modelValue', ($event.target as HTMLInputElement).value), validate()">
-        <span class="label" :style="[props.modelValue && { transform: 'translateY(-1.5em)', fontSize: '14px' }]">{{
+        <span class="label" :style="[props.modelValue && { transform: 'translateY(-1.6em)', fontSize: '12px' }]">{{
             inputId
         }}</span>
         <span v-if="props.modelValue && message" class="message"

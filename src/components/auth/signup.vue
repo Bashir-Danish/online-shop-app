@@ -65,7 +65,6 @@ onMounted(() => (
 </script>
 
 <template>
-
     <div class="signupForm">
         <div class="info-section">
             <div class="first-block">
@@ -116,7 +115,6 @@ onMounted(() => (
                     <button class="button" v-if="authStore.showOtp" type="submit" @click="verify">Verify</button>
                     <button class="button" v-if="!authStore.showOtp" type="submit" @click="sendOtp"
                         :disabled="!authStore.isValid.isEmail">Continue</button>
-
                     <span class="loginLink" @click="$emit('gotoLogin')">Exiting User? Log In</span>
                 </div>
             </form>

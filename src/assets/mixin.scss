@@ -2,48 +2,75 @@ $small-width: 480px;
 $medium-width: 768px;
 $large-width: 1024px;
 
-@mixin extra-small {
-  @media (max-width: #{$small-width - 1px}) {
-    @content;
+// @mixin extra-small {
+//   @media (max-width: #{$small-width - 1px}) {
+//     @content;
+//   }
+// }
+
+// @mixin small-down {
+//   @media (max-width: #{$medium-width - 1px}) {
+//     @content;
+//   }
+// }
+
+// @mixin small-only {
+//   @media (min-width: #{$small-width}) and (max-width: #{$medium-width - 1px}) {
+//     @content;
+//   }
+// }
+
+// @mixin small-up {
+//   @media (min-width: #{$small-width}) {
+//     @content;
+//   }
+// }
+
+// @mixin medium-down {
+//   @media (max-width: #{$medium-width}) {
+//     @content;
+//   }
+// }
+
+// @mixin medium-up {
+//   @media (min-width: #{$medium-width}) {
+//     @content;
+//   }
+// }
+
+// @mixin large {
+//   @media (min-width: #{$large-width}) {
+//     @content;
+//   }
+// }
+
+@mixin responsive( $breakpoint ) {
+  @if $breakpoint == smartphone-portrait {
+      @media only screen and ( max-width: 575.98px ) {
+          @content;
+      }
+  }
+  @if $breakpoint == smartphone-landscape {
+      @media only screen and ( min-width: 575.99px ) and ( max-width: 767.98px ) {
+          @content;
+      }
+  }
+  @if $breakpoint == tablet {
+      @media only screen and ( min-width: 767.99px ) and ( max-width: 1199.97px ) {
+          @content;
+      }
+  }
+  @if $breakpoint == laptop {
+      @media only screen and ( min-width: 1199.98px  ) and ( max-width: 1399.98px ) {
+          @content;
+      }
+  }
+  @if $breakpoint == desktop {
+      @media only screen and ( min-width: 1399.99px ) {
+          @content;
+      }
   }
 }
-
-@mixin small-down {
-  @media (max-width: #{$medium-width - 1px}) {
-    @content;
-  }
-}
-
-@mixin small-only {
-  @media (min-width: #{$small-width}) and (max-width: #{$medium-width - 1px}) {
-    @content;
-  }
-}
-
-@mixin small-up {
-  @media (min-width: #{$small-width}) {
-    @content;
-  }
-}
-
-@mixin medium-down {
-  @media (max-width: #{$medium-width}) {
-    @content;
-  }
-}
-
-@mixin medium-up {
-  @media (min-width: #{$medium-width}) {
-    @content;
-  }
-}
-
-@mixin large {
-  @media (min-width: #{$large-width}) {
-    @content;
-  }
-}
-
 
 @mixin hideScrollbar() {
   &::-webkit-scrollbar {

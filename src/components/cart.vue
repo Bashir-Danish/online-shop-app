@@ -283,9 +283,7 @@ onMounted(() => {
 
                         .divider {
                             position: absolute;
-                            bottom: 0;
-                            left: 0;
-                            right: 0;
+                            inset: (auto 0 0 0);
                             margin: 0 auto;
                             width: 95%;
                             border-bottom: $gray-2 1px solid;
@@ -723,9 +721,7 @@ onMounted(() => {
     height: 14em;
     width: 25%;
     position: absolute;
-    top: 20%;
-    left: 0;
-    right: 0;
+    inset: (25% 0 auto  0);
     margin: auto;
     background: $white;
     border-radius: 10px;
@@ -758,8 +754,7 @@ onMounted(() => {
             position: absolute;
             width: 100%;
             height: 3em;
-            bottom: 0;
-            left: 0;
+            inset: (auto auto 0 0);
             background: $green;
             color: $white;
             border: none;

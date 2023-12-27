@@ -13,6 +13,7 @@ export const useAuthStore = defineStore("auth", () => {
   const showOtp = ref(false);
   const errorMassage = ref("");
   const user = ref<any>();
+  const notifeeMsg = ref("");
 
   // const wishItems = ref<any[]>([]);
 
@@ -202,11 +203,14 @@ export const useAuthStore = defineStore("auth", () => {
         };
 
         user.value.wishList.push(obj);
+        notifeeMsg.value = "Item added to Wishlist";
       } else {
         user.value.wishList = user.value.wishList.filter(
           (el: any) => el._id !== product._id
         );
+        notifeeMsg.value = "Item removed from Wishlist";
       }
+      console.log(notifeeMsg.value);
       await axios
         .post("/users/addToWish", {
           id: user.value._id,
@@ -228,6 +232,7 @@ export const useAuthStore = defineStore("auth", () => {
     user,
     showSingUPModal,
     showLoginModal,
+    notifeeMsg,
     verifyToken,
     register,
     verify,

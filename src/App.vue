@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import { onBeforeMount } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useProductStore } from '@/stores/product';
+import Notifee from '@/components/smallComponents/customNotife.vue';
 import jwt from '@/utils/jwt'
 
 const authStore = useAuthStore();
@@ -41,7 +42,9 @@ const scroll = (e: any) => {
 
 <template>
   <div class="scroll" @scroll="scroll">
-
+    <teleport to="body">
+      <Notifee v-if="authStore.notifeeMsg" />
+    </teleport>
     <RouterView />
   </div>
 </template>
@@ -49,7 +52,6 @@ const scroll = (e: any) => {
 .scroll {
   height: 100vh;
   overflow: scroll;
-
-
+  position: relative;
 }
 </style>

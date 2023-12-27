@@ -293,8 +293,7 @@ const scrollSide = (e: any) => {
 
                 .heart {
                     position: absolute;
-                    top: 1em;
-                    right: 1em;
+                    inset: (1em 1em auto auto);
                     z-index: 10;
                     width: 2em;
                     height: 2em;
@@ -632,15 +631,13 @@ const scrollSide = (e: any) => {
 
             .next {
                 position: absolute;
-                left: 1em;
-                top: 50%;
+                inset: (50% auto auto 1em);
                 z-index: 100;
             }
 
             .prev {
                 position: absolute;
-                right: 1em;
-                top: 50%;
+                inset: (50% 1em auto auto);
                 z-index: 100;
             }
         }

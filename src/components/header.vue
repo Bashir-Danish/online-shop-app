@@ -243,7 +243,6 @@ header {
     .drop-down {
       position: absolute;
       top: 100%;
-
       right: 2%;
       background: $white;
       box-shadow: $dOp-3 0px 3px 8px;
@@ -261,9 +260,7 @@ header {
       &::after {
         content: '';
         position: absolute;
-        top: -8px;
-        left: 0;
-        right: 0;
+        inset: (-8px 0);
         margin: 0 auto;
         width: 0;
         height: 0;
@@ -293,29 +290,6 @@ header {
     }
   }
 
-  @include small-down {
-    background: $white;
-
-    .social-links {
-      display: none;
-    }
-
-    .right-section {
-      font-size: 10px;
-
-      i {
-        display: none;
-      }
-
-      span {
-        color: $green ;
-      }
-
-      .signup-login {
-        display: none;
-      }
-    }
-  }
 }
 
 
@@ -419,5 +393,16 @@ header {
 
 .dropdown-move {
   transition: all 0.5s ease;
+}
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
+@include responsive(tablet) {
+  .header-center {
+    background-color: aqua;
+  }
 }
 </style>

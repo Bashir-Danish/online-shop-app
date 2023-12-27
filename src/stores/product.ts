@@ -171,6 +171,8 @@ export const useProductStore = defineStore("product", () => {
         res.data.products.forEach((el: any) => {
           product.value.push(el);
         });
+        productLoading.value = false;
+
       })
       .catch((err) => {
         console.log(err);
@@ -190,15 +192,18 @@ export const useProductStore = defineStore("product", () => {
         _axios.spread((categoryData: any, priceData, brandData) => {
           brands.value = brandData.data.brands;
           price.value = priceData.data.price;
+          console.log(brands.value);
+          console.log(price.value);
+
           category.value = categoryData.data.category;
+
           // product.value = productData.data.products;
           if (brands.value && price.value && category.value) {
             setTimeout(() => {
               filterLoading.value = false;
-              productLoading.value = false;
-            }, 300);
+              // productLoading.value = false;
+            }, 100);
           }
-          // if (product.value) productLoading.value = false;
         })
       );
   }

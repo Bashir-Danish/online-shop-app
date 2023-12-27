@@ -77,8 +77,6 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
 @import '@/assets/variables.scss';
 @import '@/assets/mixin.scss';
 
-
-
 .product {
     max-width: 25%;
     flex-grow: 1;
@@ -88,11 +86,6 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
     border-radius: 3%;
     transition: box-shadow .5s ease;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-    @include medium-down {
-        max-width: 33.33%;
-        width: 33.33%;
-    }
 
     &:hover {
         box-shadow: 0px 5px 10px 5px $dOp-1;
@@ -124,8 +117,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
             &::after {
                 content: '';
                 position: absolute;
-                top: .3em;
-                left: .3em;
+                inset: (.3em auto auto .3em);
                 width: 95%;
                 height: 95%;
                 background-image: v-bind(img);
@@ -150,6 +142,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
 
             .heart {
                 position: absolute;
+                inset: (.5em .5em auto auto);
                 background: $bgOp-4;
                 width: 2em;
                 height: 2em;
@@ -157,8 +150,6 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                top: .5em;
-                right: .5em;
                 z-index: 100;
                 cursor: pointer;
 
@@ -175,6 +166,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 background-position: left;
                 background-size: 2900%;
                 position: absolute;
+
                 animation: like-anim .5s steps(28) forwards;
             }
 
@@ -346,8 +338,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
             &::after {
                 content: '';
                 position: absolute;
-                top: .3em;
-                left: .3em;
+                inset: (.3em auto auto .3em);
                 width: 95%;
                 height: 95%;
                 background-image: v-bind(img);
@@ -385,8 +376,7 @@ const img = 'url(http://localhost:4000' + props.data.img[0] + ')'
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                top: .5em;
-                right: .5em;
+                inset: (.5em .5em auto auto );
                 z-index: 100;
                 cursor: pointer;
 

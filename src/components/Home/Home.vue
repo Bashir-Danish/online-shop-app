@@ -74,13 +74,15 @@ onMounted(() => {
             </TransitionGroup>
           </div>
         </div>
-        <div class="main-content" v-if="productStore.productLoading">
-          <listViewSkeleton v-if="productStore.listViewData" />
-          <ProductSkeleton v-else />
-        </div>
-        <div v-else :class="productStore.listViewData ? 'listViewProduct' : 'products-container'">
+
+        <div v-if="!productStore.productLoading"
+          :class="productStore.listViewData ? 'listViewProduct' : 'products-container'">
           <Product :list-view-product="productStore.listViewData" v-for="product in productStore.product"
             :data="product" />
+        </div>
+        <div class="main-content" v-else>
+          <listViewSkeleton v-if="productStore.listViewData" />
+          <ProductSkeleton v-else />
         </div>
       </div>
     </main>
@@ -146,7 +148,7 @@ onMounted(() => {
               position: relative;
               cursor: pointer;
               padding: .3em 5px .3em 5px !important;
-              
+
               option {
                 transition: .5s all ease;
                 color: $gray-18;
@@ -185,10 +187,7 @@ onMounted(() => {
                   height: 100%;
                   background: $gray-1;
                   position: absolute;
-                  top: 0;
-                  left: 0;
-                  bottom: 0;
-                  right: 0;
+                  inset: (0);
                   z-index: -1;
                   border-radius: 5px;
                   transform: scale(0);
@@ -236,8 +235,8 @@ onMounted(() => {
               width: 1.5em;
               height: 1.5em;
               border-radius: 50%;
-              top: 0em;
-              right: 0em;
+              top: 0;
+              right: 0;
               display: flex;
               justify-content: center;
               align-items: center;

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
+import { useAuthStore } from "@/stores/auth";
 
 interface item {
   _id: string;
@@ -12,6 +13,7 @@ interface item {
 export const useCartStore = defineStore("cart", () => {
   let items = ref<item[]>([]);
   let total = ref<number>(0);
+  const authStore = useAuthStore();
 
   function loadCart() {
     total.value = 0;
@@ -37,6 +39,7 @@ export const useCartStore = defineStore("cart", () => {
       img: [],
       quantity: 1,
     };
+    authStore.notifeeMsg = "Item Added to Cart";
     item.img.push(product.img[0]);
     if (!items.value.find((e) => e._id == product._id)) {
       items.value.push(item);
@@ -53,6 +56,7 @@ export const useCartStore = defineStore("cart", () => {
         if (act == "decrease") {
           i.quantity--;
           if (i.quantity < 1) {
+            authStore.notifeeMsg = "Item removed from Cart";
             items.value = items.value.filter((i) => i._id !== id);
           }
         }
