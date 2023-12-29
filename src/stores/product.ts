@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref, computed, watch } from "vue";
 import axios from "@/plugins/axios";
 import _axios from "axios";
-
+import fetchApi from "@/plugins/fetchApi";
 export const useProductStore = defineStore("product", () => {
   const product = ref<any[]>([]);
   const brands = ref<any[]>([]);
@@ -136,28 +136,78 @@ export const useProductStore = defineStore("product", () => {
   );
 
   let offset = 0;
+
+
+  
+
+  // async function getProduct() {
+  //   productLoading.value = true;
+  //   // filterLoading.value = true;
+  //   params.delete("offset");
+  //   offset = 0;
+  //   let request = {
+  //     params: params,
+  //   };
+  //   await axios
+  //     .get("/product/all", request)
+  //     .then((res: any) => {
+  //       product.value = res.data.products;
+  //       count.value = res.data.count;
+  //       setTimeout(() => {
+  //         productLoading.value = false;
+  //         filterLoading.value = false;
+  //       }, 400);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
   async function getProduct() {
     productLoading.value = true;
-    // filterLoading.value = true;
     params.delete("offset");
     offset = 0;
     let request = {
       params: params,
     };
-    await axios
-      .get("/product/all", request)
-      .then((res: any) => {
-        product.value = res.data.products;
-        count.value = res.data.count;
-        setTimeout(() => {
-          productLoading.value = false;
-          filterLoading.value = false;
-        }, 400);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  
+    try {
+      const { response, data } = await fetchApi('/product/all', request);
+  
+      if (response?.ok) {
+        product.value = data.products;
+        count.value = data.count;
+      }
+  
+      setTimeout(() => {
+        productLoading.value = false;
+        filterLoading.value = false;
+      }, 400);
+    } catch (error) {
+      console.error(error);
+    }
   }
+  // async function getPage() {
+  //   offset++;
+  //   params.delete("offset");
+  //   params.append("offset", offset.toString());
+  //   let request = {
+  //     params: params,
+  //   };
+  //   await axios
+  //     .get("/product/all", request)
+  //     .then((res: any) => {
+  //       res.data.products.forEach((el: any) => {
+  //         product.value.push(el);
+  //       });
+  //       productLoading.value = false;
+
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
   async function getPage() {
     offset++;
     params.delete("offset");
@@ -165,48 +215,82 @@ export const useProductStore = defineStore("product", () => {
     let request = {
       params: params,
     };
-    await axios
-      .get("/product/all", request)
-      .then((res: any) => {
-        res.data.products.forEach((el: any) => {
+  
+    try {
+      const { response, data } = await fetchApi('/product/all', request);
+  
+      if (response?.ok) {
+        data.products.forEach((el: any) => {
           product.value.push(el);
         });
         productLoading.value = false;
-
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
+  // async function fetchBrandAndPrice() {
+  //   filterLoading.value = true;
+  //   productLoading.value = true;
+  //   await _axios
+  //     .all([
+  //       axios.get("/category/all"),
+  //       axios.get("/price/all"),
+  //       axios.get("/brands/all"),
+  //     ])
+  //     .then(
+  //       _axios.spread((categoryData: any, priceData, brandData) => {
+  //         brands.value = brandData.data.brands;
+  //         price.value = priceData.data.price;
+  //         console.log(brands.value);
+  //         console.log(price.value);
 
-  async function fetchBrandAndPrice() {
+  //         category.value = categoryData.data.category;
+
+  //         // product.value = productData.data.products;
+  //         if (brands.value && price.value && category.value) {
+  //           setTimeout(() => {
+  //             filterLoading.value = false;
+  //             // productLoading.value = false;
+  //           }, 100);
+  //         }
+  //       })
+  //     );
+  // }
+
+ 
+  const fetchBrandAndPrice = async () => {
     filterLoading.value = true;
     productLoading.value = true;
-    await _axios
-      .all([
-        axios.get("/category/all"),
-        axios.get("/price/all"),
-        axios.get("/brands/all"),
-      ])
-      .then(
-        _axios.spread((categoryData: any, priceData, brandData) => {
-          brands.value = brandData.data.brands;
-          price.value = priceData.data.price;
-          console.log(brands.value);
-          console.log(price.value);
+  
+    try {
+      const [categoryData, priceData, brandData] = await Promise.all([
+        fetchApi('/category/all'),
+        fetchApi('/price/all'),
+        fetchApi('/brands/all'),
+      ]);
+      
+  
+      brands.value = brandData.data.brands; 
+      price.value = priceData.data.price;
 
-          category.value = categoryData.data.category;
-
-          // product.value = productData.data.products;
-          if (brands.value && price.value && category.value) {
-            setTimeout(() => {
-              filterLoading.value = false;
-              // productLoading.value = false;
-            }, 100);
-          }
-        })
-      );
-  }
+      // console.log('brands',brands.value);
+      // console.log('price',price.value);
+  
+      category.value = categoryData.data;
+  
+      if (brands.value && price.value && category.value) {
+        setTimeout(() => {
+          filterLoading.value = false;
+          productLoading.value = false;
+        }, 100);
+      }
+    } catch (error) {
+      console.error(error);
+  
+    }
+  };
+  
 
   return {
     listView,
