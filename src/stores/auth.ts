@@ -24,42 +24,42 @@ export const useAuthStore = defineStore("auth", () => {
     isName: false,
   });
 
-  // async function verifyToken() {
-  //   loading.value = true;
-  //   try {
-  //     await axios
-  //       .get("/users/auth")
-  //       .then((response) => {
-  //         if (response.status == 200) {
-  //           isLoggedIn.value = true;
-  //           user.value = response.data.user;
-  //           loading.value = false;
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         isLoggedIn.value = false;
-  //         if (isLoggedIn.value == false) {
-  //           window.localStorage.removeItem("tokenId");
-  //         }
-  //       });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   async function verifyToken() {
     loading.value = true;
     try {
-      const { data } = await fetchApi("/users/auth");
-      isLoggedIn.value = true;
-      user.value = data.user;
+      await axios
+        .get("/users/auth")
+        .then((response) => {
+          if (response.status == 200) {
+            isLoggedIn.value = true;
+            user.value = response.data.user;
+            loading.value = false;
+          }
+        })
+        .catch((error) => {
+          isLoggedIn.value = false;
+          if (isLoggedIn.value == false) {
+            window.localStorage.removeItem("tokenId");
+          }
+        });
     } catch (err) {
-      isLoggedIn.value = false;
-      window.localStorage.removeItem("tokenId");
-    } finally {
-      loading.value = false;
+      console.log(err);
     }
   }
+
+  // async function verifyToken() {
+  //   loading.value = true;
+  //   try {
+  //     const { data } = await fetchApi("/users/auth");
+  //     isLoggedIn.value = true;
+  //     user.value = data.user;
+  //   } catch (err) {
+  //     isLoggedIn.value = false;
+  //     window.localStorage.removeItem("tokenId");
+  //   } finally {
+  //     loading.value = false;
+  //   }
+  // }
 
   // async function sendOtp(email: String) {
   //   loading.value = true;
@@ -138,56 +138,54 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
 
-  // async function register(data: registerPayload) {
-  //   const { email, name, lastName, phone, password, address } = data;
-  //   try {
-  //     await axios
-  //       .post("/users/register", {
-  //         email,
-  //         name,
-  //         lastName,
-  //         phone,
-  //         password,
-  //         address,
-  //       })
-  //       .then((res) => {
-  //         if (res.status == 201) {
-  //           user.value = res.data.user;
-  //           jwtUtil.saveToken(res.data.token);
-  //           isLoggedIn.value = true;
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         loading.value = false;
-  //         errorMassage.value = error.response;
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //     return false;
-  //   }
-  // }
-
   async function register(data: registerPayload) {
     const { email, name, lastName, phone, password, address } = data;
     try {
-      const { data: resData } = await fetchApi("/users/register", {
-        method: "POST",
-        body: { email, name, lastName, phone, password, address },
-      });
-
-      user.value = resData.user;
-      jwtUtil.saveToken(resData.token);
-      isLoggedIn.value = true;
-    } catch (error:any) {
-      loading.value = false;
-      errorMassage.value = error.response;
+      await axios
+        .post("/users/register", {
+          email,
+          name,
+          lastName,
+          phone,
+          password,
+          address,
+        })
+        .then((res) => {
+          if (res.status == 201) {
+            user.value = res.data.user;
+            jwtUtil.saveToken(res.data.token);
+            isLoggedIn.value = true;
+          }
+        })
+        .catch((error) => {
+          loading.value = false;
+          errorMassage.value = error.response;
+        });
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   }
 
+  // async function register(data: registerPayload) {
+  //   const { email, name, lastName, phone, password, address } = data;
+  //   try {
+  //     const { data: resData } = await fetchApi("/users/register", {
+  //       method: "POST",
+  //       body: { email, name, lastName, phone, password, address },
+  //     });
 
-  const fetchApi =(a, b)=>{
-    fetch(a,b)
-  }
+  //     user.value = resData.user;
+  //     jwtUtil.saveToken(resData.token);
+  //     isLoggedIn.value = true;
+  //   } catch (error:any) {
+  //     loading.value = false;
+  //     errorMassage.value = error.response;
+  //   }
+  // }
+
+
+
 
 
   // async function sendLoginCode(email: String) {
