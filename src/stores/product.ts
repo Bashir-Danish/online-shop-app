@@ -140,74 +140,53 @@ export const useProductStore = defineStore("product", () => {
 
   
 
-  // async function getProduct() {
-  //   productLoading.value = true;
-  //   // filterLoading.value = true;
-  //   params.delete("offset");
-  //   offset = 0;
-  //   let request = {
-  //     params: params,
-  //   };
-  //   await axios
-  //     .get("/product/all", request)
-  //     .then((res: any) => {
-  //       product.value = res.data.products;
-  //       count.value = res.data.count;
-  //       setTimeout(() => {
-  //         productLoading.value = false;
-  //         filterLoading.value = false;
-  //       }, 400);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
   async function getProduct() {
     productLoading.value = true;
+    // filterLoading.value = true;
     params.delete("offset");
     offset = 0;
     let request = {
       params: params,
     };
-  
-    try {
-      const { response, data } = await fetchApi('/product/all', request);
-  
-      if (response?.ok) {
-        product.value = data.products;
-        count.value = data.count;
-      }
-  
-      setTimeout(() => {
-        productLoading.value = false;
-        filterLoading.value = false;
-      }, 400);
-    } catch (error) {
-      console.error(error);
-    }
+    await axios
+      .get("/product/all", request)
+      .then((res: any) => {
+        product.value = res.data.products;
+        count.value = res.data.count;
+        setTimeout(() => {
+          productLoading.value = false;
+          filterLoading.value = false;
+        }, 400);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  // async function getPage() {
-  //   offset++;
+
+  // async function getProduct() {
+  //   productLoading.value = true;
   //   params.delete("offset");
-  //   params.append("offset", offset.toString());
+  //   offset = 0;
   //   let request = {
   //     params: params,
   //   };
-  //   await axios
-  //     .get("/product/all", request)
-  //     .then((res: any) => {
-  //       res.data.products.forEach((el: any) => {
-  //         product.value.push(el);
-  //       });
+  
+  //   try {
+  //     const { response, data } = await fetchApi('/product/all', request);
+  
+  //     if (response?.ok) {
+  //       product.value = data.products;
+  //       count.value = data.count;
+  //     }
+  
+  //     setTimeout(() => {
   //       productLoading.value = false;
-
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
+  //       filterLoading.value = false;
+  //     }, 400);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
   // }
-
   async function getPage() {
     offset++;
     params.delete("offset");
@@ -215,81 +194,103 @@ export const useProductStore = defineStore("product", () => {
     let request = {
       params: params,
     };
-  
-    try {
-      const { response, data } = await fetchApi('/product/all', request);
-  
-      if (response?.ok) {
-        data.products.forEach((el: any) => {
+    await axios
+      .get("/product/all", request)
+      .then((res: any) => {
+        res.data.products.forEach((el: any) => {
           product.value.push(el);
         });
         productLoading.value = false;
-      }
-    } catch (error) {
-      console.error(error);
-    }
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  // async function fetchBrandAndPrice() {
-  //   filterLoading.value = true;
-  //   productLoading.value = true;
-  //   await _axios
-  //     .all([
-  //       axios.get("/category/all"),
-  //       axios.get("/price/all"),
-  //       axios.get("/brands/all"),
-  //     ])
-  //     .then(
-  //       _axios.spread((categoryData: any, priceData, brandData) => {
-  //         brands.value = brandData.data.brands;
-  //         price.value = priceData.data.price;
-  //         console.log(brands.value);
-  //         console.log(price.value);
 
-  //         category.value = categoryData.data.category;
-
-  //         // product.value = productData.data.products;
-  //         if (brands.value && price.value && category.value) {
-  //           setTimeout(() => {
-  //             filterLoading.value = false;
-  //             // productLoading.value = false;
-  //           }, 100);
-  //         }
-  //       })
-  //     );
+  // async function getPage() {
+  //   offset++;
+  //   params.delete("offset");
+  //   params.append("offset", offset.toString());
+  //   let request = {
+  //     params: params,
+  //   };
+  
+  //   try {
+  //     const { response, data } = await fetchApi('/product/all', request);
+  
+  //     if (response?.ok) {
+  //       data.products.forEach((el: any) => {
+  //         product.value.push(el);
+  //       });
+  //       productLoading.value = false;
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
   // }
 
- 
-  const fetchBrandAndPrice = async () => {
+  async function fetchBrandAndPrice() {
     filterLoading.value = true;
     productLoading.value = true;
+    await _axios
+      .all([
+        axios.get("/category/all"),
+        axios.get("/price/all"),
+        axios.get("/brands/all"),
+      ])
+      .then(
+        _axios.spread((categoryData: any, priceData, brandData) => {
+          brands.value = brandData.data.brands;
+          price.value = priceData.data.price;
+          console.log(brands.value);
+          console.log(price.value);
+
+          category.value = categoryData.data.category;
+
+          // product.value = productData.data.products;
+          if (brands.value && price.value && category.value) {
+            setTimeout(() => {
+              filterLoading.value = false;
+              // productLoading.value = false;
+            }, 100);
+          }
+        })
+      );
+  }
+
+ 
+  // const fetchBrandAndPrice = async () => {
+  //   filterLoading.value = true;
+  //   productLoading.value = true;
   
-    try {
-      const [categoryData, priceData, brandData] = await Promise.all([
-        fetchApi('/category/all'),
-        fetchApi('/price/all'),
-        fetchApi('/brands/all'),
-      ]);
+  //   try {
+  //     const [categoryData, priceData, brandData] = await Promise.all([
+  //       fetchApi('/category/all'),
+  //       fetchApi('/price/all'),
+  //       fetchApi('/brands/all'),
+  //     ]);
       
   
-      brands.value = brandData.data.brands; 
-      price.value = priceData.data.price;
+  //     brands.value = brandData.data.brands; 
+  //     price.value = priceData.data.price;
 
-      // console.log('brands',brands.value);
-      // console.log('price',price.value);
+  //     // console.log('brands',brands.value);
+  //     // console.log('price',price.value);
   
-      category.value = categoryData.data;
+  //     category.value = categoryData.data;
   
-      if (brands.value && price.value && category.value) {
-        setTimeout(() => {
-          filterLoading.value = false;
-          productLoading.value = false;
-        }, 100);
-      }
-    } catch (error) {
-      console.error(error);
+  //     if (brands.value && price.value && category.value) {
+  //       setTimeout(() => {
+  //         filterLoading.value = false;
+  //         productLoading.value = false;
+  //       }, 100);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
   
-    }
-  };
+  //   }
+  // };
   
 
   return {

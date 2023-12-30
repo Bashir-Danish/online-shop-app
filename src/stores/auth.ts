@@ -16,7 +16,7 @@ export const useAuthStore = defineStore("auth", () => {
   const user = ref<any>();
   const notifeeMsg = ref("");
 
-  // const wishItems = ref<any[]>([]);
+  const wishItems = ref<any[]>([]);
 
   const isValid = ref({
     isEmail: false,
@@ -60,7 +60,6 @@ export const useAuthStore = defineStore("auth", () => {
       loading.value = false;
     }
   }
-
 
   // async function sendOtp(email: String) {
   //   loading.value = true;
@@ -185,6 +184,10 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+
+  const fetchApi =(a, b)=>{
+    fetch(a,b)
+  }
 
 
   // async function sendLoginCode(email: String) {
